@@ -103,5 +103,23 @@
     });
   }
 
-  applyTexts();
+  // Aplica textos imediatamente e aguarda DOMContentLoaded
+  function tryApplyTexts() {
+    try {
+      applyTexts();
+    } catch (e) {
+      console.error("Erro ao aplicar textos:", e);
+    }
+  }
+
+  // Tenta aplicar agora
+  tryApplyTexts();
+
+  // E aguarda o DOM estar completamente pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryApplyTexts);
+  } else {
+    // Se DOMContentLoaded já foi disparado, chama depois de um pequeno delay
+    setTimeout(tryApplyTexts, 0);
+  }
 })();
