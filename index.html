@@ -1,23 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Liliam Müller – A Sala do Banquete</title>
-    <meta
-      name="description"
-      content="Ingressos e informações sobre os eventos da Sala do Banquete de Liliam Müller."
-    />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liliam Müller – A Sala do Banquete</title>
+  <meta name="description" content="Ingressos e eventos da Sala do Banquete em Vitória, ES">
 
-    <!-- Google Fonts: Cormorant Garamond (títulos) + Montserrat (corpo) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     NAVEGAÇÃO
+     ══════════════════════════════════════════════════════════════ -->
+<nav>
+  <ul>
+    <li><a href="#home">Início</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#eventos">Eventos</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HOME
+     ══════════════════════════════════════════════════════════════ -->
+<section id="home" class="container">
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo Liliam Müller – A Sala do Banquete">
+  </div>
+  <h1>Uma Experiência Única à Mesa</h1>
+  <p style="text-align: center; color: var(--texto-suave); font-size: 15px;">Descubra os melhores eventos em Vitória, ES</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SOBRE
+     ══════════════════════════════════════════════════════════════ -->
+<section id="sobre" class="container">
+  <h2>A Sala do Banquete</h2>
+  <p>A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.</p>
+  <p>Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     EVENTOS
+     ══════════════════════════════════════════════════════════════ -->
+<section id="eventos" class="container">
+  <h2>Próximos Eventos</h2>
+  <p>Confira nossa programação completa e reserve seus ingressos</p>
+
+  <div class="events-grid">
+    <div class="event-card">
+      <h3>Noite Especial com Música ao Vivo</h3>
+      <div class="event-date">28 de Junho · 19h30</div>
+      <p>Uma noite inesquecível com os melhores artistas locais</p>
+      <button class="btn">Adquirir Ingresso</button>
+    </div>
+
+    <div class="event-card">
+      <h3>Chá Musical com Poesia</h3>
+      <div class="event-date">12 de Julho · 16h00</div>
+      <p>Experiência única combinando chá, música clássica e poesia</p>
+      <button class="btn">Adquirir Ingresso</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     GALERIA
+     ══════════════════════════════════════════════════════════════ -->
+<section id="galeria" class="container">
+  <h2>Nossa Galeria</h2>
+  <p>Conheça os ambientes elegantes e sofisticados da Sala do Banquete</p>
+
+  <div class="gallery">
+    <div class="gallery-container">
+      <div class="gallery-track">
+        <img src="assets/decoracao1.jpeg" alt="Galeria 1" class="gallery-img active">
+        <img src="assets/decoracao2.jpeg" alt="Galeria 2" class="gallery-img">
+        <img src="assets/decoracao3.jpeg" alt="Galeria 3" class="gallery-img">
+        <img src="assets/decoracao4.jpeg" alt="Galeria 4" class="gallery-img">
+        <img src="assets/decoracao5.jpeg" alt="Galeria 5" class="gallery-img">
+        <img src="assets/decoracao6.jpeg" alt="Galeria 6" class="gallery-img">
+        <img src="assets/decoracao7.jpeg" alt="Galeria 7" class="gallery-img">
+      </div>
+      <button class="gallery-btn prev" onclick="previousImage()">‹</button>
+      <button class="gallery-btn next" onclick="nextImage()">›</button>
+    </div>
+
+    <div class="gallery-dots">
+      <span class="gallery-dot active"></span>
+      <span class="gallery-dot"></span>
+      <span class="gallery-dot"></span>
+      <span class="gallery-dot"></span>
+      <span class="gallery-dot"></span>
+      <span class="gallery-dot"></span>
+      <span class="gallery-dot"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CONTATO
+     ══════════════════════════════════════════════════════════════ -->
+<section id="contato" class="container">
+  <h2>Fale Conosco</h2>
+  <p style="text-align: center;">Entre em contato conosco para informações, reservas ou dúvidas sobre nossos eventos</p>
+
+  <div class="contact-info">
+    <!-- WhatsApp -->
+    <div class="contact-card">
+      <div>
+        <strong>WhatsApp</strong>
+        <p><a id="link-whatsapp" href="#">Falar pelo WhatsApp</a></p>
+      </div>
+    </div>
+
+    <!-- Instagram -->
+    <div class="contact-card">
+      <div>
+        <strong>Instagram</strong>
+        <p><a id="link-instagram" href="#">@saladobanquete</a></p>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="contact-card">
+      <div>
+        <strong>E-mail</strong>
+        <p><a id="link-email" href="#">contato@saladobanquete.com</a></p>
+      </div>
+    </div>
+
+    <!-- Endereço -->
+    <div class="contact-card">
+      <div>
+        <strong>Endereço</strong>
+        <p><a id="link-maps" href="#" target="_blank">R. Constante Sodré, 364 - Santa Lucia, Vitória - ES, 29056-310</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     BOTÃO VOLTAR AO TOPO
+     ══════════════════════════════════════════════════════════════ -->
+<button id="btnTopo" style="
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+  z-index: 998;
+  background: var(--rosa);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s;
+">
+  ↑
+</button>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════════════════════════════ -->
+<script src="js/global.js"></script>
+
+</body>
+</html>
   </head>
   <body data-page="index">
     <!-- ── Navegação Topo ──────────────────────────────────────────────── -->
