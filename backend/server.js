@@ -72,7 +72,6 @@ app.use(
 );
 
 // Variáveis de ambiente
-const MP_PUBLIC_KEY = process.env.MERCADO_PAGO_PUBLIC_KEY;
 const MP_ACCESS_TOKEN = process.env.MERCADO_PAGO_ACCESS_TOKEN;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN;

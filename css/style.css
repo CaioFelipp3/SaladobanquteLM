@@ -234,6 +234,11 @@ p {
     text-decoration: underline;
 }
 
+.contact-intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 .whatsapp-btn {
     position: fixed;
     bottom: 30px;

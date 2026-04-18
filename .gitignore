@@ -4,13 +4,11 @@ README.md
 
 # Variáveis de ambiente (sensível)
 .env
-.env.example
 .env.local
 .env.*.local
 
 # Dependências
 node_modules/
-package-lock.json
 yarn.lock
 
 # Banco de dados local
