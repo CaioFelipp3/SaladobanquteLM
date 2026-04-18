@@ -1,0 +1,107 @@
+// inter — Textos em PT-BR (Liliam Müller – A Sala do Banquete)
+// Preencha os valores vazios com os textos reais do projeto.
+
+(function () {
+  var t = {
+    // ── Navegação Topo ───────────────────────────────────────────────────────
+    "nav.home": "Início",
+    "nav.sobre": "A Sala do Banquete",
+    "nav.eventos": "Eventos",
+    "nav.galeria": "Galeria",
+    "nav.ingressos": "Ingressos",
+    "nav.contato": "Fale Conosco",
+
+    // ── Navegação Lateral (seções do index) ──────────────────────────────────
+    "navl.sobre": "A Sala do Banquete",
+    "navl.eventos": "Eventos",
+    "navl.galeria": "Galeria",
+    "navl.contato": "Fale Conosco",
+
+    // ── Rodapé ───────────────────────────────────────────────────────────────
+    "footer.copy": "Todos os direitos reservados.",
+
+    // ── Acessibilidade ───────────────────────────────────────────────────────
+    "btn.topo": "Voltar ao topo",
+    "btn.gal.prev": "Foto anterior",
+    "btn.gal.next": "Próxima foto",
+    "btn.whatsapp": "Falar pelo WhatsApp",
+
+    // ── Hero ─────────────────────────────────────────────────────────────────
+    "hero.titulo": "", // ← Título principal (ex: "Uma experiência única à mesa")
+    "hero.sub": "", // ← Tagline ou próxima data (ex: "28 de junho · 19h30")
+    "hero.cta": "Ver próximos eventos",
+
+    // ── Sobre ─────────────────────────────────────────────────────────────────
+    "sobre.h2": "A Sala do Banquete",
+    "sobre.p0": "", // ← Parágrafo de apresentação do espaço
+    "sobre.p1": "", // ← Segundo parágrafo (história, diferenciais)
+
+    // ── Eventos ───────────────────────────────────────────────────────────────
+    "eventos.h2": "Próximos Eventos",
+    "eventos.intro": "", // ← Texto introdutório
+
+    "evento1.nome": "", // ← Nome do 1º evento
+    "evento1.data": "", // ← Data e horário (ex: "28 Jun · 19h30")
+    "evento1.desc": "", // ← Descrição breve
+    "evento1.cta": "Adquirir ingresso",
+
+    "evento2.nome": "", // ← Nome do 2º evento
+    "evento2.data": "", // ← Data e horário
+    "evento2.desc": "", // ← Descrição breve
+    "evento2.cta": "Adquirir ingresso",
+
+    // ── Galeria ───────────────────────────────────────────────────────────────
+    "galeria.h2": "Nossa Galeria",
+    "galeria.p": "", // ← Texto descritivo da galeria
+
+    // ── Contato ───────────────────────────────────────────────────────────────
+    "contato.h1": "Fale Conosco",
+    "contato.h2": "Fale Conosco",
+    "contato.intro": "", // ← Texto introdutório de contato
+    "contato.wa": "WhatsApp",
+    "contato.wa.link": "Falar pelo WhatsApp",
+    "contato.email": "E-mail",
+    "contato.ig": "Instagram",
+    "contato.end": "Endereço",
+    "contato.end.val":
+      "R. Constante Sodré, 364 - Santa Lucia, Vitória - ES, 29056-310", // ← Endereço completo
+
+    // ── Página de Ingressos ───────────────────────────────────────────────────
+    "ingressos.h1": "Ingressos",
+    "ingressos.intro": "", // ← Texto introdutório da página de ingressos
+  };
+
+  // ── Títulos de página ─────────────────────────────────────────────────────
+  var pageTitles = {
+    index: "Liliam Müller – A Sala do Banquete",
+    ingressos: "Ingressos – Liliam Müller",
+    contato: "Fale Conosco – Liliam Müller",
+  };
+
+  // ── Aplica textos ─────────────────────────────────────────────────────────
+  function applyTexts() {
+    var pageId =
+      (document.body && document.body.getAttribute("data-page")) || "";
+    if (pageTitles[pageId]) document.title = pageTitles[pageId];
+
+    // data-i18n → textContent
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (t[key] !== undefined && t[key] !== "") el.textContent = t[key];
+    });
+
+    // data-i18n-aria → aria-label
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-aria");
+      if (t[key] !== undefined && t[key] !== "")
+        el.setAttribute("aria-label", t[key]);
+    });
+
+    // Dots da galeria: aria-label numerados
+    document.querySelectorAll(".galeria-dot").forEach(function (dot, idx) {
+      dot.setAttribute("aria-label", "Foto " + (idx + 1));
+    });
+  }
+
+  applyTexts();
+})();

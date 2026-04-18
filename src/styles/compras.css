@@ -1,0 +1,129 @@
+/* Página de Compras */
+
+.compras-section {
+  padding: 48px 0;
+  text-align: center;
+}
+
+.compras-section h1 {
+  margin-bottom: 10px;
+}
+
+.compras-section > p {
+  margin-bottom: 40px;
+  opacity: 0.85;
+}
+
+/* Grade de Produtos */
+
+.produtos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.produto-card {
+  background-color: var(--surface);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.produto-card:hover {
+  border-color: rgba(184, 104, 138, 0.45);
+  background-color: var(--surface-alt);
+}
+
+.produto-card__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background-color: var(--surface-alt);
+}
+
+.produto-card__info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.produto-card__nome {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(15px, 2vw, 18px);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.produto-card__desc {
+  font-size: 14px;
+  opacity: 0.8;
+  margin: 0;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.produto-card__btns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.produto-card__btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.produto-card__btn:hover {
+  transform: translateY(-2px);
+}
+
+.produto-card__btn--ml {
+  background-color: var(--rosa);
+  color: #fff;
+}
+
+.produto-card__btn--ml:hover {
+  background-color: var(--rosa-hover);
+}
+
+.produto-card__btn--amz {
+  background-color: #ff9900;
+  color: #111;
+}
+
+/* Botão desabilitado (link ainda não configurado em compras.js) */
+
+.produto-card__btn[href="#"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Responsivo */
+
+@media (max-width: 600px) {
+  .produtos-grid {
+    grid-template-columns: 1fr;
+  }
+}

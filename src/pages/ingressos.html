@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingressos – Liliam Müller</title>
+    <meta
+      name="description"
+      content="Adquira ingressos para os eventos da Sala do Banquete."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/compras.css" />
+  </head>
+  <body data-page="ingressos">
+    <!-- ── Navegação ────────────────────────────────────────────────────────── -->
+    <nav id="nav-topo">
+      <ul>
+        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+        <li>
+          <a href="index.html#sobre" data-i18n="nav.sobre"
+            >A Sala do Banquete</a
+          >
+        </li>
+        <li>
+          <a href="index.html#eventos" data-i18n="nav.eventos">Eventos</a>
+        </li>
+        <li>
+          <a href="index.html#galeria" data-i18n="nav.galeria">Galeria</a>
+        </li>
+        <li>
+          <a href="ingressos.html" data-i18n="nav.ingressos">Ingressos</a>
+        </li>
+        <li><a href="contato.html" data-i18n="nav.contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <!-- ── Conteúdo ─────────────────────────────────────────────────────────── -->
+    <main id="page">
+      <section class="compras-section">
+        <h1 data-i18n="ingressos.h1">Ingressos</h1>
+        <p data-i18n="ingressos.intro"><!-- Texto introdutório da página --></p>
+
+        <div class="produtos-grid">
+          <!-- Card Ingresso 1 -->
+          <div class="produto-card reveal">
+            <div class="produto-card__info">
+              <h3 class="produto-card__nome" data-i18n="ing1.nome">
+                <!-- Tipo de ingresso 1 -->
+              </h3>
+              <p class="produto-card__desc" data-i18n="ing1.desc">
+                <!-- Descrição -->
+              </p>
+              <div class="produto-card__btns">
+                <a
+                  href="#"
+                  id="link-ingresso1"
+                  class="produto-card__btn produto-card__btn--ml"
+                  >Adquirir via MP</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Ingresso 2 -->
+          <div class="produto-card reveal">
+            <div class="produto-card__info">
+              <h3 class="produto-card__nome" data-i18n="ing2.nome">
+                <!-- Tipo de ingresso 2 -->
+              </h3>
+              <p class="produto-card__desc" data-i18n="ing2.desc">
+                <!-- Descrição -->
+              </p>
+              <div class="produto-card__btns">
+                <a
+                  href="#"
+                  id="link-ingresso2"
+                  class="produto-card__btn produto-card__btn--ml"
+                  >Adquirir via MP</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Rodapé ────────────────────────────────────────────────────────────── -->
+    <footer class="rodape">
+      <p>
+        &copy; <span id="ano-atual"></span> Sala do Banquete.
+        <span data-i18n="footer.copy">Todos os direitos reservados.</span>
+      </p>
+    </footer>
+
+    <!-- ── Botão Voltar ao Topo ──────────────────────────────────────────────── -->
+    <button id="btnTopo" aria-label="Voltar ao topo" data-i18n-aria="btn.topo">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="22"
+        height="22"
+        aria-hidden="true"
+      >
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+
+    <!-- ── Scripts ───────────────────────────────────────────────────────────── -->
+    <script src="../scripts/global.js"></script>
+    <script src="../scripts/inter.js"></script>
+    <script src="../scripts/scroll-reveal.js"></script>
+    <script src="../scripts/compras.js"></script>
+  </body>
+</html>
