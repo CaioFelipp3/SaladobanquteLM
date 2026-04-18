@@ -1,0 +1,43 @@
+# 🚀 TESTE AGORA
+
+## Passo 1: Abra um Terminal
+
+```bash
+cd "Venda de ingressos - SDB"/frontend
+python3 -m http.server 8000
+```
+
+## Passo 2: Abra o Navegador
+
+Copie e cole no navegador:
+```
+http://localhost:8000/src/pages/index.html
+```
+
+## O Que Deve Aparecer
+
+✅ **Logo no topo** (Liliam Müller)
+✅ **Título**: "Uma Experiência Única à Mesa"
+✅ **Descrição**: "Descubra os melhores eventos..."
+✅ **Seção "Sobre"** com texto
+✅ **Seção "Eventos"** com 2 eventos e descrições
+✅ **Galeria** com 7 imagens
+✅ **Navegação funcionando** (tente clicar nos links)
+
+## Se Não Funcionar
+
+Abra o Console (F12) e procure por erros em vermelho.
+
+Se tiver erro como `Failed to fetch`, verifique se o servidor está rodando:
+```
+python3 -m http.server 8000
+```
+
+## Testar Outras Páginas
+
+- Clique em "Fale Conosco" → vai para `/src/pages/contato.html`
+- Clique em "Ingressos" → vai para `/src/pages/ingressos.html`
+
+---
+
+**Qualquer problema, me avisa!**
