@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teste de Carregamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .test {
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 4px solid #ddd;
+    }
+    .pass {
+      border-color: #4caf50;
+      background: #f1f8f4;
+    }
+    .fail {
+      border-color: #f44336;
+      background: #fdf1f0;
+    }
+    h2 { color: #333; }
+    .icon { font-size: 18px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Teste de Carregamento - Sala do Banquete</h1>
+
+    <div id="tests"></div>
+
+    <h2 style="margin-top: 30px;">📝 Resultado Final</h2>
+    <div id="summary"></div>
+
+    <div style="margin-top: 30px; text-align: center;">
+      <a href="src/pages/index.html" style="
+        display: inline-block;
+        padding: 12px 24px;
+        background: #b8688a;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+      ">
+        ➜ Ir para o Site
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const tests = [];
+    const container = document.getElementById('tests');
+
+    function addTest(name, passed, details = '') {
+      const test = { name, passed, details };
+      tests.push(test);
+
+      const div = document.createElement('div');
+      div.className = `test ${passed ? 'pass' : 'fail'}`;
+      div.innerHTML = `
+        <span class="icon">${passed ? '✅' : '❌'}</span>
+        <strong>${name}</strong>
+        ${details ? `<br><small style="color: #666;">${details}</small>` : ''}
+      `;
+      container.appendChild(div);
+    }
+
+    // Testes
+    (function() {
+      // 1. Verificar se estamos em um servidor HTTP
+      const isHttp = location.protocol === 'http:' || location.protocol === 'https:';
+      addTest('Servidor HTTP', isHttp, isHttp ? '✓ Rodando em servidor' : '✗ Aberto como arquivo local');
+
+      // 2. Verificar frontend/src/pages
+      fetch('src/pages/index.html')
+        .then(r => r.ok ? addTest('Página index.html', true) : addTest('Página index.html', false))
+        .catch(e => addTest('Página index.html', false, e.message));
+
+      // 3. Verificar CSS global
+      fetch('src/styles/global.css')
+        .then(r => r.ok ? addTest('Stylesheet global.css', true) : addTest('Stylesheet global.css', false))
+        .catch(e => addTest('Stylesheet global.css', false, e.message));
+
+      // 4. Verificar scripts
+      fetch('src/scripts/global.js')
+        .then(r => r.ok ? addTest('Script global.js', true) : addTest('Script global.js', false))
+        .catch(e => addTest('Script global.js', false, e.message));
+
+      // 5. Verificar assets
+      fetch('src/assets/logo.png')
+        .then(r => r.ok ? addTest('Asset logo.png', true, 'Logo carregável') : addTest('Asset logo.png', false))
+        .catch(e => addTest('Asset logo.png', false, e.message));
+
+      // 6. Verificar imagens da galeria
+      fetch('src/assets/decoracao1.jpeg')
+        .then(r => r.ok ? addTest('Asset decoracao1.jpeg', true, 'Galeriacarregável') : addTest('Asset decoracao1.jpeg', false))
+        .catch(e => addTest('Asset decoracao1.jpeg', false, e.message));
+
+      // Resumo
+      setTimeout(() => {
+        const summary = document.getElementById('summary');
+        const passed = tests.filter(t => t.passed).length;
+        const total = tests.length;
+        const status = passed === total ? '✅ TUDO FUNCIONANDO!' : `⚠️ ${passed}/${total} testes passaram`;
+        summary.innerHTML = `
+          <div style="
+            padding: 20px;
+            background: ${passed === total ? '#e8f5e9' : '#fff3e0'};
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            color: ${passed === total ? '#2e7d32' : '#e65100'};
+          ">
+            ${status}
+          </div>
+        `;
+      }, 500);
+    })();
+  </script>
+</body>
+</html>

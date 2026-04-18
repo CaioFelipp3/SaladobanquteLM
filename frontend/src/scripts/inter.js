@@ -27,37 +27,37 @@
     "btn.whatsapp": "Falar pelo WhatsApp",
 
     // ── Hero ─────────────────────────────────────────────────────────────────
-    "hero.titulo": "", // ← Título principal (ex: "Uma experiência única à mesa")
-    "hero.sub": "", // ← Tagline ou próxima data (ex: "28 de junho · 19h30")
+    "hero.titulo": "Uma Experiência Única à Mesa",
+    "hero.sub": "Descubra os melhores eventos em Vitória, ES",
     "hero.cta": "Ver próximos eventos",
 
     // ── Sobre ─────────────────────────────────────────────────────────────────
     "sobre.h2": "A Sala do Banquete",
-    "sobre.p0": "", // ← Parágrafo de apresentação do espaço
-    "sobre.p1": "", // ← Segundo parágrafo (história, diferenciais)
+    "sobre.p0": "A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.",
+    "sobre.p1": "Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.",
 
     // ── Eventos ───────────────────────────────────────────────────────────────
     "eventos.h2": "Próximos Eventos",
-    "eventos.intro": "", // ← Texto introdutório
+    "eventos.intro": "Confira nossa programação completa e reserve seus ingressos",
 
-    "evento1.nome": "", // ← Nome do 1º evento
-    "evento1.data": "", // ← Data e horário (ex: "28 Jun · 19h30")
-    "evento1.desc": "", // ← Descrição breve
+    "evento1.nome": "Noite Especial com Música ao Vivo",
+    "evento1.data": "28 de Junho · 19h30",
+    "evento1.desc": "Uma noite inesquecível com os melhores artistas locais",
     "evento1.cta": "Adquirir ingresso",
 
-    "evento2.nome": "", // ← Nome do 2º evento
-    "evento2.data": "", // ← Data e horário
-    "evento2.desc": "", // ← Descrição breve
+    "evento2.nome": "Chá Musical com Poesia",
+    "evento2.data": "12 de Julho · 16h00",
+    "evento2.desc": "Experiência única combinando chá, música clássica e poesia",
     "evento2.cta": "Adquirir ingresso",
 
     // ── Galeria ───────────────────────────────────────────────────────────────
     "galeria.h2": "Nossa Galeria",
-    "galeria.p": "", // ← Texto descritivo da galeria
+    "galeria.p": "Conheça os ambientes elegantes e sofisticados da Sala do Banquete",
 
     // ── Contato ───────────────────────────────────────────────────────────────
     "contato.h1": "Fale Conosco",
     "contato.h2": "Fale Conosco",
-    "contato.intro": "", // ← Texto introdutório de contato
+    "contato.intro": "Entre em contato conosco para informações, reservas ou dúvidas sobre nossos eventos"
     "contato.wa": "WhatsApp",
     "contato.wa.link": "Falar pelo WhatsApp",
     "contato.email": "E-mail",
