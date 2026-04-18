@@ -1,525 +1,427 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liliam Müller – A Sala do Banquete</title>
-  <meta name="description" content="Ingressos e eventos da Sala do Banquete em Vitória, ES">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liliam Müller – A Sala do Banquete</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Montserrat", Arial, sans-serif;
+            background: #faf5ef;
+            color: #3d2b35;
+            padding-top: 60px;
+        }
 
-  <link rel="stylesheet" href="css/global.css">
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 245, 239, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #3d2b35;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #b8688a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .logo img {
+            max-width: 150px;
+            width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 48px;
+            text-align: center;
+            margin: 30px 0 10px;
+            color: #3d2b35;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7a5a68;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 36px;
+            margin: 40px 0 20px;
+            color: #3d2b35;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 15px 0;
+            color: #3d2b35;
+        }
+
+        .events {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .event {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .event h3 {
+            font-size: 18px;
+            color: #3d2b35;
+            margin-bottom: 10px;
+        }
+
+        .event-date {
+            color: #c9a84c;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .event p {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #b8688a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #9a5472;
+        }
+
+        .gallery {
+            margin: 30px 0;
+        }
+
+        .gallery-main {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .gallery-img.active {
+            display: block;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery-btn {
+            width: 40px;
+            height: 40px;
+            background: #b8688a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .gallery-btn:hover {
+            background: #9a5472;
+        }
+
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: #b8688a;
+        }
+
+        .contacts {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .contact-item {
+            background: #fafafa;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .contact-item strong {
+            display: block;
+            color: #7a5a68;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .contact-item a {
+            color: #b8688a;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 680px) {
+            nav ul { gap: 15px; }
+            h1 { font-size: 32px; }
+            h2 { font-size: 28px; }
+            .container { padding: 40px 15px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════════
-     NAVEGAÇÃO
-     ══════════════════════════════════════════════════════════════ -->
+<!-- NAVEGAÇÃO -->
 <nav>
-  <ul>
-    <li><a href="#home">Início</a></li>
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#eventos">Eventos</a></li>
-    <li><a href="#galeria">Galeria</a></li>
-    <li><a href="#contato">Contato</a></li>
-  </ul>
+    <ul>
+        <li><a href="#home">Início</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#contato">Contato</a></li>
+    </ul>
 </nav>
 
-<!-- ══════════════════════════════════════════════════════════════
-     HOME
-     ══════════════════════════════════════════════════════════════ -->
+<!-- HOME -->
 <section id="home" class="container">
-  <div class="logo">
-    <img src="assets/logo.png" alt="Logo Liliam Müller – A Sala do Banquete">
-  </div>
-  <h1>Uma Experiência Única à Mesa</h1>
-  <p style="text-align: center; color: var(--texto-suave); font-size: 15px;">Descubra os melhores eventos em Vitória, ES</p>
+    <div class="logo">
+        <img src="assets/logo.png" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect fill=%22%23b8688a%22 width=%22150%22 height=%22150%22/%3E%3Ctext x=%2275%22 y=%2275%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2224%22 fill=%22white%22 font-family=%22Arial%22%3ELiliam%3C/text%3E%3C/svg%3E'">
+    </div>
+    <h1>Uma Experiência Única à Mesa</h1>
+    <p class="subtitle">Descubra os melhores eventos em Vitória, ES</p>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-     SOBRE
-     ══════════════════════════════════════════════════════════════ -->
+<!-- SOBRE -->
 <section id="sobre" class="container">
-  <h2>A Sala do Banquete</h2>
-  <p>A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.</p>
-  <p>Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.</p>
+    <h2>A Sala do Banquete</h2>
+    <p>A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.</p>
+    <p>Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.</p>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-     EVENTOS
-     ══════════════════════════════════════════════════════════════ -->
+<!-- EVENTOS -->
 <section id="eventos" class="container">
-  <h2>Próximos Eventos</h2>
-  <p>Confira nossa programação completa e reserve seus ingressos</p>
+    <h2>Próximos Eventos</h2>
+    <p>Confira nossa programação completa e reserve seus ingressos</p>
 
-  <div class="events-grid">
-    <div class="event-card">
-      <h3>Noite Especial com Música ao Vivo</h3>
-      <div class="event-date">28 de Junho · 19h30</div>
-      <p>Uma noite inesquecível com os melhores artistas locais</p>
-      <button class="btn">Adquirir Ingresso</button>
-    </div>
+    <div class="events">
+        <div class="event">
+            <h3>Noite Especial com Música ao Vivo</h3>
+            <div class="event-date">28 de Junho · 19h30</div>
+            <p>Uma noite inesquecível com os melhores artistas locais</p>
+            <button class="btn">Adquirir Ingresso</button>
+        </div>
 
-    <div class="event-card">
-      <h3>Chá Musical com Poesia</h3>
-      <div class="event-date">12 de Julho · 16h00</div>
-      <p>Experiência única combinando chá, música clássica e poesia</p>
-      <button class="btn">Adquirir Ingresso</button>
+        <div class="event">
+            <h3>Chá Musical com Poesia</h3>
+            <div class="event-date">12 de Julho · 16h00</div>
+            <p>Experiência única combinando chá, música clássica e poesia</p>
+            <button class="btn">Adquirir Ingresso</button>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-     GALERIA
-     ══════════════════════════════════════════════════════════════ -->
+<!-- GALERIA -->
 <section id="galeria" class="container">
-  <h2>Nossa Galeria</h2>
-  <p>Conheça os ambientes elegantes e sofisticados da Sala do Banquete</p>
+    <h2>Nossa Galeria</h2>
+    <p>Conheça os ambientes elegantes e sofisticados da Sala do Banquete</p>
 
-  <div class="gallery">
-    <div class="gallery-container">
-      <div class="gallery-track">
-        <img src="assets/decoracao1.jpeg" alt="Galeria 1" class="gallery-img active">
-        <img src="assets/decoracao2.jpeg" alt="Galeria 2" class="gallery-img">
-        <img src="assets/decoracao3.jpeg" alt="Galeria 3" class="gallery-img">
-        <img src="assets/decoracao4.jpeg" alt="Galeria 4" class="gallery-img">
-        <img src="assets/decoracao5.jpeg" alt="Galeria 5" class="gallery-img">
-        <img src="assets/decoracao6.jpeg" alt="Galeria 6" class="gallery-img">
-        <img src="assets/decoracao7.jpeg" alt="Galeria 7" class="gallery-img">
-      </div>
-      <button class="gallery-btn prev" onclick="previousImage()">‹</button>
-      <button class="gallery-btn next" onclick="nextImage()">›</button>
-    </div>
+    <div class="gallery">
+        <div class="gallery-main" id="galleryMain">
+            <img src="assets/decoracao1.jpeg" alt="Foto 1" class="gallery-img active" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao2.jpeg" alt="Foto 2" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao3.jpeg" alt="Foto 3" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao4.jpeg" alt="Foto 4" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao5.jpeg" alt="Foto 5" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao6.jpeg" alt="Foto 6" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao7.jpeg" alt="Foto 7" class="gallery-img" onerror="this.style.background='#ddd'">
+        </div>
 
-    <div class="gallery-dots">
-      <span class="gallery-dot active"></span>
-      <span class="gallery-dot"></span>
-      <span class="gallery-dot"></span>
-      <span class="gallery-dot"></span>
-      <span class="gallery-dot"></span>
-      <span class="gallery-dot"></span>
-      <span class="gallery-dot"></span>
+        <div class="gallery-controls">
+            <button class="gallery-btn" onclick="prevImage()">‹</button>
+            <button class="gallery-btn" onclick="nextImage()">›</button>
+        </div>
+
+        <div class="gallery-dots">
+            <span class="dot active" onclick="showImage(0)"></span>
+            <span class="dot" onclick="showImage(1)"></span>
+            <span class="dot" onclick="showImage(2)"></span>
+            <span class="dot" onclick="showImage(3)"></span>
+            <span class="dot" onclick="showImage(4)"></span>
+            <span class="dot" onclick="showImage(5)"></span>
+            <span class="dot" onclick="showImage(6)"></span>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-     CONTATO
-     ══════════════════════════════════════════════════════════════ -->
+<!-- CONTATO -->
 <section id="contato" class="container">
-  <h2>Fale Conosco</h2>
-  <p style="text-align: center;">Entre em contato conosco para informações, reservas ou dúvidas sobre nossos eventos</p>
+    <h2>Fale Conosco</h2>
+    <p style="text-align: center; margin-bottom: 30px;">Entre em contato conosco para informações, reservas ou dúvidas</p>
 
-  <div class="contact-info">
-    <!-- WhatsApp -->
-    <div class="contact-card">
-      <div>
-        <strong>WhatsApp</strong>
-        <p><a id="link-whatsapp" href="#">Falar pelo WhatsApp</a></p>
-      </div>
-    </div>
+    <div class="contacts">
+        <div class="contact-item">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/5527993093644" target="_blank">💬 Falar pelo WhatsApp</a>
+        </div>
 
-    <!-- Instagram -->
-    <div class="contact-card">
-      <div>
-        <strong>Instagram</strong>
-        <p><a id="link-instagram" href="#">@saladobanquete</a></p>
-      </div>
-    </div>
+        <div class="contact-item">
+            <strong>Instagram</strong>
+            <a href="https://instagram.com" target="_blank">📷 @saladobanquete</a>
+        </div>
 
-    <!-- Email -->
-    <div class="contact-card">
-      <div>
-        <strong>E-mail</strong>
-        <p><a id="link-email" href="#">contato@saladobanquete.com</a></p>
-      </div>
-    </div>
+        <div class="contact-item">
+            <strong>E-mail</strong>
+            <a href="mailto:contato@saladobanquete.com">📧 contato@saladobanquete.com</a>
+        </div>
 
-    <!-- Endereço -->
-    <div class="contact-card">
-      <div>
-        <strong>Endereço</strong>
-        <p><a id="link-maps" href="#" target="_blank">R. Constante Sodré, 364 - Santa Lucia, Vitória - ES, 29056-310</a></p>
-      </div>
+        <div class="contact-item">
+            <strong>Endereço</strong>
+            <a href="https://maps.google.com/maps?q=R.+Constante+Sodré,+364,+Santa+Lucia,+Vitória,+ES" target="_blank">📍 R. Constante Sodré, 364 - Vitória, ES</a>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
-     BOTÃO VOLTAR AO TOPO
-     ══════════════════════════════════════════════════════════════ -->
-<button id="btnTopo" style="
-  position: fixed;
-  bottom: 90px;
-  right: 30px;
-  z-index: 998;
-  background: var(--rosa);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: all 0.3s;
-">
-  ↑
-</button>
+<!-- BOTÃO WHATSAPP -->
+<a href="https://wa.me/5527993093644" class="whatsapp-btn" target="_blank">💬</a>
 
-<!-- ══════════════════════════════════════════════════════════════
-     SCRIPTS
-     ══════════════════════════════════════════════════════════════ -->
-<script src="js/global.js"></script>
+<!-- JAVASCRIPT -->
+<script>
+    let currentImage = 0;
+    const images = document.querySelectorAll('.gallery-img');
+    const dots = document.querySelectorAll('.dot');
+
+    function showImage(index) {
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        images[index].classList.add('active');
+        dots[index].classList.add('active');
+
+        currentImage = index;
+    }
+
+    function nextImage() {
+        let next = (currentImage + 1) % images.length;
+        showImage(next);
+    }
+
+    function prevImage() {
+        let prev = (currentImage - 1 + images.length) % images.length;
+        showImage(prev);
+    }
+
+    // Setas do teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+    });
+</script>
 
 </body>
-</html>
-  </head>
-  <body data-page="index">
-    <!-- ── Navegação Topo ──────────────────────────────────────────────── -->
-    <nav id="nav-topo">
-      <ul>
-        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
-        <li><a href="#sobre" data-i18n="nav.sobre">A Sala do Banquete</a></li>
-        <li><a href="#eventos" data-i18n="nav.eventos">Eventos</a></li>
-        <li><a href="#galeria" data-i18n="nav.galeria">Galeria</a></li>
-        <li>
-          <a href="ingressos.html" data-i18n="nav.ingressos">Ingressos</a>
-        </li>
-        <li><a href="contato.html" data-i18n="nav.contato">Contato</a></li>
-      </ul>
-    </nav>
-
-    <!-- ── Navegação Lateral (seções da página) ───────────────────────── -->
-    <nav id="nav-lateral" aria-label="Seções da página">
-      <ul>
-        <li><a href="#sobre" data-i18n="navl.sobre">A Sala do Banquete</a></li>
-        <li><a href="#eventos" data-i18n="navl.eventos">Eventos</a></li>
-        <li><a href="#galeria" data-i18n="navl.galeria">Galeria</a></li>
-        <li><a href="#contato" data-i18n="navl.contato">Contato</a></li>
-      </ul>
-    </nav>
-
-    <!-- ── Logo Banner ──────────────────────────────────────────────────────── -->
-    <section id="logo-banner">
-      <img
-        src="assets/logo.png"
-        alt="Logo da Empresa"
-        class="logo-banner-img"
-      />
-    </section>
-
-    <!-- ── Hero ───────────────────────────────────────────────────────── -->
-    <section id="hero">
-      <div class="hero-inner">
-        <h1 data-i18n="hero.titulo"><!-- Título principal --></h1>
-        <p class="hero-sub" data-i18n="hero.sub">
-          <!-- Tagline ou data do próximo evento -->
-        </p>
-      </div>
-    </section>
-
-    <!-- ── Conteúdo Principal ──────────────────────────────────────────── -->
-    <main id="page">
-      <!-- Sobre -------------------------------------------------------- -->
-      <section id="sobre" class="secao reveal">
-        <h2 data-i18n="sobre.h2">A Sala do Banquete</h2>
-        <p data-i18n="sobre.p0"><!-- Descrição do espaço e da proposta --></p>
-        <p data-i18n="sobre.p1">
-          <!-- Mais detalhes, história, diferenciais -->
-        </p>
-        <!-- <img src="assets/sobre.jpg" alt="A Sala do Banquete" /> -->
-      </section>
-
-      <!-- Próximos Eventos --------------------------------------------- -->
-      <section id="eventos" class="secao reveal">
-        <h2 data-i18n="eventos.h2">Próximos Eventos</h2>
-        <p data-i18n="eventos.intro"><!-- Texto introdutório --></p>
-
-        <div class="eventos-grid">
-          <!-- Card Evento 1 -->
-          <article class="evento-card reveal">
-            <!-- <img src="assets/evento1.jpg" alt="" class="evento-card__img" /> -->
-            <div class="evento-card__info">
-              <h3 data-i18n="evento1.nome">André Furlan - Dia dos Namorados</h3>
-              <p class="evento-card__data" data-i18n="evento1.data">
-                12 de Junho · 21:00
-              </p>
-              <p class="evento-card__desc" data-i18n="evento1.desc">
-                Dia dos Namorados com André Furlan, Jackie Húver, Daniel
-                Cypreste.
-              </p>
-              <a
-                href="ingressos.html"
-                class="btn-ingresso"
-                data-i18n="evento1.cta"
-                >Adquirir ingresso</a
-              >
-            </div>
-          </article>
-
-          <!-- Card Evento 2 -->
-          <article class="evento-card reveal">
-            <!-- <img src="assets/evento2.jpg" alt="" class="evento-card__img" /> -->
-            <div class="evento-card__info">
-              <h3 data-i18n="evento2.nome">Chá musical com Poesia</h3>
-              <p class="evento-card__data" data-i18n="evento2.data">
-                26 de Junho · 16:00
-              </p>
-              <p class="evento-card__desc" data-i18n="evento2.desc">
-                2ª Edição do Chá musical com Poesia
-              </p>
-              <a
-                href="ingressos.html"
-                class="btn-ingresso"
-                data-i18n="evento2.cta"
-                >Adquirir ingresso</a
-              >
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- Galeria ------------------------------------------------------ -->
-      <section id="galeria" class="secao reveal">
-        <h2 data-i18n="galeria.h2">Nossa Galeria</h2>
-        <p data-i18n="galeria.p">
-          Um pouco das nossas Mesas Postas nos Eventos
-        </p>
-
-        <div class="galeria-container">
-          <div class="galeria-track">
-            <img
-              class="galeria-foto ativa"
-              src="assets/decoracao1.jpeg"
-              alt="Xícara de Café"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao2.jpeg"
-              alt="Mesas e cadeiras"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao3.jpeg"
-              alt="Arranjo"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao4.jpeg"
-              alt="Decoração"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao5.jpeg"
-              alt="Detalhe do Patronacinador"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao6.jpeg"
-              alt="Mesa Posta"
-            />
-            <img
-              class="galeria-foto"
-              src="assets/decoracao7.jpeg"
-              alt="Decoração"
-            />
-          </div>
-          <button
-            class="galeria-btn galeria-btn--prev"
-            aria-label="Foto anterior"
-            data-i18n-aria="btn.gal.prev"
-          >
-            &#8249;
-          </button>
-          <button
-            class="galeria-btn galeria-btn--next"
-            aria-label="Próxima foto"
-            data-i18n-aria="btn.gal.next"
-          >
-            &#8250;
-          </button>
-        </div>
-        <div class="galeria-dots">
-          <!-- Dots gerados dinamicamente pelo index.js -->
-        </div>
-      </section>
-
-      <!-- Contato ------------------------------------------------------ -->
-      <section id="contato" class="secao reveal">
-        <h2 data-i18n="contato.h2">Fale Conosco</h2>
-        <p data-i18n="contato.intro"><!-- Texto de convite para contato --></p>
-
-        <div class="contato-info">
-          <!-- WhatsApp (link injetado pelo global.js) -->
-          <div class="contato-card">
-            <span
-              class="contato-card__icone contato-card__icone--wa"
-              aria-hidden="true"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-                />
-              </svg>
-            </span>
-            <div>
-              <strong data-i18n="contato.wa">WhatsApp</strong>
-              <p>
-                <a href="#" id="link-whatsapp" data-i18n="contato.wa.link"
-                  >Falar pelo WhatsApp</a
-                >
-              </p>
-            </div>
-          </div>
-
-          <!-- Instagram (link injetado pelo contato.js) -->
-          <div class="contato-card">
-            <span
-              class="contato-card__icone contato-card__icone--ig"
-              aria-hidden="true"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="28"
-                height="28"
-              >
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
-                />
-              </svg>
-            </span>
-            <div>
-              <strong data-i18n="contato.ig">Instagram</strong>
-              <p>
-                <a
-                  href="#"
-                  id="link-instagram"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >@<!-- handle --></a
-                >
-              </p>
-            </div>
-          </div>
-
-          <!-- E-mail (link injetado pelo contato.js) -->
-          <div class="contato-card">
-            <span class="contato-card__icone" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-                >
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-              </svg>
-            </span>
-            <div>
-              <strong data-i18n="contato.email">E-mail</strong>
-              <p>
-                <a href="#" id="link-email"
-                  ><!-- preenchido pelo contato.js --></a
-                >
-                <button id="email-trocar" hidden>trocar</button>
-              </p>
-              <div id="email-picker" hidden>
-                <p class="email-picker__label">Abrir com:</p>
-                <div class="email-picker__opcoes">
-                  <button data-mailclient="gmail">Gmail</button>
-                  <button data-mailclient="outlook">Outlook</button>
-                  <button data-mailclient="yahoo">Yahoo</button>
-                  <button data-mailclient="default">Padrão do sistema</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Endereço -->
-          <div class="contato-card">
-            <span class="contato-card__icone" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-            </span>
-            <div>
-              <strong data-i18n="contato.end">Endereço</strong>
-              <p>
-                <a
-                  href="#"
-                  id="link-maps-index"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-i18n="contato.end.val"
-                >
-                  <!-- preenchido pelo contato.js -->
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- ── Rodapé ─────────────────────────────────────────────────────── -->
-    <footer class="rodape">
-      <p>
-        &copy; <span id="ano-atual"></span> Sala do Banquete.
-        <span data-i18n="footer.copy">Todos os direitos reservados.</span>
-      </p>
-    </footer>
-
-    <!-- ── Botão Voltar ao Topo ───────────────────────────────────────── -->
-    <button id="btnTopo" aria-label="Voltar ao topo" data-i18n-aria="btn.topo">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        width="22"
-        height="22"
-        aria-hidden="true"
-      >
-        <polyline points="18 15 12 9 6 15"></polyline>
-      </svg>
-    </button>
-
-    <!-- ── Scripts ────────────────────────────────────────────────────── -->
-    <script src="js/global.js"></script>
-    <script src="js/inter.js"></script>
-    <script src="js/scroll-reveal.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/contato.js"></script>
-  </body>
 </html>
