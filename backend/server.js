@@ -84,6 +84,9 @@ const transporter = nodemailer.createTransport({
 
 const TRANSACOES_FILE = path.join(__dirname, "transacoes.json");
 
+// Serializa escritas no arquivo para evitar race condition entre webhooks simultâneos
+let writeLock = Promise.resolve();
+
 // ─────────────────────────────────────────────────────────
 // RATE LIMITING
 // ─────────────────────────────────────────────────────────
@@ -141,20 +144,22 @@ function validarAssinaturaMercadoPago(req) {
 // FUNÇÕES AUXILIARES
 // ─────────────────────────────────────────────────────────
 
+function loadTransacoes() {
+  if (!fs.existsSync(TRANSACOES_FILE)) return [];
+  return JSON.parse(fs.readFileSync(TRANSACOES_FILE, "utf-8") || "[]");
+}
+
 function salvarTransacao(transacao) {
-  try {
-    let transacoes = [];
-
-    if (fs.existsSync(TRANSACOES_FILE)) {
-      const dados = fs.readFileSync(TRANSACOES_FILE, "utf-8");
-      transacoes = JSON.parse(dados || "[]");
+  writeLock = writeLock.then(() => {
+    try {
+      const transacoes = loadTransacoes();
+      transacoes.push({ ...transacao, data: new Date().toISOString() });
+      fs.writeFileSync(TRANSACOES_FILE, JSON.stringify(transacoes, null, 2));
+    } catch (erro) {
+      console.error("❌ Erro ao salvar transação:", erro.message);
     }
-
-    transacoes.push({ ...transacao, data: new Date().toISOString() });
-    fs.writeFileSync(TRANSACOES_FILE, JSON.stringify(transacoes, null, 2));
-  } catch (erro) {
-    console.error("❌ Erro ao salvar transação:", erro.message);
-  }
+  });
+  return writeLock;
 }
 
 async function enviarEmailSeguro(email, dados) {
@@ -322,10 +327,7 @@ app.post("/webhook/pagamento", async (req, res) => {
 
 app.get("/transacoes", transacoesLimiter, autenticarAdmin, (req, res) => {
   try {
-    if (!fs.existsSync(TRANSACOES_FILE)) return res.json([]);
-
-    const dados = fs.readFileSync(TRANSACOES_FILE, "utf-8");
-    res.json(JSON.parse(dados || "[]"));
+    res.json(loadTransacoes());
   } catch (erro) {
     console.error("❌ Erro ao ler transações");
     res.status(500).json({ error: "Erro ao ler transações" });
