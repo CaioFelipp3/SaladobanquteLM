@@ -13,7 +13,12 @@
 
 <!-- NAVEGAÇÃO -->
 <nav>
-    <ul>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="nav-links">
         <li><a href="#home">Início</a></li>
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#eventos">Eventos</a></li>
@@ -25,7 +30,7 @@
 <!-- HOME -->
 <section id="home" class="container">
     <div class="logo">
-        <img src="assets/logo.png" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect fill=%22%23b8688a%22 width=%22150%22 height=%22150%22/%3E%3Ctext x=%2275%22 y=%2275%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2224%22 fill=%22white%22 font-family=%22Arial%22%3ELiliam%3C/text%3E%3C/svg%3E'">
+        <img src="assets/logo.png" alt="Liliam Müller – A Sala do Banquete" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect fill=%22%23b8688a%22 width=%22150%22 height=%22150%22/%3E%3Ctext x=%2275%22 y=%2275%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2224%22 fill=%22white%22 font-family=%22Arial%22%3ELiliam%3C/text%3E%3C/svg%3E'">
     </div>
     <h1>Uma Experiência Única à Mesa</h1>
     <p class="subtitle">Descubra os melhores eventos em Vitória, ES</p>
@@ -45,14 +50,14 @@
 
     <div class="events">
         <div class="event">
-            <h3>Noite Especial com Música ao Vivo</h3>
-            <div class="event-date">28 de Junho · 19h30</div>
+            <h3>Dia dos Namorados</h3>
+            <div class="event-date">12 de Junho · 19h30</div>
             <p>Uma noite inesquecível com os melhores artistas locais</p>
             <button class="btn">Adquirir Ingresso</button>
         </div>
 
         <div class="event">
-            <h3>Chá Musical com Poesia</h3>
+            <h3>Encontro da Conjugalidade</h3>
             <div class="event-date">12 de Julho · 16h00</div>
             <p>Experiência única combinando chá, música clássica e poesia</p>
             <button class="btn">Adquirir Ingresso</button>
@@ -67,28 +72,28 @@
 
     <div class="gallery">
         <div class="gallery-main" id="galleryMain">
-            <img src="assets/decoracao1.jpeg" alt="Foto 1" class="gallery-img active" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao2.jpeg" alt="Foto 2" class="gallery-img" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao3.jpeg" alt="Foto 3" class="gallery-img" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao4.jpeg" alt="Foto 4" class="gallery-img" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao5.jpeg" alt="Foto 5" class="gallery-img" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao6.jpeg" alt="Foto 6" class="gallery-img" onerror="this.style.background='#ddd'">
-            <img src="assets/decoracao7.jpeg" alt="Foto 7" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao1.jpeg" alt="Decoração da Sala do Banquete 1" class="gallery-img active" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao2.jpeg" alt="Decoração da Sala do Banquete 2" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao3.jpeg" alt="Decoração da Sala do Banquete 3" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao4.jpeg" alt="Decoração da Sala do Banquete 4" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao5.jpeg" alt="Decoração da Sala do Banquete 5" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao6.jpeg" alt="Decoração da Sala do Banquete 6" class="gallery-img" onerror="this.style.background='#ddd'">
+            <img src="assets/decoracao7.jpeg" alt="Decoração da Sala do Banquete 7" class="gallery-img" onerror="this.style.background='#ddd'">
         </div>
 
         <div class="gallery-controls">
-            <button class="gallery-btn" onclick="prevImage()">‹</button>
-            <button class="gallery-btn" onclick="nextImage()">›</button>
+            <button class="gallery-btn" aria-label="Foto anterior" onclick="prevImage()">‹</button>
+            <button class="gallery-btn" aria-label="Próxima foto" onclick="nextImage()">›</button>
         </div>
 
-        <div class="gallery-dots">
-            <span class="dot active" onclick="showImage(0)"></span>
-            <span class="dot" onclick="showImage(1)"></span>
-            <span class="dot" onclick="showImage(2)"></span>
-            <span class="dot" onclick="showImage(3)"></span>
-            <span class="dot" onclick="showImage(4)"></span>
-            <span class="dot" onclick="showImage(5)"></span>
-            <span class="dot" onclick="showImage(6)"></span>
+        <div class="gallery-dots" role="tablist" aria-label="Selecionar foto">
+            <span class="dot active" role="tab" onclick="showImage(0)"></span>
+            <span class="dot" role="tab" onclick="showImage(1)"></span>
+            <span class="dot" role="tab" onclick="showImage(2)"></span>
+            <span class="dot" role="tab" onclick="showImage(3)"></span>
+            <span class="dot" role="tab" onclick="showImage(4)"></span>
+            <span class="dot" role="tab" onclick="showImage(5)"></span>
+            <span class="dot" role="tab" onclick="showImage(6)"></span>
         </div>
     </div>
 </section>
@@ -101,29 +106,30 @@
     <div class="contacts">
         <div class="contact-item">
             <strong>WhatsApp</strong>
-            <a href="https://wa.me/5527993093644" target="_blank" rel="noopener noreferrer">💬 Falar pelo WhatsApp</a>
+            <a id="link-whatsapp" href="https://wa.me/5527993093644" target="_blank" rel="noopener noreferrer">💬 Falar pelo WhatsApp</a>
         </div>
 
         <div class="contact-item">
             <strong>Instagram</strong>
-            <a href="https://www.instagram.com/saladobanquete.lm/" target="_blank" rel="noopener noreferrer">📷 @saladobanquete.lm</a>
+            <a id="link-instagram" href="https://www.instagram.com/saladobanquete.lm/" target="_blank" rel="noopener noreferrer">📷 @saladobanquete.lm</a>
         </div>
 
         <div class="contact-item">
             <strong>E-mail</strong>
-            <a href="mailto:contato@saladobanquete.com">📧 contato@saladobanquete.com</a>
+            <a id="link-email" href="mailto:contato@saladobanquete.com">📧 contato@saladobanquete.com</a>
         </div>
 
         <div class="contact-item">
             <strong>Endereço</strong>
-            <a href="https://maps.google.com/maps?q=R.+Constante+Sodré,+364,+Santa+Lucia,+Vitória,+ES" target="_blank" rel="noopener noreferrer">📍 R. Constante Sodré, 364 - Vitória, ES</a>
+            <a id="link-maps" href="https://maps.google.com/maps?q=R.+Constante+Sodré,+364,+Santa+Lucia,+Vitória,+ES" target="_blank" rel="noopener noreferrer">📍 R. Constante Sodré, 364 - Vitória, ES</a>
         </div>
     </div>
 </section>
 
 <!-- BOTÃO WHATSAPP -->
-<a href="https://wa.me/5527993093644" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
+<a id="link-whatsapp-float" href="https://wa.me/5527993093644" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Falar pelo WhatsApp">💬</a>
 
+<script src="js/config.js"></script>
 <script src="js/gallery.js"></script>
 </body>
 </html>

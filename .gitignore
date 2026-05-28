@@ -11,6 +11,9 @@ README.md
 node_modules/
 yarn.lock
 
+# Configuração local do frontend (dados sensíveis)
+js/config.js
+
 # Banco de dados local
 transacoes.json
 
