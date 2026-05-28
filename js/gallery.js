@@ -59,6 +59,11 @@ navLinks.querySelectorAll('a').forEach(link => {
     });
 });
 
+// ─── Botões de ingresso → WhatsApp ──────────────────────
+document.querySelectorAll('[data-wa]').forEach(btn => {
+    btn.addEventListener('click', () => window.open(btn.dataset.wa, '_blank'));
+});
+
 // ─── Aplicar config ─────────────────────────────────────
 if (typeof CONFIG !== 'undefined') {
     const wa = `https://wa.me/${CONFIG.whatsappNumber}`;
