@@ -141,7 +141,7 @@ p {
 
 /* ─── Fundadora ─────────────────────────────────────────── */
 .founder {
-    max-width: 500px;
+    max-width: 700px;
     margin: 30px auto 10px;
 }
 
@@ -412,8 +412,7 @@ p {
     }
 
     .nav-links.open {
-        display: flex;
-    }
+        display: flex;    }
 
     nav a { font-size: 14px; }
 
