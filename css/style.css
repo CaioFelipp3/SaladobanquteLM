@@ -497,23 +497,12 @@ footer p {
     h1 { font-size: 30px; }
     h2 { font-size: 26px; }
 
-    /* Cards de evento: um acima do outro, altura determinada pelo conteúdo */
+    /* Cards de evento: empilhados, altura livre independente do tamanho do texto */
     .events { display: flex; flex-direction: column; gap: 20px; }
-    .event  { width: 100%; }
+    .event  { flex: none; width: 100%; }
 
-    /* Imagem: sai do modo absolute/aspect-ratio e flui normalmente */
-    .event-img-wrap {
-        aspect-ratio: auto;
-        position: static;
-        overflow: visible;
-    }
-    .event-img-wrap img {
-        position: static;
-        top: auto; left: auto; right: auto; bottom: auto;
-        width: 100%;
-        height: auto;
-        object-fit: fill;
-    }
+    /* Imagem em 3:2 — mantém position:absolute funcionando, menos altura que 1:1 */
+    .event-img-wrap { aspect-ratio: 3 / 2; }
 
     /* Galeria em formato mais vertical no mobile */
     .gallery-main { aspect-ratio: 3 / 4; }
