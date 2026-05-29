@@ -214,7 +214,6 @@ p {
 .event-img-wrap {
     width: 100%;
     aspect-ratio: 1 / 1;
-    min-height: 260px;
     background: #f5f0eb;
     overflow: hidden;
     position: relative;
@@ -498,12 +497,16 @@ footer p {
     h1 { font-size: 30px; }
     h2 { font-size: 26px; }
 
-    /* Cards de evento: um acima do outro, altura livre para mostrar todo conteúdo */
-    .events         { display: block; }
-    .event          { width: 100%; margin-bottom: 20px; }
+    /* Cards de evento: um acima do outro, altura determinada pelo conteúdo */
+    .events { display: flex; flex-direction: column; gap: 20px; }
+    .event  { width: 100%; }
 
-    /* Imagem ocupa largura total e altura proporcional ao formato original */
-    .event-img-wrap { height: auto; aspect-ratio: unset; min-height: unset; }
+    /* Imagem: sai do modo absolute/aspect-ratio e flui normalmente */
+    .event-img-wrap {
+        aspect-ratio: auto;
+        position: static;
+        overflow: visible;
+    }
     .event-img-wrap img {
         position: static;
         top: auto; left: auto; right: auto; bottom: auto;
