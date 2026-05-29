@@ -174,6 +174,8 @@ p {
 }
 
 .founder-img-wrap img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -209,17 +211,18 @@ p {
 .event-img-wrap {
     width: 100%;
     aspect-ratio: 1 / 1;
+    min-height: 260px;
     background: #f5f0eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
+    position: relative;
 }
 
 .event-img-wrap img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
 }
 
