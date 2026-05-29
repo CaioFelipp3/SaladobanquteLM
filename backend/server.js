@@ -213,7 +213,13 @@ function validarAssinaturaMercadoPago(req) {
 async function loadTransacoes() {
   try {
     const data = await fsPromises.readFile(TRANSACOES_FILE, "utf-8");
-    return JSON.parse(data || "[]");
+    try {
+      return JSON.parse(data || "[]");
+    } catch {
+      // Arquivo corrompido (escrita interrompida) — loga e recupera com array vazio
+      console.error("❌ transacoes.json com JSON inválido — recuperando com []");
+      return [];
+    }
   } catch (err) {
     // ENOENT = arquivo ainda não existe — esperado na primeira execução
     if (err.code === "ENOENT") return [];
@@ -290,8 +296,7 @@ async function enviarEmailSeguro(email, dados) {
     ? `
       <h2>Pagamento Confirmado!</h2>
       <p>Seu pagamento foi <strong>processado com sucesso</strong>.</p>
-      <p>Um link para acessar seus detalhes foi enviado em email separado.</p>
-      <p style="color: #666; font-size: 12px;">Nunca compartilhe links de confirmação de pagamento.</p>
+      <p>Em breve entraremos em contato com as instruções para o evento. Qualquer dúvida, fale conosco pelo WhatsApp.</p>
     `
     : `
       <h2>Pagamento Recusado</h2>
