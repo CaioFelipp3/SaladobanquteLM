@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w 'Status: %{http_code} | Tamanho: %{size_download}B | URL: %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/logo.png https://www.saladobanquetelm.com.br/)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}
