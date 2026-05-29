@@ -95,8 +95,9 @@ nav a:focus-visible {
     padding: 60px 20px;
 }
 
-#home  { padding-bottom: 20px; }
-#sobre { padding-top: 20px; }
+#home     { padding-bottom: 0; }
+#sobre    { padding-top: 20px; }
+#sobre h2 { margin-top: 0; }
 
 /* ─── Logo ──────────────────────────────────────────────── */
 .logo {
@@ -415,7 +416,8 @@ p {
     }
 
     .nav-links.open {
-        display: flex;    }
+        display: flex;
+    }
 
     nav a { font-size: 14px; }
 
