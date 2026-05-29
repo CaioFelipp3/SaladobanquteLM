@@ -1,3 +1,16 @@
+/* Visually hidden — acessível a leitores de tela, invisível visualmente */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* ─── Reset e base cross-browser ──────────────────────── */
 *, *::before, *::after {
     margin: 0;
@@ -275,12 +288,7 @@ p {
     border-radius: 10px;
     overflow: hidden;
     margin: 20px 0;
-    cursor: grab;
     min-height: 240px; /* fallback for browsers without aspect-ratio */
-}
-
-.gallery-main:active {
-    cursor: grabbing;
 }
 
 .gallery-img {
@@ -330,7 +338,7 @@ p {
 .nav-toggle:focus-visible,
 .dot:focus-visible,
 .contact-item a:focus-visible {
-    outline: 3px solid rgba(184,104,138,0.25);
+    outline: 3px solid #b8688a;
     outline-offset: 2px;
 }
 

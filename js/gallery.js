@@ -9,6 +9,7 @@
   const dotsWrapper = document.querySelector(".gallery-dots");
 
   let currentIndex = 0;
+  let liveRegion   = null;
 
   // Gera os dots dinamicamente a partir das imagens.
   // Evita o bug de ter que atualizar HTML e JS manualmente
@@ -16,12 +17,28 @@
   function initDots() {
     if (!dotsWrapper || images.length === 0) return;
 
+    // Região de anúncio para leitores de tela
+    liveRegion = document.createElement("span");
+    liveRegion.className = "sr-only";
+    liveRegion.setAttribute("aria-live", "polite");
+    liveRegion.setAttribute("aria-atomic", "true");
+    dotsWrapper.parentElement?.insertBefore(liveRegion, dotsWrapper);
+
     dotsWrapper.innerHTML = "";
     images.forEach((_, i) => {
       const dot = document.createElement("span");
       dot.className = "dot" + (i === 0 ? " active" : "");
       dot.setAttribute("role", "tab");
+      dot.setAttribute("tabindex", "0");
+      dot.setAttribute("aria-label", `Foto ${i + 1} de ${images.length}`);
+      dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
       dot.addEventListener("click", () => showImage(i));
+      dot.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          showImage(i);
+        }
+      });
       dotsWrapper.appendChild(dot);
     });
   }
@@ -29,8 +46,15 @@
   function showImage(index) {
     const dots = dotsWrapper ? dotsWrapper.querySelectorAll(".dot") : [];
     images.forEach((img, i) => img.classList.toggle("active", i === index));
-    Array.from(dots).forEach((dot, i) => dot.classList.toggle("active", i === index));
+    Array.from(dots).forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+      dot.setAttribute("aria-selected", i === index ? "true" : "false");
+    });
     currentIndex = index;
+
+    if (liveRegion) {
+      liveRegion.textContent = `Foto ${index + 1} de ${images.length}`;
+    }
   }
 
   function nextImage() {
@@ -46,8 +70,10 @@
   window.nextImage = nextImage;
   window.prevImage = prevImage;
 
-  // Setas do teclado
+  // Setas do teclado — ignora quando foco está em campos de texto
   document.addEventListener("keydown", (e) => {
+    const tag = document.activeElement?.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
     if (e.key === "ArrowRight") nextImage();
     if (e.key === "ArrowLeft")  prevImage();
   });

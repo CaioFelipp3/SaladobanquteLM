@@ -28,6 +28,10 @@ transacoes.json
 .DS_Store
 Thumbs.db
 
+# Backups
+*.bak
+*.backup
+
 # Logs
 logs/
 *.log

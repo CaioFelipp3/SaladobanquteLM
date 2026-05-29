@@ -112,18 +112,6 @@ app.use(
   })
 );
 
-// SEGURANÇA: Validar X-Forwarded-For para detectar spoof de IP
-// Se aplicação está atrás de proxy (Cloudflare, AWS), isso é crítico
-app.use((req, res, next) => {
-  const xForwarded = req.header("X-Forwarded-For");
-  if (xForwarded && process.env.NODE_ENV === "production") {
-    // Em produção com proxy, usar apenas o IP mais confiável (o do proxy)
-    // Logs: não detalhar X-Forwarded-For pois pode vazar IPs de clientes
-    console.debug(`Proxy detectado, IP real pode estar em X-Forwarded-For`);
-  }
-  next();
-});
-
 // ─── Rate limiting ────────────────────────────────────────
 const createPreferenceLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -149,6 +137,13 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
+});
+
+// Verifica conexão SMTP no boot para detectar credenciais inválidas antes de um pagamento real
+transporter.verify().then(() => {
+  console.log("✉️  SMTP verificado com sucesso");
+}).catch((err) => {
+  console.error("❌ Falha na verificação SMTP:", err.message);
 });
 
 // ─── Validação e autenticação ─────────────────────────────
@@ -306,7 +301,7 @@ async function enviarEmailSeguro(email, dados) {
 
   try {
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: `"Sala do Banquete" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: assunto,
       html: corpo,
@@ -364,7 +359,14 @@ app.post("/criar-preference", createPreferenceLimiter, async (req, res) => {
     }
 
     const frontendBase = process.env.FRONTEND_URL || "https://saladobanquete.com.br";
-    const backendBase  = process.env.BACKEND_URL  || "https://seu-dominio.com/api";
+    const backendBase  = process.env.BACKEND_URL;
+    if (!backendBase) {
+      if (process.env.NODE_ENV === "production") {
+        return res.status(500).json({ success: false, error: "Configuração incompleta no servidor" });
+      }
+      console.warn("⚠️  BACKEND_URL não definido — notification_url do Mercado Pago será inválido");
+    }
+    const backendBaseResolved = backendBase || "http://localhost:3000";
 
     const preferencia = {
       items: [
@@ -381,7 +383,7 @@ app.post("/criar-preference", createPreferenceLimiter, async (req, res) => {
         failure: `${frontendBase}/ingressos?status=failure`,
         pending: `${frontendBase}/ingressos?status=pending`,
       },
-      notification_url: `${backendBase}/webhook/pagamento`,
+      notification_url: `${backendBaseResolved}/webhook/pagamento`,
       auto_return: "approved",
     };
 
@@ -485,12 +487,36 @@ app.get("/transacoes", transacoesLimiter, autenticarAdmin, async (req, res) => {
 });
 
 // ─── Boot ─────────────────────────────────────────────────
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`\n🚀 Servidor rodando em http://localhost:${PORT}`);
   console.log(`🔒 CORS permitido para: ${allowedOrigins.join(", ")}`);
   console.log(`📝 NODE_ENV: ${process.env.NODE_ENV || "development"}\n`);
 });
 
+// ─── Graceful shutdown ────────────────────────────────────
+// Necessário em ambientes containerizados (Docker, Kubernetes) para não dropar
+// conexões ativas quando o processo recebe SIGTERM no deploy.
+function gracefulShutdown(signal) {
+  console.log(`\n${signal} recebido. Encerrando servidor graciosamente...`);
+  server.close(() => {
+    console.log("✅ Servidor encerrado.");
+    process.exit(0);
+  });
+  // Force exit se conexões não fecharem em 10s
+  setTimeout(() => {
+    console.error("❌ Timeout de shutdown — forçando encerramento");
+    process.exit(1);
+  }, 10000).unref();
+}
+
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("SIGINT",  () => gracefulShutdown("SIGINT"));
+
 process.on("unhandledRejection", (reason) => {
   console.error("❌ Promise rejeitada não tratada:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("❌ Exceção não capturada:", err);
+  process.exit(1);
 });
