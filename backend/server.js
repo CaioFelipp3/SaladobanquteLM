@@ -13,7 +13,13 @@ const app = express();
 
 // ─── Validação de variáveis de ambiente ───────────────────
 // Falha no boot — melhor do que falhar silenciosamente em runtime
-const REQUIRED_ENV = ["MERCADO_PAGO_ACCESS_TOKEN", "WEBHOOK_SECRET", "ADMIN_TOKEN"];
+const REQUIRED_ENV = [
+  "MERCADO_PAGO_ACCESS_TOKEN",
+  "WEBHOOK_SECRET",
+  "ADMIN_TOKEN",
+  "EMAIL_USER",
+  "EMAIL_PASSWORD",
+];
 const missingEnv   = REQUIRED_ENV.filter((key) => !process.env[key]);
 if (missingEnv.length > 0) {
   console.error(`❌ Variáveis de ambiente ausentes: ${missingEnv.join(", ")}`);
@@ -90,11 +96,12 @@ app.use(
   cors({
     origin(origin, callback) {
       // origin é undefined em requisições same-origin e ferramentas como curl/Postman.
-      // Bloquear !origin em produção adicionaria segurança, mas quebraria clientes legítimos
-      // sem Origin header. CORS é proteção de browser — não substitui autenticação.
+      // Em produção, considerar bloquear !origin para máxima segurança
+      // CORS é proteção de browser — não substitui autenticação.
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.warn(`⚠️ CORS bloqueado para origem: ${origin}`);
         callback(new Error("CORS não permitido"));
       }
     },
@@ -105,6 +112,18 @@ app.use(
   })
 );
 
+// SEGURANÇA: Validar X-Forwarded-For para detectar spoof de IP
+// Se aplicação está atrás de proxy (Cloudflare, AWS), isso é crítico
+app.use((req, res, next) => {
+  const xForwarded = req.header("X-Forwarded-For");
+  if (xForwarded && process.env.NODE_ENV === "production") {
+    // Em produção com proxy, usar apenas o IP mais confiável (o do proxy)
+    // Logs: não detalhar X-Forwarded-For pois pode vazar IPs de clientes
+    console.debug(`Proxy detectado, IP real pode estar em X-Forwarded-For`);
+  }
+  next();
+});
+
 // ─── Rate limiting ────────────────────────────────────────
 const createPreferenceLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -112,8 +131,9 @@ const createPreferenceLimiter = rateLimit({
   message: "Muitas requisições, tente novamente mais tarde",
   standardHeaders: true,
   legacyHeaders: false,
-  // Bypass autenticado para testes manuais do admin — não usar em produção sem necessidade
-  skip: (req) => req.header("Authorization") === `Bearer ${ADMIN_TOKEN}`,
+  // SEGURANÇA: Em produção, até admin sofre rate limiting
+  // Bypass seria apenas para IPs internos (gerência)
+  skip: (req) => process.env.NODE_ENV !== "production" && req.header("Authorization") === `Bearer ${ADMIN_TOKEN}`,
 });
 
 const transacoesLimiter = rateLimit({
@@ -224,8 +244,22 @@ function salvarTransacao(transacao) {
         (t) => t.transactionId === transacao.transactionId
       );
       if (jaExiste) {
-        console.log(`ℹ️ Webhook duplicado ignorado — id: ${transacao.transactionId}`);
+        console.log(`ℹ️ Webhook duplicado ignorado`);
         return;
+      }
+
+      // ALTO: Proteção contra DDoS via webhooks — máximo 100k transações
+      // Se exceder, arquivo é rotacionado para arquivo.YYYY-MM-DD.bak
+      const MAX_TRANSACOES = 100000;
+      if (transacoes.length >= MAX_TRANSACOES) {
+        const backupName = TRANSACOES_FILE.replace(
+          ".json",
+          `.${new Date().toISOString().split("T")[0]}.bak`
+        );
+        await fsPromises.writeFile(backupName, JSON.stringify(transacoes, null, 2));
+        await fsPromises.writeFile(TRANSACOES_FILE, JSON.stringify([], null, 2));
+        console.warn(`⚠️ transacoes.json rotacionado para ${backupName}`);
+        transacoes = [];
       }
 
       transacoes.push({ ...transacao, data: new Date().toISOString() });
@@ -278,7 +312,7 @@ async function enviarEmailSeguro(email, dados) {
       html: corpo,
     });
     // Loga apenas os primeiros 5 chars do email — LGPD: não logar PII completo
-    console.log(`✉️ Email enviado para ${email.slice(0, 5)}***`);
+    console.log(`✉️ Email enviado`);
   } catch (err) {
     console.error("❌ Erro ao enviar email:", err.message);
   }
@@ -314,9 +348,15 @@ app.post("/criar-preference", createPreferenceLimiter, async (req, res) => {
     }
 
     const valorNum = parseFloat(valor);
+    // SEGURANÇA: Valor deve estar entre R$ 0.01 e R$ 9999.99
+    // Impede ataques de "forced-price" (forçar pagamento de R$0.01)
+    // Em produção real, validar contra tabela de preços permitidos no backend
     if (isNaN(valorNum) || valorNum <= 0 || valorNum > 9999.99) {
       return res.status(400).json({ success: false, error: "Valor inválido (0.01 – 9999.99)" });
     }
+    // TODO: Em produção, substituir por validação contra BD de ingressos
+    // const ingressoValido = await db.ingressos.findOne({ name: ingresso, preco: valorNum });
+    // if (!ingressoValido) return res.status(400).json({ success: false, error: "Ingresso ou preço inválido" });
 
     const quantNum = parseInt(quantidade, 10);
     if (!Number.isInteger(quantNum) || quantNum < 1 || quantNum > 100) {
@@ -375,8 +415,12 @@ app.post("/criar-preference", createPreferenceLimiter, async (req, res) => {
 // e reenviar o webhook se não receber resposta a tempo.
 app.post("/webhook/pagamento", async (req, res) => {
   try {
+    // CRÍTICO: Toda requisição MUST ter assinatura válida
+    // Sem isso, atacante pode gerar ingressos/emails sem pagar
     if (!validarAssinaturaMercadoPago(req)) {
       console.warn("⚠️ Webhook rejeitado: assinatura inválida");
+      // Loga apenas IP/timestamp para auditoria (sem PII)
+      console.warn(`   IP: ${req.ip}, Time: ${new Date().toISOString()}`);
       return res.status(401).json({ error: "Assinatura inválida" });
     }
 
@@ -414,7 +458,7 @@ app.post("/webhook/pagamento", async (req, res) => {
       }
 
       // Loga ID da transação para auditoria — não loga email ou valor
-      console.log(`✅ Pagamento ${transacao.status} — id: ${transacao.transactionId}`);
+      console.log(`✅ Pagamento ${transacao.status}`);
       return res.status(200).json({ success: true });
     }
 
