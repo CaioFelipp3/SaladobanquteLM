@@ -6,7 +6,8 @@
       "Bash(git commit -m ' *)",
       "Bash(curl -s \"https://www.saladobanquetelm.com.br/css/style.css\")",
       "Bash(curl -s \"https://www.saladobanquetelm.com.br/\")",
-      "Bash(curl -s -o /dev/null -w 'Status: %{http_code} — %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/evento-namorados.jpeg https://www.saladobanquetelm.com.br/assets/evento-conjugalidade.jpeg)"
+      "Bash(curl -s -o /dev/null -w 'Status: %{http_code} — %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/evento-namorados.jpeg https://www.saladobanquetelm.com.br/assets/evento-conjugalidade.jpeg)",
+      "Bash(node -e \"console.log\\(encodeURIComponent\\('Olá! Vim pelo site da Sala do Banquete e gostaria de saber mais sobre agendas disponíveis, orçamentos e possibilidade de agendar uma reunião. Poderia me ajudar?'\\)\\)\")"
     ]
   }
 }
