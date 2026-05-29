@@ -3,7 +3,10 @@
     "allow": [
       "Bash(curl -s -o /dev/null -w 'Status: %{http_code} | Tamanho: %{size_download}B | URL: %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/logo.png https://www.saladobanquetelm.com.br/)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(curl -s \"https://www.saladobanquetelm.com.br/css/style.css\")",
+      "Bash(curl -s \"https://www.saladobanquetelm.com.br/\")",
+      "Bash(curl -s -o /dev/null -w 'Status: %{http_code} — %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/evento-namorados.jpeg https://www.saladobanquetelm.com.br/assets/evento-conjugalidade.jpeg)"
     ]
   }
 }
