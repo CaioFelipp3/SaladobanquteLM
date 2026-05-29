@@ -217,6 +217,7 @@ p {
     padding: 12px 20px;
     border-radius: 6px;
     text-decoration: none;
+    font-family: inherit; /* <button> não herda a fonte da página por padrão */
     font-weight: 600;
     font-size: 12px;
     text-transform: uppercase;
