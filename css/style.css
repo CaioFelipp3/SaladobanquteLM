@@ -498,12 +498,12 @@ footer p {
     h1 { font-size: 30px; }
     h2 { font-size: 26px; }
 
-    /* Eventos em coluna única — sem flex-basis de altura no eixo vertical */
-    .events { flex-direction: column; }
-    .event  { flex: none; width: 100%; }
+    /* Cards de evento: um acima do outro, altura livre para mostrar todo conteúdo */
+    .events         { display: block; }
+    .event          { width: 100%; margin-bottom: 20px; }
 
-    /* Imagem do evento em 16:9 no mobile — libera mais espaço para o texto */
-    .event-img-wrap { aspect-ratio: 16 / 9; min-height: 180px; }
+    /* Altura fixa para a imagem no mobile — elimina dependência de aspect-ratio */
+    .event-img-wrap { height: 200px; aspect-ratio: unset; min-height: unset; }
 
     /* Galeria em formato mais vertical no mobile */
     .gallery-main { aspect-ratio: 3 / 4; }
