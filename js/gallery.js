@@ -143,6 +143,10 @@
     el("link-maps")?.setAttribute("href", CONFIG.mapsUrl);
   }
 
+  // Ano dinâmico no rodapé
+  const yearEl = document.getElementById("footer-year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
   // Inicializa dots após tudo configurado
   initDots();
 })();
