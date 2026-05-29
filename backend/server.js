@@ -237,7 +237,7 @@ let writeLock = Promise.resolve();
 function salvarTransacao(transacao) {
   writeLock = writeLock
     .then(async () => {
-      const transacoes = await loadTransacoes();
+      let transacoes = await loadTransacoes();
 
       // Idempotência: rejeita silenciosamente se transactionId já foi processado
       const jaExiste = transacoes.some(
