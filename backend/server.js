@@ -84,8 +84,8 @@ app.use(express.json({ limit: "1mb" }));
 
 // ─── CORS ─────────────────────────────────────────────────
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "https://saladobanquete.com.br",
-  "https://www.saladobanquete.com.br",
+  process.env.FRONTEND_URL || "https://www.saladobanquetelm.com.br",
+  "https://saladobanquetelm.com.br",
 ];
 
 if (process.env.NODE_ENV === "development") {
@@ -358,7 +358,7 @@ app.post("/criar-preference", createPreferenceLimiter, async (req, res) => {
       return res.status(400).json({ success: false, error: "Quantidade inválida (1–100)" });
     }
 
-    const frontendBase = process.env.FRONTEND_URL || "https://saladobanquete.com.br";
+    const frontendBase = process.env.FRONTEND_URL || "https://www.saladobanquetelm.com.br";
     const backendBase  = process.env.BACKEND_URL;
     if (!backendBase) {
       if (process.env.NODE_ENV === "production") {
