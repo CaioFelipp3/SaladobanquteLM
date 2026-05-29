@@ -502,8 +502,15 @@ footer p {
     .events         { display: block; }
     .event          { width: 100%; margin-bottom: 20px; }
 
-    /* Altura fixa para a imagem no mobile — elimina dependência de aspect-ratio */
-    .event-img-wrap { height: 200px; aspect-ratio: unset; min-height: unset; }
+    /* Imagem ocupa largura total e altura proporcional ao formato original */
+    .event-img-wrap { height: auto; aspect-ratio: unset; min-height: unset; }
+    .event-img-wrap img {
+        position: static;
+        top: auto; left: auto; right: auto; bottom: auto;
+        width: 100%;
+        height: auto;
+        object-fit: fill;
+    }
 
     /* Galeria em formato mais vertical no mobile */
     .gallery-main { aspect-ratio: 3 / 4; }
