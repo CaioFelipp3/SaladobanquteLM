@@ -127,11 +127,12 @@
   // config.js é ignorado pelo git — contém dados reais (número, links, etc.)
   // Todos os getElementById usam ?. para não quebrar se um elemento for removido
   if (typeof CONFIG !== "undefined") {
-    const waBase = `https://wa.me/${CONFIG.whatsappNumber}`;
+    const waBase  = `https://wa.me/${CONFIG.whatsappNumber}`;
+    const waFloat = `${waBase}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Sala%20do%20Banquete%20e%20gostaria%20de%20saber%20mais%20sobre%20agendas%20dispon%C3%ADveis%2C%20or%C3%A7amentos%20e%20possibilidade%20de%20agendar%20uma%20reuni%C3%A3o.%20Poderia%20me%20ajudar%3F`;
     const el = (id) => document.getElementById(id);
 
     el("link-whatsapp")?.setAttribute("href", waBase);
-    el("link-whatsapp-float")?.setAttribute("href", waBase);
+    el("link-whatsapp-float")?.setAttribute("href", waFloat);
     el("link-instagram")?.setAttribute("href", CONFIG.instagramUrl);
 
     const emailLink = el("link-email");
