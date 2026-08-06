@@ -7,7 +7,18 @@
       "Bash(curl -s \"https://www.saladobanquetelm.com.br/css/style.css\")",
       "Bash(curl -s \"https://www.saladobanquetelm.com.br/\")",
       "Bash(curl -s -o /dev/null -w 'Status: %{http_code} — %{url_effective}\\\\n' https://www.saladobanquetelm.com.br/assets/evento-namorados.jpeg https://www.saladobanquetelm.com.br/assets/evento-conjugalidade.jpeg)",
-      "Bash(node -e \"console.log\\(encodeURIComponent\\('Olá! Vim pelo site da Sala do Banquete e gostaria de saber mais sobre agendas disponíveis, orçamentos e possibilidade de agendar uma reunião. Poderia me ajudar?'\\)\\)\")"
+      "Bash(node -e \"console.log\\(encodeURIComponent\\('Olá! Vim pelo site da Sala do Banquete e gostaria de saber mais sobre agendas disponíveis, orçamentos e possibilidade de agendar uma reunião. Poderia me ajudar?'\\)\\)\")",
+      "Bash(node -e \"require\\('playwright'\\)\")",
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(npx --yes playwright --version)",
+      "Bash(ls ~/Library/Caches/ms-playwright 2>/dev/null || echo \"no cache dir\")",
+      "Read(//Users/caiofelippe/Library/Caches/**)",
+      "Bash(npx --yes playwright install chromium --with-deps)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(node shot.js)",
+      "Bash(lsof -ti:8791 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)"
     ]
   }
 }
