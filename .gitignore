@@ -20,6 +20,12 @@ build/
 next-env.d.ts
 *.tsbuildinfo
 
+# Vercel (estado local de link do projeto — não é segredo, mas não deve ser versionado)
+.vercel
+
+# Certificados locais (ex: HTTPS em dev)
+*.pem
+
 # IDE
 .vscode/
 .idea/
