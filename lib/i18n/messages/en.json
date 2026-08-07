@@ -1,0 +1,137 @@
+{
+  "Metadata": {
+    "title": "Liliam Müller – A Sala do Banquete",
+    "description": "A Sala do Banquete – a sophisticated event space in Vitória, ES, Brazil. Gastronomy, live music, and unique experiences with Liliam Müller."
+  },
+  "Nav": {
+    "ariaLabel": "Main navigation",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "events": "Events",
+    "gallery": "Table Settings",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageLabel": "Language"
+  },
+  "Home": {
+    "Hero": {
+      "logoAlt": "Liliam Müller – A Sala do Banquete",
+      "title": "A Unique Experience at the Table",
+      "subtitle": "Discover the best events in Vitória, ES"
+    },
+    "About": {
+      "heading": "A Sala do Banquete",
+      "paragraph1": "A Sala do Banquete is a sophisticated space dedicated to creating unforgettable moments. With an innovative approach that blends gastronomy, art, and entertainment, we specialize in memorable events.",
+      "paragraph2": "Founded by Liliam Müller, our venue has become a reference in Vitória-ES for offering personalized experiences, elegant settings, and a careful selection of artists and producers. Every event is unique, reflecting our commitment to excellence.",
+      "founderImageAlt": "Liliam Müller – Founder of Sala do Banquete",
+      "founderCaption": "Liliam Müller — Founder"
+    },
+    "Events": {
+      "heading": "Upcoming Events",
+      "intro": "Check out our schedule and stay up to date on upcoming events",
+      "ctaButton": "Learn More",
+      "ctaMessage": "Hello! I'd like to know more about the upcoming events at Sala do Banquete.",
+      "chaDasFlores": {
+        "title": "Chá das Flores",
+        "date": "[Date to be confirmed]",
+        "description": "[Event description to be filled in]",
+        "imagePlaceholder": "Image coming soon",
+        "ctaButton": "Get Tickets",
+        "ctaMessage": "Hello! I'm interested in the *Chá das Flores* event at Sala do Banquete. Could you send me more information and pricing?"
+      }
+    },
+    "Gallery": {
+      "roledescription": "carousel",
+      "heading": "Our table settings",
+      "intro": "Explore the elegant, sophisticated environments of Sala do Banquete",
+      "imageAlt": "Sala do Banquete decoration {index}",
+      "prevLabel": "Previous photo",
+      "nextLabel": "Next photo",
+      "dotLabel": "Photo {index} of {total}",
+      "statusLabel": "Photo {index} of {total}"
+    },
+    "Contact": {
+      "heading": "Get in Touch",
+      "intro": "Reach out for information, reservations, or questions",
+      "whatsappLabel": "WhatsApp",
+      "whatsappLink": "Chat on WhatsApp",
+      "instagramLabel": "Instagram",
+      "emailLabel": "Email",
+      "addressLabel": "Address"
+    }
+  },
+  "Services": {
+    "Metadata": {
+      "title": "Services – A Sala do Banquete",
+      "description": "Explore the services offered by Sala do Banquete: birthdays, anniversaries, weddings, corporate events, and tableware collection consulting."
+    },
+    "heading": "Our Services",
+    "intro": "Every celebration deserves unique care — see what we prepare for your special moment",
+    "ctaButton": "Ask About a Service",
+    "ctaMessage": "Hello! I'd like to know more about the services at Sala do Banquete.",
+    "descriptionPlaceholder": "[Description to be filled in]",
+    "imagePlaceholder": "Image coming soon",
+    "items": {
+      "aniversario-infantil": { "title": "Kids' Birthday Party" },
+      "mesa-posta": { "title": "Table Setting" },
+      "bodas": { "title": "Wedding Anniversaries" },
+      "etiqueta-mesa": { "title": "Table Etiquette" },
+      "eventos-corporativos": { "title": "Corporate Events" },
+      "aniversario-15-anos": { "title": "15th Birthday (Debutante Ball)" },
+      "casamento": { "title": "Wedding" },
+      "cha-de-panela": { "title": "Bridal Shower" },
+      "consultoria-acervo": { "title": "Tableware Collection Consulting" }
+    }
+  },
+  "Budget": {
+    "Metadata": {
+      "title": "Get a Quote – A Sala do Banquete",
+      "description": "Request a quote for your event at Sala do Banquete. Fill out the form and get a response via WhatsApp or email."
+    },
+    "heading": "Request a Quote",
+    "intro": "Fill in the details below and send your request via WhatsApp or email — we'll get back to you as soon as possible",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "phonePlaceholder": "(27) 99999-9999",
+      "service": "Service type",
+      "servicePlaceholder": "Select a service",
+      "eventDate": "Event date",
+      "guestCount": "Number of guests",
+      "message": "Message"
+    },
+    "messageOptional": "(optional)",
+    "errors": {
+      "nameRequired": "Enter your name (minimum 2 characters)",
+      "nameInvalid": "Name cannot contain symbols or numbers",
+      "emailInvalid": "Enter a valid email address",
+      "phoneInvalid": "Enter a valid phone number with area code, e.g. (27) 99999-9999",
+      "serviceRequired": "Select a service",
+      "eventDateInvalid": "Enter a valid date",
+      "eventDatePast": "The event date cannot be in the past",
+      "guestCountInvalid": "Enter a guest count between 1 and 1000",
+      "messageTooLong": "The message can be at most 500 characters"
+    },
+    "submitWhatsapp": "Send via WhatsApp",
+    "submitEmail": "Send via email",
+    "submitting": "Sending...",
+    "successTitle": "All set!",
+    "successWhatsapp": "We opened WhatsApp with your details filled in — just review and send.",
+    "successEmail": "We opened your email app with your details filled in — just review and send.",
+    "errorTitle": "Couldn't continue",
+    "errorGeneric": "Please review the highlighted fields below and try again.",
+    "privacyNote": "We only use your details to respond to this quote request — nothing is stored on our servers.",
+    "messageTemplate": "Hello! I'd like to request a quote for Sala do Banquete.\nName: {name}\nPhone: {phone}\nService: {service}\nEvent date: {eventDate}\nNumber of guests: {guestCount}\nMessage: {message}",
+    "emailSubject": "Quote request – {service}"
+  },
+  "Footer": {
+    "rights": "All rights reserved."
+  },
+  "WhatsappFloat": {
+    "ariaLabel": "Chat on WhatsApp",
+    "message": "Hello! I'd like to know more about the upcoming events at Sala do Banquete."
+  }
+}

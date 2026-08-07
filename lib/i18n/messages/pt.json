@@ -1,0 +1,137 @@
+{
+  "Metadata": {
+    "title": "Liliam Müller – A Sala do Banquete",
+    "description": "A Sala do Banquete – espaço sofisticado de eventos em Vitória, ES. Gastronomia, música ao vivo e experiências únicas com Liliam Müller."
+  },
+  "Nav": {
+    "ariaLabel": "Navegação principal",
+    "home": "Início",
+    "about": "Sobre",
+    "services": "Serviços",
+    "events": "Eventos",
+    "gallery": "Mesas Postas",
+    "contact": "Contato",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "languageLabel": "Idioma"
+  },
+  "Home": {
+    "Hero": {
+      "logoAlt": "Liliam Müller – A Sala do Banquete",
+      "title": "Uma Experiência Única à Mesa",
+      "subtitle": "Descubra os melhores eventos em Vitória, ES"
+    },
+    "About": {
+      "heading": "A Sala do Banquete",
+      "paragraph1": "A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.",
+      "paragraph2": "Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.",
+      "founderImageAlt": "Liliam Müller – Fundadora da Sala do Banquete",
+      "founderCaption": "Liliam Müller — Fundadora"
+    },
+    "Events": {
+      "heading": "Próximos Eventos",
+      "intro": "Confira nossa programação e fique por dentro dos próximos eventos",
+      "ctaButton": "Saber Mais",
+      "ctaMessage": "Olá. Tudo bem?\nQuero saber mais sobre os próximos eventos da Sala do Banquete.",
+      "chaDasFlores": {
+        "title": "Chá das Flores",
+        "date": "[Data a confirmar]",
+        "description": "[Descrição do evento a preencher]",
+        "imagePlaceholder": "Imagem em breve",
+        "ctaButton": "Adquirir Ingresso",
+        "ctaMessage": "Olá! Tenho interesse no evento *Chá das Flores* na Sala do Banquete. Poderia me passar mais informações e valores?"
+      }
+    },
+    "Gallery": {
+      "roledescription": "carrossel",
+      "heading": "Nossas mesas postas",
+      "intro": "Conheça os ambientes elegantes e sofisticados da Sala do Banquete",
+      "imageAlt": "Decoração da Sala do Banquete {index}",
+      "prevLabel": "Foto anterior",
+      "nextLabel": "Próxima foto",
+      "dotLabel": "Foto {index} de {total}",
+      "statusLabel": "Foto {index} de {total}"
+    },
+    "Contact": {
+      "heading": "Fale Conosco",
+      "intro": "Entre em contato conosco para informações, reservas ou dúvidas",
+      "whatsappLabel": "WhatsApp",
+      "whatsappLink": "Falar pelo WhatsApp",
+      "instagramLabel": "Instagram",
+      "emailLabel": "E-mail",
+      "addressLabel": "Endereço"
+    }
+  },
+  "Services": {
+    "Metadata": {
+      "title": "Serviços – A Sala do Banquete",
+      "description": "Conheça os serviços da Sala do Banquete: aniversários, bodas, casamentos, eventos corporativos e consultoria para montar seu acervo de mesa posta."
+    },
+    "heading": "Nossos Serviços",
+    "intro": "Cada celebração merece um cuidado único — conheça o que preparamos para o seu momento especial",
+    "ctaButton": "Consultar Serviço",
+    "ctaMessage": "Olá. Tudo bem?\nQuero saber mais sobre os serviços da Sala do Banquete.",
+    "descriptionPlaceholder": "[Descrição a preencher]",
+    "imagePlaceholder": "Imagem em breve",
+    "items": {
+      "aniversario-infantil": { "title": "Aniversário Infantil" },
+      "mesa-posta": { "title": "Mesa Posta" },
+      "bodas": { "title": "Bodas" },
+      "etiqueta-mesa": { "title": "Etiqueta à Mesa" },
+      "eventos-corporativos": { "title": "Eventos Corporativos" },
+      "aniversario-15-anos": { "title": "Aniversário de 15 Anos" },
+      "casamento": { "title": "Casamento" },
+      "cha-de-panela": { "title": "Chá de Panela" },
+      "consultoria-acervo": { "title": "Consultoria para Montar Acervo" }
+    }
+  },
+  "Budget": {
+    "Metadata": {
+      "title": "Orçamento – A Sala do Banquete",
+      "description": "Solicite um orçamento para o seu evento na Sala do Banquete. Preencha o formulário e receba uma resposta pelo WhatsApp ou e-mail."
+    },
+    "heading": "Solicitar Orçamento",
+    "intro": "Preencha os dados abaixo e envie sua solicitação pelo WhatsApp ou por e-mail — responderemos o quanto antes",
+    "fields": {
+      "name": "Nome",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "phonePlaceholder": "(27) 99999-9999",
+      "service": "Tipo de serviço",
+      "servicePlaceholder": "Selecione um serviço",
+      "eventDate": "Data do evento",
+      "guestCount": "Número de convidados",
+      "message": "Mensagem"
+    },
+    "messageOptional": "(opcional)",
+    "errors": {
+      "nameRequired": "Informe seu nome (mínimo 2 caracteres)",
+      "nameInvalid": "O nome não pode conter símbolos ou números",
+      "emailInvalid": "Informe um e-mail válido",
+      "phoneInvalid": "Informe um telefone válido com DDD, ex: (27) 99999-9999",
+      "serviceRequired": "Selecione um serviço",
+      "eventDateInvalid": "Informe uma data válida",
+      "eventDatePast": "A data do evento não pode ser no passado",
+      "guestCountInvalid": "Informe um número de convidados entre 1 e 1000",
+      "messageTooLong": "A mensagem pode ter no máximo 500 caracteres"
+    },
+    "submitWhatsapp": "Enviar pelo WhatsApp",
+    "submitEmail": "Enviar por e-mail",
+    "submitting": "Enviando...",
+    "successTitle": "Pronto!",
+    "successWhatsapp": "Abrimos o WhatsApp com os dados preenchidos — é só conferir e enviar por lá.",
+    "successEmail": "Abrimos seu aplicativo de e-mail com os dados preenchidos — é só conferir e enviar.",
+    "errorTitle": "Não foi possível continuar",
+    "errorGeneric": "Revise os campos destacados abaixo e tente novamente.",
+    "privacyNote": "Usamos seus dados apenas para responder a esta solicitação de orçamento — nada é armazenado em nossos servidores.",
+    "messageTemplate": "Olá! Gostaria de solicitar um orçamento para a Sala do Banquete.\nNome: {name}\nTelefone: {phone}\nServiço: {service}\nData do evento: {eventDate}\nNúmero de convidados: {guestCount}\nMensagem: {message}",
+    "emailSubject": "Solicitação de orçamento – {service}"
+  },
+  "Footer": {
+    "rights": "Todos os direitos reservados."
+  },
+  "WhatsappFloat": {
+    "ariaLabel": "Falar pelo WhatsApp",
+    "message": "Olá. Tudo bem?\nQuero saber mais sobre os próximos eventos da Sala do Banquete."
+  }
+}

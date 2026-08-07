@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/*
+ * Paleta e tipografia extraídas de css/style.css (site original em HTML puro).
+ * --color-banquete-* vira automaticamente classes utilitárias como bg-banquete-rose,
+ * text-banquete-dark, border-banquete-gold, etc.
+ */
+@theme {
+  --color-banquete-bg: #faf5ef;
+  --color-banquete-dark: #3d2b35;
+  --color-banquete-rose: #b8688a;
+  --color-banquete-rose-dark: #9a5472;
+  --color-banquete-gold: #c9a84c;
+  --color-banquete-gold-light: #c4a882;
+  --color-banquete-rose-soft: #f5e9ee;
+  --color-banquete-gold-soft: #f3ead4;
+  --color-banquete-rose-soft-2: #ecdce3;
+  --color-banquete-border: #f0f0f0;
+
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-montserrat), Arial, Helvetica, sans-serif;
+
+  /*
+   * O CSS original tinha breakpoints próprios (768px / 680px / 400px) em vez dos
+   * padrões do Tailwind (640/768/1024). Redefinimos "sm" e adicionamos "xs" para
+   * que sm:/md: correspondam exatamente aos pontos de quebra do site atual.
+   * "md" já era 768px por padrão, então não precisa mudar.
+   */
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 680px;
+}
+
+body {
+  font-family: var(--font-sans);
+}
