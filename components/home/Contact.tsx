@@ -6,6 +6,7 @@ export default function Contact() {
 
   const items = [
     {
+      id: "whatsapp",
       label: t("whatsappLabel"),
       href: `https://wa.me/${contacts.whatsappNumber}`,
       external: true,
@@ -27,18 +28,21 @@ export default function Contact() {
       ),
     },
     {
+      id: "instagram",
       label: t("instagramLabel"),
       href: contacts.instagramUrl,
       external: true,
       content: <>📷 {contacts.instagramHandle}</>,
     },
     {
+      id: "email",
       label: t("emailLabel"),
       href: `mailto:${contacts.email}`,
       external: false,
       content: <>📧 {contacts.email}</>,
     },
     {
+      id: "address",
       label: t("addressLabel"),
       href: contacts.mapsUrl,
       external: true,
@@ -56,7 +60,7 @@ export default function Contact() {
       <div className="mx-auto max-w-[500px]">
         {items.map((item) => (
           <div
-            key={item.label}
+            key={item.id}
             className="my-4 rounded-[10px] border border-banquete-border bg-neutral-50 p-5"
           >
             <strong className="mb-2 block text-[11px] uppercase tracking-wide text-banquete-dark/70">

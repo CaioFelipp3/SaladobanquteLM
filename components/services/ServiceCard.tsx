@@ -31,9 +31,9 @@ export default function ServiceCard({
         >
           <span aria-hidden="true">{icon}</span>
         </div>
-        <h3 className="mb-2 font-serif text-lg leading-snug text-banquete-dark">
+        <h2 className="mb-2 font-serif text-lg leading-snug text-banquete-dark">
           {t(`items.${id}.title`)}
-        </h3>
+        </h2>
         <p className="text-sm text-banquete-dark/70">{t("descriptionPlaceholder")}</p>
       </div>
     </div>
