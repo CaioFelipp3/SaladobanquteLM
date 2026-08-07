@@ -18,6 +18,14 @@ Todo header HTTP abaixo é enviado em **todas as respostas** do site (configurad
 
 **O que previne:** vazamento de informação via header `Referer`. Por padrão, quando alguém clica de uma página do seu site para um link externo, o navegador informa ao site de destino a URL completa de onde veio (que pode conter dados sensíveis na query string). Essa política diz: para links dentro do mesmo site, manda a URL completa; para links externos, manda só o domínio (`saladobanquetelm.com.br`), nunca o caminho completo.
 
+### `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+
+**O que previne:** ataques de downgrade/interceptação (man-in-the-middle) que tentam forçar a conexão a cair para HTTP puro. Esse header diz ao navegador "sempre acesse este site por HTTPS pelos próximos 2 anos, mesmo que alguém tente te mandar um link `http://`" — depois da primeira visita, o navegador nem tenta HTTP de novo. A Vercel já adiciona isso automaticamente em produção; deixamos explícito aqui como defesa em profundidade (não depender só do comportamento implícito da plataforma).
+
+### `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+
+**O que previne:** o site nunca precisa de câmera, microfone ou localização — esse header desliga essas permissões de propósito no navegador. Reduz o que um script malicioso conseguiria fazer caso algum dia um script de terceiro comprometido fosse carregado por engano.
+
 ## Links externos com `rel="noopener noreferrer"`
 
 O site antigo já fazia isso corretamente nos links de WhatsApp/Instagram/Maps (`target="_blank" rel="noopener noreferrer"`), e vamos manter essa prática na migração. **O que previne:** sem `noopener`, a aba nova aberta por `target="_blank"` ganha acesso ao objeto `window.opener` — ou seja, o site que você acabou de abrir poderia redirecionar silenciosamente a aba original para uma página de phishing. `noreferrer` também evita vazar a URL de origem para o site de destino.
