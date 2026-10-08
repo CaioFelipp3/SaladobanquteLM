@@ -1,9 +1,14 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import TicketCheckout from "@/components/home/TicketCheckout";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
+import { ticketSales } from "@/lib/data/tickets";
+import { salesOpen } from "@/lib/payments/mercadopago";
 import { bodyText, buttonPrimary, sectionHeading } from "@/lib/ui/styles";
 
 export default function UpcomingEvents() {
   const t = useTranslations("Home.Events");
+  const tTickets = useTranslations("Tickets");
+  const locale = useLocale() as "pt" | "en";
 
   return (
     <section id="eventos" className="mx-auto max-w-[900px] px-5 py-10">
@@ -35,14 +40,28 @@ export default function UpcomingEvents() {
             <p className="my-2.5 text-sm">
               {t("chaDasFlores.description")}
             </p>
-            <a
-              href={buildWhatsappUrl(t("chaDasFlores.ctaMessage"))}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${buttonPrimary} mt-auto text-center`}
-            >
-              {t("chaDasFlores.ctaButton")}
-            </a>
+            {/* Vendas abertas (ingressos no catálogo + token configurado):
+                compra pelo Mercado Pago. Senão, segue pelo WhatsApp. */}
+            {salesOpen() ? (
+              <TicketCheckout
+                eventName={ticketSales.eventName[locale]}
+                tickets={ticketSales.tickets}
+                maxPerPurchase={ticketSales.maxPerPurchase}
+                buttonLabel={t("chaDasFlores.ctaButton")}
+                whatsappHref={buildWhatsappUrl(
+                  tTickets("whatsappMessage", { event: ticketSales.eventName[locale] }),
+                )}
+              />
+            ) : (
+              <a
+                href={buildWhatsappUrl(t("chaDasFlores.ctaMessage"))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${buttonPrimary} mt-auto text-center`}
+              >
+                {t("chaDasFlores.ctaButton")}
+              </a>
+            )}
           </div>
         </div>
       </div>

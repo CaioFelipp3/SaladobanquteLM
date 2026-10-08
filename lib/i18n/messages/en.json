@@ -145,6 +145,39 @@
     "fallbackWhatsapp": "If the chat did not open, <link>click here to open WhatsApp</link>.",
     "fallbackEmail": "If nothing opened, <link>click here</link> or write directly to {email}."
   },
+  "Tickets": {
+    "dialogLabel": "Buy tickets",
+    "ticketType": "Ticket type",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "total": "Total",
+    "paymentNote": "You will go to Mercado Pago's secure checkout to pay with Pix, card or bank slip. Your payment details are entered only there.",
+    "privacyLink": "Privacy Policy",
+    "submit": "Go to payment",
+    "submitting": "Opening Mercado Pago...",
+    "close": "Close",
+    "errorTitle": "We couldn't open the payment right now.",
+    "errorBody": "Please try again in a few minutes or <link>message us on WhatsApp</link>.",
+    "whatsappMessage": "Hello! I tried to buy a ticket for *{event}* on the website, but the payment didn't open. Could you help me?",
+    "Return": {
+      "Metadata": { "title": "Payment – A Sala do Banquete" },
+      "approvedTitle": "Payment confirmed!",
+      "approvedBody": "Thank you! Mercado Pago has emailed you the receipt. We'll be in touch soon with the event details.",
+      "pendingTitle": "Payment processing",
+      "pendingBody": "Your payment is still being processed (common with bank slips and some card reviews). You'll get an email confirmation as soon as it's approved.",
+      "rejectedTitle": "Payment not approved",
+      "rejectedBody": "The payment was not completed and nothing was charged. You can try again with another payment method.",
+      "unknownTitle": "We couldn't confirm the payment",
+      "unknownBody": "If you completed the payment, the Mercado Pago receipt will arrive by email. If in doubt, message us on WhatsApp.",
+      "summary": "{description} — {amount}",
+      "orderLabel": "Order",
+      "backHome": "Back to home",
+      "tryAgain": "Try again",
+      "help": "Message us on WhatsApp",
+      "helpMessage": "Hello! I bought a ticket on the website (order {order}) and I'd like some help."
+    }
+  },
   "Privacy": {
     "Metadata": {
       "title": "Privacy Policy – A Sala do Banquete",
@@ -161,7 +194,7 @@
       },
       "collected": {
         "title": "What data we collect",
-        "body": "The website only receives personal data when you fill in the quote request form:",
+        "body": "The website receives personal data in two situations. Through the quote request form:",
         "items": [
           "Name",
           "Phone number",
@@ -170,25 +203,30 @@
           "Number of guests",
           "Message (optional)"
         ],
-        "note": "We do not ask for ID numbers, home address, payment details or sensitive data (such as health, religion or ethnic origin). Please do not include this kind of information in the message field."
+        "note": "When you buy tickets, the data is entered at Mercado Pago (see \"Ticket purchases\" below). We do not ask for sensitive data (such as health, religion or ethnic origin). Please do not include this kind of information in the message field."
       },
       "flow": {
         "title": "How the data reaches us",
         "body": "The form does not send anything to a Sala do Banquete server. When you click send, your own browser builds the message and opens WhatsApp or your email app with it already filled in. You review the text and decide whether to send it. The data only reaches us if you send the message there, and nothing is stored on the website."
       },
+      "payments": {
+        "title": "Ticket purchases",
+        "body": "When you buy a ticket, the payment takes place entirely within Mercado Pago's environment: that is where you enter your name, email, ID number and payment details, under Mercado Pago's own privacy policy. The website does not receive or store card details, ID documents or passwords. After the purchase, Sala do Banquete receives from Mercado Pago the buyer's name and email, the ticket type and quantity and the amount paid, to put together the guest list and contact you about the event."
+      },
       "purpose": {
         "title": "What we use it for",
-        "body": "We use the data only to answer your quote request and, if you hire us, to organize your event. We do not use your data for advertising, we do not sell it and we do not share it with third parties for commercial purposes."
+        "body": "We use the data only to answer your quote request, to organize your event if you hire us and, for ticket purchases, to put together the guest list and contact you about the event. We do not use your data for advertising, we do not sell it and we do not share it with third parties for commercial purposes."
       },
       "legalBasis": {
         "title": "Legal basis",
-        "body": "Processing is based on Article 7, item V, of the LGPD: preliminary steps related to a contract, at the request of the data subject. In other words, you contact us asking for a quote. The acknowledgment checkbox on the form exists to make sure you have read this policy before sending."
+        "body": "For quote requests, processing is based on Article 7, item V, of the LGPD: preliminary steps related to a contract, at the request of the data subject. For ticket purchases, the basis is the performance of the contract (the same Article 7, item V) and compliance with legal and tax obligations (Article 7, item II). The acknowledgment checkbox on the form exists to make sure you have read this policy before sending."
       },
       "sharing": {
         "title": "Who the data is shared with",
         "body": "To work, the website and our customer service rely on a few third-party services:",
         "items": [
           "WhatsApp (Meta) or your email provider, which carry the message you decide to send.",
+          "Mercado Pago, which processes ticket payments and informs us of the purchase details.",
           "Google (Gmail), which hosts Sala do Banquete's mailbox.",
           "Vercel, the company that hosts the website and logs technical access data, such as IP address and browser type, for security and operational reasons."
         ],
@@ -196,7 +234,7 @@
       },
       "retention": {
         "title": "How long we keep it",
-        "body": "Quote conversations and emails are kept for up to 12 months after the last contact when no contract is signed. If there is a contract, the data is kept for as long as needed to meet legal and tax obligations. You can ask for deletion earlier at any time."
+        "body": "Quote conversations and emails are kept for up to 12 months after the last contact when no contract is signed. If there is a contract, the data is kept for as long as needed to meet legal and tax obligations. Ticket purchase records are kept at Mercado Pago for the period required by tax law. You can ask for deletion of anything we are not legally required to keep at any time."
       },
       "cookies": {
         "title": "Cookies",

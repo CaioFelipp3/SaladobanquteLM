@@ -145,6 +145,39 @@
     "fallbackWhatsapp": "Se a conversa não abriu, <link>clique aqui para abrir o WhatsApp</link>.",
     "fallbackEmail": "Se nada abriu, <link>clique aqui</link> ou escreva diretamente para {email}."
   },
+  "Tickets": {
+    "dialogLabel": "Comprar ingresso",
+    "ticketType": "Tipo de ingresso",
+    "quantity": "Quantidade",
+    "decrease": "Diminuir quantidade",
+    "increase": "Aumentar quantidade",
+    "total": "Total",
+    "paymentNote": "Você vai para o ambiente seguro do Mercado Pago para pagar com Pix, cartão ou boleto. Seus dados de pagamento são informados só lá.",
+    "privacyLink": "Política de Privacidade",
+    "submit": "Ir para o pagamento",
+    "submitting": "Abrindo o Mercado Pago...",
+    "close": "Fechar",
+    "errorTitle": "Não foi possível abrir o pagamento agora.",
+    "errorBody": "Tente novamente em alguns minutos ou <link>fale com a gente pelo WhatsApp</link>.",
+    "whatsappMessage": "Olá! Tentei comprar ingresso para o *{event}* pelo site, mas o pagamento não abriu. Pode me ajudar?",
+    "Return": {
+      "Metadata": { "title": "Pagamento – A Sala do Banquete" },
+      "approvedTitle": "Pagamento confirmado!",
+      "approvedBody": "Obrigado! O Mercado Pago enviou o comprovante para o seu e-mail. Em breve entraremos em contato com os detalhes do evento.",
+      "pendingTitle": "Pagamento em processamento",
+      "pendingBody": "Seu pagamento ainda está sendo processado (comum em boleto e em algumas análises de cartão). Você recebe a confirmação por e-mail assim que for aprovado.",
+      "rejectedTitle": "Pagamento não aprovado",
+      "rejectedBody": "O pagamento não foi concluído e nada foi cobrado. Você pode tentar de novo com outro meio de pagamento.",
+      "unknownTitle": "Não conseguimos confirmar o pagamento",
+      "unknownBody": "Se você concluiu o pagamento, o comprovante do Mercado Pago chega por e-mail. Em caso de dúvida, fale com a gente pelo WhatsApp.",
+      "summary": "{description} — {amount}",
+      "orderLabel": "Pedido",
+      "backHome": "Voltar para o início",
+      "tryAgain": "Tentar novamente",
+      "help": "Falar pelo WhatsApp",
+      "helpMessage": "Olá! Fiz uma compra de ingresso pelo site (pedido {order}) e gostaria de ajuda."
+    }
+  },
   "Privacy": {
     "Metadata": {
       "title": "Política de Privacidade – A Sala do Banquete",
@@ -161,7 +194,7 @@
       },
       "collected": {
         "title": "Quais dados coletamos",
-        "body": "O site só recebe dados pessoais quando você preenche o formulário de orçamento:",
+        "body": "O site recebe dados pessoais em duas situações. No formulário de orçamento:",
         "items": [
           "Nome",
           "Telefone",
@@ -170,25 +203,30 @@
           "Número de convidados",
           "Mensagem (opcional)"
         ],
-        "note": "Não pedimos CPF, endereço, dados de pagamento nem dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem."
+        "note": "Na compra de ingressos, os dados são informados no Mercado Pago (veja \"Compra de ingressos\" abaixo). Não pedimos dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem."
       },
       "flow": {
         "title": "Como os dados chegam até nós",
         "body": "O formulário não envia nada para um servidor da Sala do Banquete. Ao clicar em enviar, o seu próprio navegador monta a mensagem e abre o WhatsApp ou o seu aplicativo de e-mail já preenchido. Você confere o texto e decide se envia. Os dados só chegam até nós se você enviar a mensagem por lá, e nada fica gravado no site."
       },
+      "payments": {
+        "title": "Compra de ingressos",
+        "body": "Quando você compra um ingresso, o pagamento acontece inteiramente no ambiente do Mercado Pago: é lá que você informa nome, e-mail, CPF e dados de pagamento, conforme a política de privacidade do Mercado Pago. O site não recebe nem armazena dados de cartão, documentos ou senhas. Depois da compra, a Sala do Banquete recebe do Mercado Pago o nome e o e-mail de quem comprou, o tipo e a quantidade de ingressos e o valor pago, para montar a lista de convidados e entrar em contato sobre o evento."
+      },
       "purpose": {
         "title": "Para que usamos",
-        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento e, se você contratar, para organizar o seu evento. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
+        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento, para organizar o seu evento se você nos contratar e, na compra de ingressos, para montar a lista de convidados e falar com você sobre o evento. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
       },
       "legalBasis": {
         "title": "Base legal",
-        "body": "O tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Ou seja, você nos procura pedindo um orçamento. A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar."
+        "body": "Para o orçamento, o tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Na compra de ingressos, a base é a execução do contrato (o mesmo art. 7º, inciso V) e o cumprimento de obrigações legais e fiscais (art. 7º, inciso II). A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar."
       },
       "sharing": {
         "title": "Com quem os dados são compartilhados",
         "body": "Para funcionar, o site e o atendimento dependem de alguns serviços de terceiros:",
         "items": [
           "WhatsApp (Meta) ou o seu provedor de e-mail, que transportam a mensagem que você decide enviar.",
+          "Mercado Pago, que processa o pagamento dos ingressos e nos informa os dados da compra.",
           "Google (Gmail), onde fica a caixa de e-mail da Sala do Banquete.",
           "Vercel, empresa que hospeda o site e registra dados técnicos de acesso, como endereço IP e tipo de navegador, por motivos de segurança e funcionamento."
         ],
@@ -196,7 +234,7 @@
       },
       "retention": {
         "title": "Por quanto tempo guardamos",
-        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Você pode pedir a exclusão antes disso a qualquer momento."
+        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Os registros de compra de ingressos ficam no Mercado Pago pelo prazo exigido pela legislação fiscal. Você pode pedir a exclusão do que não for obrigatório manter a qualquer momento."
       },
       "cookies": {
         "title": "Cookies",

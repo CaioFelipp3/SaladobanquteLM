@@ -9,6 +9,7 @@ const sectionIds = [
   "controller",
   "collected",
   "flow",
+  "payments",
   "purpose",
   "legalBasis",
   "sharing",
