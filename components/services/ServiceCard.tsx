@@ -13,15 +13,20 @@ export default function ServiceCard({
   id,
   icon,
   index,
+  onContact,
 }: {
   id: ServiceId;
   icon: string;
   index: number;
+  onContact: () => void;
 }) {
   const t = useTranslations("Services");
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-banquete-rose-soft-2 hover:shadow-lg">
+    // relative + o after:inset-0 do botão: o card inteiro vira área de clique
+    // sem envolver o <h2> num <button> (HTML inválido, e o leitor de tela
+    // leria o card todo como o nome do botão).
+    <div className="group relative flex flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-banquete-rose-soft-2 hover:shadow-lg">
       <div className="flex aspect-[3/2] items-center justify-center bg-banquete-rose-soft text-sm text-banquete-dark/70">
         {t("imagePlaceholder")}
       </div>
@@ -35,6 +40,14 @@ export default function ServiceCard({
           {t(`items.${id}.title`)}
         </h2>
         <p className="text-sm text-banquete-dark/70">{t("descriptionPlaceholder")}</p>
+        <button
+          type="button"
+          onClick={onContact}
+          aria-haspopup="dialog"
+          className="mt-auto pt-4 text-xs font-semibold uppercase tracking-wide text-banquete-rose underline-offset-4 after:absolute after:inset-0 group-hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-banquete-rose"
+        >
+          {t("contact.button")}
+        </button>
       </div>
     </div>
   );

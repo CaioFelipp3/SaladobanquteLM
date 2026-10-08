@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import ServiceCard from "@/components/services/ServiceCard";
+import ServicesGrid from "@/components/services/ServicesGrid";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
-import { services } from "@/lib/data/services";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { bodyText, buttonPrimary, pageHeading } from "@/lib/ui/styles";
 
@@ -37,11 +36,7 @@ export default async function ServicosPage({
       <h1 className={pageHeading}>{t("heading")}</h1>
       <p className={bodyText}>{t("intro")}</p>
 
-      <div className="mt-8 grid grid-cols-2 gap-3.5 xs:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] xs:gap-5">
-        {services.map((service, index) => (
-          <ServiceCard key={service.id} id={service.id} icon={service.icon} index={index} />
-        ))}
-      </div>
+      <ServicesGrid />
 
       <div className="mt-8 text-center">
         <a

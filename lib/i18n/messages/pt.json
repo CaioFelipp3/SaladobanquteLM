@@ -84,6 +84,18 @@
       "casamento": { "title": "Casamento" },
       "cha-de-panela": { "title": "Chá de Panela" },
       "consultoria-acervo": { "title": "Consultoria para Montar Acervo" }
+    },
+    "contact": {
+      "button": "Solicitar informações",
+      "dialogLabel": "Falar sobre",
+      "dialogIntro": "Como você prefere falar com a gente sobre este serviço?",
+      "whatsapp": "Conversar pelo WhatsApp",
+      "email": "Enviar e-mail",
+      "close": "Fechar",
+      "opensInNewTab": "(abre em nova aba)",
+      "whatsappMessage": "Olá! Vim pelo site e tenho interesse no serviço *{service}* da Sala do Banquete. Poderia me passar mais informações?",
+      "emailSubject": "Interesse no serviço: {service}",
+      "emailBody": "Olá!\n\nVim pelo site e tenho interesse no serviço \"{service}\" da Sala do Banquete. Poderia me passar mais informações?\n\nObrigado(a)!"
     }
   },
   "Budget": {

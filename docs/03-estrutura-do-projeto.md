@@ -20,7 +20,7 @@ Sala do Banquete LM/
 ├── components/
 │   ├── layout/    → Navbar, Footer, LanguageSwitcher, SkipLink, WhatsappFloatButton (usados em toda página)
 │   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact (só usados na Home)
-│   ├── services/  → ServiceCard
+│   ├── services/  → ServicesGrid (grade + estado), ServiceCard, ServiceContactDialog (popup WhatsApp/e-mail)
 │   ├── budget/    → BudgetForm
 │   └── icons/     → WhatsappIcon (SVG reaproveitado em mais de um lugar)
 ├── lib/
