@@ -1,20 +1,15 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { bodyText, sectionHeading } from "@/lib/ui/styles";
 
 export default function About() {
   const t = useTranslations("Home.About");
 
   return (
     <section id="sobre" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className="mb-5 mt-0 font-serif text-[26px] leading-tight text-banquete-dark xs:text-3xl sm:text-4xl">
-        {t("heading")}
-      </h2>
-      <p className="my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-        {t("paragraph1")}
-      </p>
-      <p className="my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-        {t("paragraph2")}
-      </p>
+      <h2 className={sectionHeading}>{t("heading")}</h2>
+      <p className={bodyText}>{t("paragraph1")}</p>
+      <p className={bodyText}>{t("paragraph2")}</p>
 
       <div className="mx-auto mt-8 max-w-[700px]">
         <div className="relative aspect-[4/3] min-h-[180px] w-full overflow-hidden rounded-[10px] bg-banquete-border">

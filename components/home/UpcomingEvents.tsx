@@ -1,22 +1,19 @@
 import { useTranslations } from "next-intl";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
+import { bodyText, buttonPrimary, sectionHeading } from "@/lib/ui/styles";
 
 export default function UpcomingEvents() {
   const t = useTranslations("Home.Events");
 
   return (
     <section id="eventos" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className="mb-5 mt-0 font-serif text-[26px] leading-tight text-banquete-dark xs:text-3xl sm:text-4xl">
-        {t("heading")}
-      </h2>
-      <p className="my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-        {t("intro")}
-      </p>
+      <h2 className={sectionHeading}>{t("heading")}</h2>
+      <p className={bodyText}>{t("intro")}</p>
       <a
         href={buildWhatsappUrl(t("ctaMessage"))}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-2.5 inline-block min-h-11 rounded-md bg-banquete-rose px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+        className={`${buttonPrimary} mt-2.5`}
       >
         {t("ctaButton")}
       </a>
@@ -40,7 +37,7 @@ export default function UpcomingEvents() {
               href={buildWhatsappUrl(t("chaDasFlores.ctaMessage"))}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto inline-block min-h-11 rounded-md bg-banquete-rose px-5 py-3 text-center text-xs font-semibold uppercase text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+              className={`${buttonPrimary} mt-auto text-center`}
             >
               {t("chaDasFlores.ctaButton")}
             </a>

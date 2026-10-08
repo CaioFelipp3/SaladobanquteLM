@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import BudgetForm from "@/components/budget/BudgetForm";
 import { routing } from "@/lib/i18n/routing";
+import { pageHeading } from "@/lib/ui/styles";
 
 export async function generateMetadata({
   params,
@@ -43,7 +44,7 @@ export default async function OrcamentoPage({
 
   return (
     <section className="mx-auto max-w-[900px] px-5 py-12">
-      <h1 className="mb-5 mt-0 text-center font-serif text-[30px] leading-tight text-banquete-dark xs:text-4xl sm:text-5xl">
+      <h1 className={`${pageHeading} text-center`}>
         {t("heading")}
       </h1>
       <p className="mx-auto max-w-[560px] text-center text-[15px] leading-relaxed text-banquete-dark xs:text-base">

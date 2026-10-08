@@ -4,6 +4,7 @@ import ServiceCard from "@/components/services/ServiceCard";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
 import { routing } from "@/lib/i18n/routing";
+import { bodyText, buttonPrimary, pageHeading } from "@/lib/ui/styles";
 
 export async function generateMetadata({
   params,
@@ -45,12 +46,8 @@ export default async function ServicosPage({
 
   return (
     <section className="mx-auto max-w-[900px] px-5 py-12">
-      <h1 className="mb-5 mt-0 font-serif text-[30px] leading-tight text-banquete-dark xs:text-4xl sm:text-5xl">
-        {t("heading")}
-      </h1>
-      <p className="my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-        {t("intro")}
-      </p>
+      <h1 className={pageHeading}>{t("heading")}</h1>
+      <p className={bodyText}>{t("intro")}</p>
 
       <div className="mt-8 grid grid-cols-2 gap-3.5 xs:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] xs:gap-5">
         {services.map((service, index) => (
@@ -63,7 +60,7 @@ export default async function ServicosPage({
           href={buildWhatsappUrl(t("ctaMessage"))}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block min-h-11 rounded-md bg-banquete-rose px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+          className={buttonPrimary}
         >
           {t("ctaButton")}
         </a>

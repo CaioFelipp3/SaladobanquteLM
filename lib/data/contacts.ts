@@ -10,11 +10,17 @@ export const contacts = {
   email: "saladobanquete.lm@gmail.com",
   address: "R. Constante Sodré, 364 - Santa Lucia, Vitória, ES",
   mapsUrl:
-    "https://maps.google.com/maps?q=R.+Constante+Sodré,+364,+Santa+Lucia,+Vitória,+ES",
+    "https://maps.google.com/maps?q=R.+Constante+Sodr%C3%A9,+364,+Santa+Lucia,+Vit%C3%B3ria,+ES",
 } as const;
 
-export function buildWhatsappUrl(message: string): string {
-  return `https://wa.me/${contacts.whatsappNumber}?text=${encodeURIComponent(message)}`;
+/**
+ * Link wa.me para o número da empresa. A mensagem passa por
+ * encodeURIComponent: qualquer &, #, ? ou quebra de linha digitada pelo
+ * visitante vira texto literal, sem como injetar parâmetros extras na URL.
+ */
+export function buildWhatsappUrl(message?: string): string {
+  const base = `https://wa.me/${contacts.whatsappNumber}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
 export function buildMailtoUrl(subject: string, body: string): string {

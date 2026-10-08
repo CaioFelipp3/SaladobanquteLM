@@ -3,8 +3,11 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { bodyText, focusRing, sectionHeading } from "@/lib/ui/styles";
 
 const TOTAL_IMAGES = 11;
+
+const arrowButton = `flex h-11 w-11 items-center justify-center rounded-full bg-banquete-rose text-xl text-white transition-colors hover:bg-banquete-rose-dark ${focusRing}`;
 
 // Client Component: carrossel precisa de estado (imagem atual) e de eventos
 // de teclado/toque, que só existem no navegador.
@@ -41,12 +44,8 @@ export default function Gallery() {
 
   return (
     <section id="galeria" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className="mb-5 mt-0 font-serif text-[26px] leading-tight text-banquete-dark xs:text-3xl sm:text-4xl">
-        {t("heading")}
-      </h2>
-      <p className="my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-        {t("intro")}
-      </p>
+      <h2 className={sectionHeading}>{t("heading")}</h2>
+      <p className={bodyText}>{t("intro")}</p>
 
       <div
         className="relative my-5 aspect-[3/4] min-h-60 w-full overflow-hidden rounded-[10px] bg-banquete-border focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:aspect-[4/3]"
@@ -73,7 +72,7 @@ export default function Gallery() {
           type="button"
           aria-label={t("prevLabel")}
           onClick={prev}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-banquete-rose text-xl text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+          className={arrowButton}
         >
           ‹
         </button>
@@ -81,7 +80,7 @@ export default function Gallery() {
           type="button"
           aria-label={t("nextLabel")}
           onClick={next}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-banquete-rose text-xl text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+          className={arrowButton}
         >
           ›
         </button>
