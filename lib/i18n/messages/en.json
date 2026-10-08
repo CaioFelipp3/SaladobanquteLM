@@ -113,7 +113,8 @@
       "eventDateTooFar": "The event date can be at most 3 years ahead",
       "guestCountInvalid": "Enter a guest count between 1 and 1000",
       "messageTooLong": "The message can be at most 500 characters",
-      "messageInvalid": "The message contains invisible or control characters that are not allowed"
+      "messageInvalid": "The message contains invisible or control characters that are not allowed",
+      "privacyRequired": "Please confirm you have read the Privacy Policy to continue"
     },
     "submitWhatsapp": "Send via WhatsApp",
     "submitEmail": "Send via email",
@@ -123,12 +124,94 @@
     "successEmail": "We opened your email app with your details filled in — just review and send.",
     "errorTitle": "Couldn't continue",
     "errorGeneric": "Please review the highlighted fields below and try again.",
-    "privacyNote": "We only use your details to respond to this quote request — nothing is stored on our servers.",
+    "privacyNote": "When you send, you leave this website: WhatsApp or your email app opens with the message ready, and only you decide whether to send it. The website does not store any data.",
     "messageTemplate": "Hello! I'd like to request a quote for Sala do Banquete.\nName: {name}\nPhone: {phone}\nService: {service}\nEvent date: {eventDate}\nNumber of guests: {guestCount}\nMessage: {message}",
-    "emailSubject": "Quote request – {service}"
+    "emailSubject": "Quote request – {service}",
+    "privacyConsent": "I have read and acknowledge the <link>Privacy Policy</link>",
+    "opensInNewTab": "(opens in a new tab)"
+  },
+  "Privacy": {
+    "Metadata": {
+      "title": "Privacy Policy – A Sala do Banquete",
+      "description": "How Sala do Banquete handles the personal data sent through the quote request form, in line with Brazil's LGPD."
+    },
+    "heading": "Privacy Policy",
+    "updatedAt": "Last updated: October 7, 2026",
+    "intro": "This policy explains, in plain terms, which personal data Sala do Banquete handles when you use this website, why, and what your rights are under Brazil's General Data Protection Law (Law No. 13,709/2018, LGPD).",
+    "contactLabel": "Privacy contact:",
+    "sections": {
+      "controller": {
+        "title": "Who is responsible for your data",
+        "body": "A Sala do Banquete – Liliam Müller, located at R. Constante Sodré, 364 - Santa Lucia, Vitória, ES, Brazil, is the controller of the personal data handled through this website. For any privacy matter, contact us at the email address at the end of this page."
+      },
+      "collected": {
+        "title": "What data we collect",
+        "body": "The website only receives personal data when you fill in the quote request form:",
+        "items": [
+          "Name",
+          "Phone number",
+          "Type of service",
+          "Expected event date",
+          "Number of guests",
+          "Message (optional)"
+        ],
+        "note": "We do not ask for ID numbers, home address, payment details or sensitive data (such as health, religion or ethnic origin). Please do not include this kind of information in the message field."
+      },
+      "flow": {
+        "title": "How the data reaches us",
+        "body": "The form does not send anything to a Sala do Banquete server. When you click send, your own browser builds the message and opens WhatsApp or your email app with it already filled in. You review the text and decide whether to send it. The data only reaches us if you send the message there, and nothing is stored on the website."
+      },
+      "purpose": {
+        "title": "What we use it for",
+        "body": "We use the data only to answer your quote request and, if you hire us, to organize your event. We do not use your data for advertising, we do not sell it and we do not share it with third parties for commercial purposes."
+      },
+      "legalBasis": {
+        "title": "Legal basis",
+        "body": "Processing is based on Article 7, item V, of the LGPD: preliminary steps related to a contract, at the request of the data subject. In other words, you contact us asking for a quote. The acknowledgment checkbox on the form exists to make sure you have read this policy before sending."
+      },
+      "sharing": {
+        "title": "Who the data is shared with",
+        "body": "To work, the website and our customer service rely on a few third-party services:",
+        "items": [
+          "WhatsApp (Meta) or your email provider, which carry the message you decide to send.",
+          "Google (Gmail), which hosts Sala do Banquete's mailbox.",
+          "Vercel, the company that hosts the website and logs technical access data, such as IP address and browser type, for security and operational reasons."
+        ],
+        "note": "Each service follows its own privacy policy, and some may store data outside Brazil (LGPD, Article 33)."
+      },
+      "retention": {
+        "title": "How long we keep it",
+        "body": "Quote conversations and emails are kept for up to 12 months after the last contact when no contract is signed. If there is a contract, the data is kept for as long as needed to meet legal and tax obligations. You can ask for deletion earlier at any time."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "The website uses a single cookie, NEXT_LOCALE, which stores your chosen language (Portuguese or English) and expires when you close your browser. It is required for the website to work. We do not use advertising cookies, analytics tools or tracking pixels."
+      },
+      "security": {
+        "title": "Security",
+        "body": "The website is served only over an encrypted connection (HTTPS) and uses security headers that make common attacks harder. Since the form does not store data on a server, there is no database of quote requests on the website that could leak."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "Under the LGPD (Article 18), you may, at any time and free of charge:",
+        "items": [
+          "Confirm whether we process your data and access it.",
+          "Correct incomplete, inaccurate or outdated data.",
+          "Request deletion of your data.",
+          "Find out who we share your data with.",
+          "Object to the processing."
+        ],
+        "note": "To exercise these rights, write to the email address below. We will reply within 15 days. You may also file a complaint with Brazil's National Data Protection Authority (ANPD)."
+      },
+      "changes": {
+        "title": "Changes to this policy",
+        "body": "If this policy changes, the update date at the top of this page will change too."
+      }
+    }
   },
   "Footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy"
   },
   "WhatsappFloat": {
     "ariaLabel": "Chat on WhatsApp",

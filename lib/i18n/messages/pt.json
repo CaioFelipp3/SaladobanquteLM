@@ -113,7 +113,8 @@
       "eventDateTooFar": "A data do evento pode ser no máximo 3 anos à frente",
       "guestCountInvalid": "Informe um número de convidados entre 1 e 1000",
       "messageTooLong": "A mensagem pode ter no máximo 500 caracteres",
-      "messageInvalid": "A mensagem contém caracteres invisíveis ou de controle não permitidos"
+      "messageInvalid": "A mensagem contém caracteres invisíveis ou de controle não permitidos",
+      "privacyRequired": "Confirme que leu a Política de Privacidade para continuar"
     },
     "submitWhatsapp": "Enviar pelo WhatsApp",
     "submitEmail": "Enviar por e-mail",
@@ -123,12 +124,94 @@
     "successEmail": "Abrimos seu aplicativo de e-mail com os dados preenchidos — é só conferir e enviar.",
     "errorTitle": "Não foi possível continuar",
     "errorGeneric": "Revise os campos destacados abaixo e tente novamente.",
-    "privacyNote": "Usamos seus dados apenas para responder a esta solicitação de orçamento — nada é armazenado em nossos servidores.",
+    "privacyNote": "Ao enviar, você sai deste site: o WhatsApp ou o seu aplicativo de e-mail abre com a mensagem pronta, e só você decide se a envia. O site não armazena nenhum dado.",
     "messageTemplate": "Olá! Gostaria de solicitar um orçamento para a Sala do Banquete.\nNome: {name}\nTelefone: {phone}\nServiço: {service}\nData do evento: {eventDate}\nNúmero de convidados: {guestCount}\nMensagem: {message}",
-    "emailSubject": "Solicitação de orçamento – {service}"
+    "emailSubject": "Solicitação de orçamento – {service}",
+    "privacyConsent": "Li e estou ciente da <link>Política de Privacidade</link>",
+    "opensInNewTab": "(abre em nova aba)"
+  },
+  "Privacy": {
+    "Metadata": {
+      "title": "Política de Privacidade – A Sala do Banquete",
+      "description": "Como a Sala do Banquete trata os dados pessoais enviados pelo formulário de orçamento, de acordo com a LGPD."
+    },
+    "heading": "Política de Privacidade",
+    "updatedAt": "Última atualização: 7 de outubro de 2026",
+    "intro": "Esta política explica, de forma direta, quais dados pessoais a Sala do Banquete trata quando você usa este site, para quê e quais são os seus direitos segundo a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).",
+    "contactLabel": "Contato sobre privacidade:",
+    "sections": {
+      "controller": {
+        "title": "Quem é responsável pelos seus dados",
+        "body": "A Sala do Banquete – Liliam Müller, com endereço na R. Constante Sodré, 364 - Santa Lucia, Vitória, ES, é a controladora dos dados pessoais tratados a partir deste site. Para qualquer assunto de privacidade, fale conosco pelo e-mail informado no fim desta página."
+      },
+      "collected": {
+        "title": "Quais dados coletamos",
+        "body": "O site só recebe dados pessoais quando você preenche o formulário de orçamento:",
+        "items": [
+          "Nome",
+          "Telefone",
+          "Tipo de serviço desejado",
+          "Data prevista do evento",
+          "Número de convidados",
+          "Mensagem (opcional)"
+        ],
+        "note": "Não pedimos CPF, endereço, dados de pagamento nem dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem."
+      },
+      "flow": {
+        "title": "Como os dados chegam até nós",
+        "body": "O formulário não envia nada para um servidor da Sala do Banquete. Ao clicar em enviar, o seu próprio navegador monta a mensagem e abre o WhatsApp ou o seu aplicativo de e-mail já preenchido. Você confere o texto e decide se envia. Os dados só chegam até nós se você enviar a mensagem por lá, e nada fica gravado no site."
+      },
+      "purpose": {
+        "title": "Para que usamos",
+        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento e, se você contratar, para organizar o seu evento. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
+      },
+      "legalBasis": {
+        "title": "Base legal",
+        "body": "O tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Ou seja, você nos procura pedindo um orçamento. A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar."
+      },
+      "sharing": {
+        "title": "Com quem os dados são compartilhados",
+        "body": "Para funcionar, o site e o atendimento dependem de alguns serviços de terceiros:",
+        "items": [
+          "WhatsApp (Meta) ou o seu provedor de e-mail, que transportam a mensagem que você decide enviar.",
+          "Google (Gmail), onde fica a caixa de e-mail da Sala do Banquete.",
+          "Vercel, empresa que hospeda o site e registra dados técnicos de acesso, como endereço IP e tipo de navegador, por motivos de segurança e funcionamento."
+        ],
+        "note": "Cada serviço segue a sua própria política de privacidade, e alguns podem armazenar dados fora do Brasil (LGPD, art. 33)."
+      },
+      "retention": {
+        "title": "Por quanto tempo guardamos",
+        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Você pode pedir a exclusão antes disso a qualquer momento."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "O site usa um único cookie, NEXT_LOCALE, que guarda o idioma escolhido (português ou inglês) e expira quando você fecha o navegador. Ele é necessário para o funcionamento do site. Não usamos cookies de publicidade, ferramentas de análise (analytics) nem pixels de rastreamento."
+      },
+      "security": {
+        "title": "Segurança",
+        "body": "O site é servido apenas por conexão criptografada (HTTPS) e usa cabeçalhos de segurança que dificultam ataques comuns. Como o formulário não grava dados em servidor, não existe no site um banco de dados de orçamentos que possa vazar."
+      },
+      "rights": {
+        "title": "Seus direitos",
+        "body": "Pela LGPD (art. 18), você pode, a qualquer momento e sem custo:",
+        "items": [
+          "Confirmar se tratamos seus dados e ter acesso a eles.",
+          "Corrigir dados incompletos, inexatos ou desatualizados.",
+          "Pedir a eliminação dos seus dados.",
+          "Saber com quem compartilhamos seus dados.",
+          "Opor-se ao tratamento."
+        ],
+        "note": "Para exercer esses direitos, escreva para o e-mail abaixo. Responderemos em até 15 dias. Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD)."
+      },
+      "changes": {
+        "title": "Alterações nesta política",
+        "body": "Se esta política mudar, a data de atualização no topo da página será alterada."
+      }
+    }
   },
   "Footer": {
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "privacy": "Política de Privacidade"
   },
   "WhatsappFloat": {
     "ariaLabel": "Falar pelo WhatsApp",

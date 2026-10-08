@@ -94,6 +94,11 @@ export const budgetFormSchema = z.object({
     .max(500, "messageTooLong")
     .refine((value) => !CONTROL_CHARS_EXCEPT_NEWLINE.test(value), "messageInvalid")
     .refine((value) => !SPOOFING_CHARS.test(value), "messageInvalid"),
+
+  // Ciência da Política de Privacidade (/privacidade). Não é a base legal do
+  // tratamento (essa é o art. 7º, V da LGPD), mas garante transparência:
+  // ninguém envia dados sem ter tido a chance de ler a política.
+  privacyAccepted: z.literal(true, "privacyRequired"),
 });
 
 /** "2027-05-20" → Date à meia-noite no fuso do visitante (não UTC). */
@@ -127,4 +132,5 @@ export type BudgetFormInput = {
   eventDate: string;
   guestCount: string;
   message: string;
+  privacyAccepted: boolean;
 };

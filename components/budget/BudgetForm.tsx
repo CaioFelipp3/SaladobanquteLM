@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { buildMailtoUrl, buildWhatsappUrl } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
+import { Link } from "@/lib/i18n/navigation";
 import { budgetFormSchema, parseLocalDate, type BudgetFormInput } from "@/lib/validation/budget";
 
 const emptyValues: BudgetFormInput = {
@@ -13,6 +14,7 @@ const emptyValues: BudgetFormInput = {
   eventDate: "",
   guestCount: "",
   message: "",
+  privacyAccepted: false,
 };
 
 type FieldErrors = Partial<Record<keyof BudgetFormInput, string>>;
@@ -51,7 +53,12 @@ export default function BudgetForm() {
     return (
       event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     ) => {
-      setValues((prev) => ({ ...prev, [field]: event.target.value }));
+      const { target } = event;
+      const value =
+        target instanceof HTMLInputElement && target.type === "checkbox"
+          ? target.checked
+          : target.value;
+      setValues((prev) => ({ ...prev, [field]: value }));
     };
   }
 
@@ -226,6 +233,41 @@ export default function BudgetForm() {
         <FieldError id="budget-message-error" message={fieldError("message")} />
       </div>
 
+      <div className="mb-5">
+        <div className="flex items-start gap-2.5">
+          <input
+            id="budget-privacyAccepted"
+            name="privacyAccepted"
+            type="checkbox"
+            checked={values.privacyAccepted}
+            onChange={handleChange("privacyAccepted")}
+            aria-invalid={Boolean(fieldError("privacyAccepted"))}
+            aria-describedby={
+              fieldError("privacyAccepted") ? "budget-privacyAccepted-error" : undefined
+            }
+            className="mt-1 h-4 w-4 shrink-0 accent-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+          />
+          <label htmlFor="budget-privacyAccepted" className="text-sm text-banquete-dark">
+            {t.rich("privacyConsent", {
+              link: (chunks) => (
+                <Link
+                  href="/privacidade"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-banquete-rose underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+                >
+                  {chunks}
+                  <span className="sr-only"> {t("opensInNewTab")}</span>
+                </Link>
+              ),
+            })}
+          </label>
+        </div>
+        <FieldError id="budget-privacyAccepted-error" message={fieldError("privacyAccepted")} />
+      </div>
+
+      <p className="mb-5 text-xs leading-relaxed text-banquete-dark/70">{t("privacyNote")}</p>
+
       <div className="flex flex-col gap-3 xs:flex-row">
         <button
           type="button"
@@ -262,8 +304,6 @@ export default function BudgetForm() {
           </p>
         )}
       </div>
-
-      <p className="mt-4 text-center text-xs text-banquete-dark/50">{t("privacyNote")}</p>
     </form>
   );
 }
