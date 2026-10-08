@@ -33,7 +33,7 @@ export default function Navbar() {
           toggleRef.current?.focus();
         }
       }}
-      className="fixed inset-x-0 top-0 z-50 flex bg-banquete-bg/97 px-5 py-4 shadow-sm sm:py-3.5"
+      className="fixed inset-x-0 top-0 z-50 flex bg-banquete-bg/97 px-5 py-4 shadow-sm sm:justify-center sm:py-3.5"
     >
       <button
         ref={toggleRef}
