@@ -12,7 +12,7 @@ export default function Hero() {
           alt={t("logoAlt")}
           width={300}
           height={140}
-          priority
+          preload
           className="mx-auto h-auto w-full max-w-[300px]"
         />
       </div>

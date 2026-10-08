@@ -4,18 +4,32 @@
  * Paleta e tipografia extraídas de css/style.css (site original em HTML puro).
  * --color-banquete-* vira automaticamente classes utilitárias como bg-banquete-rose,
  * text-banquete-dark, border-banquete-gold, etc.
+ *
+ * Contraste (WCAG 2.2 AA — 4.5:1 para texto, 3:1 para ícones e bordas de campo):
+ * o rosa original (#b8688a) dava 3.9:1 com texto branco e 3.6:1 como texto sobre
+ * o fundo creme — reprovado. Foi escurecido 13%, o mínimo para passar, mantendo
+ * o mesmo matiz. Dourado e verde do WhatsApp precisariam escurecer demais para
+ * servir de texto, então ganharam variantes "-text"/tokens próprios só para os
+ * pontos onde carregam texto; o tom original continua nos usos decorativos.
+ * Ver docs/08-auditoria-seguranca.md (seção de acessibilidade).
  */
 @theme {
   --color-banquete-bg: #faf5ef;
   --color-banquete-dark: #3d2b35;
-  --color-banquete-rose: #b8688a;
-  --color-banquete-rose-dark: #9a5472;
+  --color-banquete-rose: #a05a78; /* original #b8688a — 4.5:1+ com branco e sobre o creme */
+  --color-banquete-rose-dark: #884a64; /* hover, mais escuro que o rose */
   --color-banquete-gold: #c9a84c;
+  --color-banquete-gold-text: #8b7434; /* dourado legível sobre branco (4.5:1) */
   --color-banquete-gold-light: #c4a882;
   --color-banquete-rose-soft: #f5e9ee;
   --color-banquete-gold-soft: #f3ead4;
   --color-banquete-rose-soft-2: #ecdce3;
-  --color-banquete-border: #f0f0f0;
+  --color-banquete-border: #f0f0f0; /* só divisórias decorativas */
+  --color-banquete-input-border: #948a90; /* borda de campo de formulário (3:1) */
+
+  /* Verde da marca WhatsApp (#25d366) não chega a 4.5:1 com texto branco. */
+  --color-whatsapp: #188741;
+  --color-whatsapp-dark: #15783a;
 
   --font-serif: var(--font-cormorant), Georgia, serif;
   --font-sans: var(--font-montserrat), Arial, Helvetica, sans-serif;
@@ -32,4 +46,19 @@
 
 body {
   font-family: var(--font-sans);
+}
+
+/*
+ * Quem ativou "reduzir movimento" no sistema (labirintite, enxaqueca, TDAH)
+ * não recebe as animações de hover/menu — WCAG 2.3.3.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

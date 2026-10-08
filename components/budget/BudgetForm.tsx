@@ -26,11 +26,11 @@ type Status =
   | { kind: "sent"; channel: "whatsapp" | "email"; url: string };
 
 const inputClasses =
-  "w-full rounded-md border bg-white px-4 py-2.5 text-[15px] text-banquete-dark placeholder:text-banquete-dark/40 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
+  "w-full rounded-md border bg-white px-4 py-2.5 text-[15px] text-banquete-dark placeholder:text-banquete-dark/70 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
 // Cor da borda em classes separadas: aplicar "border-banquete-border" e
 // "border-red-500" juntas no mesmo elemento deixaria o resultado depender da
 // ordem do CSS gerado, não da ordem no className.
-const validBorderClasses = "border-banquete-border focus:border-banquete-rose";
+const validBorderClasses = "border-banquete-input-border focus:border-banquete-rose";
 const invalidBorderClasses = "border-red-500 focus:border-red-500";
 const linkClasses =
   "font-semibold text-banquete-rose underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose";
@@ -233,7 +233,7 @@ export default function BudgetForm() {
 
       <div className="mb-5">
         <label htmlFor="budget-message" className={labelClasses}>
-          {t("fields.message")} <span className="font-normal text-banquete-dark/50">{t("messageOptional")}</span>
+          {t("fields.message")} <span className="font-normal text-banquete-dark/70">{t("messageOptional")}</span>
         </label>
         <textarea
           {...inputProps("message")}
@@ -285,7 +285,7 @@ export default function BudgetForm() {
           type="button"
           disabled={isSubmitting}
           onClick={() => submit("whatsapp")}
-          className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#25d366] px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-[#1ebc59] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-whatsapp px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-whatsapp-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? t("submitting") : t("submitWhatsapp")}
         </button>
@@ -338,7 +338,7 @@ export default function BudgetForm() {
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="mt-1.5 text-[13px] text-red-600">
+    <p id={id} className="mt-1.5 text-[13px] text-red-700">
       {message}
     </p>
   );

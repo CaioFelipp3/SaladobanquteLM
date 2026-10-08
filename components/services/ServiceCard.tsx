@@ -22,7 +22,7 @@ export default function ServiceCard({
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-banquete-rose-soft-2 hover:shadow-lg">
-      <div className="flex aspect-[3/2] w-full items-center justify-center bg-banquete-rose-soft text-sm text-banquete-dark/50">
+      <div className="flex aspect-[3/2] w-full items-center justify-center bg-banquete-rose-soft text-sm text-banquete-dark/70">
         {t("imagePlaceholder")}
       </div>
       <div className="flex flex-1 flex-col items-center px-5 py-7">

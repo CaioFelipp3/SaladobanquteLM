@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, usePathname } from "@/lib/i18n/navigation";
 import { routing } from "@/lib/i18n/routing";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -12,6 +12,7 @@ export default function Navbar() {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   const links = [
     { href: "/", label: t("home") },
@@ -25,15 +26,23 @@ export default function Navbar() {
   return (
     <nav
       aria-label={t("ariaLabel")}
+      // Esc fecha o menu mobile e devolve o foco ao botão (padrão de disclosure)
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && isOpen) {
+          setIsOpen(false);
+          toggleRef.current?.focus();
+        }
+      }}
       className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-banquete-bg/97 px-5 py-4 shadow-sm sm:justify-start sm:px-5 sm:py-3.5"
     >
       <button
+        ref={toggleRef}
         type="button"
         aria-label={isOpen ? t("closeMenu") : t("openMenu")}
         aria-expanded={isOpen}
         aria-controls="main-nav"
         onClick={() => setIsOpen((open) => !open)}
-        className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col justify-center gap-1.5 p-2 sm:hidden"
+        className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col justify-center gap-1.5 rounded-sm p-2 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:hidden"
       >
         <span
           className={`block h-0.5 w-6 rounded bg-banquete-dark transition-transform duration-300 ${

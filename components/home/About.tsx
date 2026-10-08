@@ -5,7 +5,7 @@ export default function About() {
   const t = useTranslations("Home.About");
 
   return (
-    <section id="sobre" className="mx-auto max-w-[900px] scroll-mt-16 px-5 py-10">
+    <section id="sobre" className="mx-auto max-w-[900px] px-5 py-10">
       <h2 className="mb-5 mt-0 font-serif text-[26px] leading-tight text-banquete-dark xs:text-3xl sm:text-4xl">
         {t("heading")}
       </h2>

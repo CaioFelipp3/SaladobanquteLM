@@ -13,7 +13,8 @@
     "contact": "Contato",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
-    "languageLabel": "Idioma"
+    "languageLabel": "Idioma",
+    "skipToContent": "Pular para o conteúdo"
   },
   "Home": {
     "Hero": {
@@ -123,7 +124,7 @@
     "successWhatsapp": "Abrimos o WhatsApp com os dados preenchidos — é só conferir e enviar por lá.",
     "successEmail": "Abrimos seu aplicativo de e-mail com os dados preenchidos — é só conferir e enviar.",
     "errorTitle": "Não foi possível continuar",
-    "errorGeneric": "Revise os campos destacados abaixo e tente novamente.",
+    "errorGeneric": "Revise os campos com erro e tente novamente.",
     "privacyNote": "Ao enviar, você sai deste site: o WhatsApp ou o seu aplicativo de e-mail abre com a mensagem pronta, e só você decide se a envia. O site não armazena nenhum dado.",
     "messageTemplate": "Olá! Gostaria de solicitar um orçamento para a Sala do Banquete.\nNome: {name}\nTelefone: {phone}\nServiço: {service}\nData do evento: {eventDate}\nNúmero de convidados: {guestCount}\nMensagem: {message}",
     "emailSubject": "Solicitação de orçamento – {service}",

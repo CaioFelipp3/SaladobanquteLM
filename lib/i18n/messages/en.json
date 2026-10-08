@@ -13,7 +13,8 @@
     "contact": "Contact",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "languageLabel": "Language"
+    "languageLabel": "Language",
+    "skipToContent": "Skip to content"
   },
   "Home": {
     "Hero": {
@@ -123,7 +124,7 @@
     "successWhatsapp": "We opened WhatsApp with your details filled in — just review and send.",
     "successEmail": "We opened your email app with your details filled in — just review and send.",
     "errorTitle": "Couldn't continue",
-    "errorGeneric": "Please review the highlighted fields below and try again.",
+    "errorGeneric": "Please review the fields with errors and try again.",
     "privacyNote": "When you send, you leave this website: WhatsApp or your email app opens with the message ready, and only you decide whether to send it. The website does not store any data.",
     "messageTemplate": "Hello! I'd like to request a quote for Sala do Banquete.\nName: {name}\nPhone: {phone}\nService: {service}\nEvent date: {eventDate}\nNumber of guests: {guestCount}\nMessage: {message}",
     "emailSubject": "Quote request – {service}",

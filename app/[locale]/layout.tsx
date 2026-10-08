@@ -5,6 +5,7 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import SkipLink from "@/components/layout/SkipLink";
 import WhatsappFloatButton from "@/components/layout/WhatsappFloatButton";
 import { routing } from "@/lib/i18n/routing";
 import "../globals.css";
@@ -94,11 +95,22 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${cormorant.variable} ${montserrat.variable}`}>
+    // scroll-pt-20: o menu é fixo no topo (≈60px). Sem essa folga, links de
+    // âncora (#sobre) e o foco no primeiro campo inválido do formulário
+    // paravam escondidos atrás dele (WCAG 2.4.11 — foco não obscurecido).
+    <html
+      lang={locale === "pt" ? "pt-BR" : locale}
+      className={`${cormorant.variable} ${montserrat.variable} scroll-pt-20`}
+    >
       <body className="flex min-h-screen flex-col bg-banquete-bg pt-14 text-banquete-dark antialiased sm:pt-[60px]">
         <NextIntlClientProvider>
+          <SkipLink />
           <Navbar />
-          <main className="flex-1">{children}</main>
+          {/* tabIndex -1: permite que o "pular para o conteúdo" mova o foco
+              para cá sem tornar o <main> parte da ordem de Tab. */}
+          <main id="conteudo" tabIndex={-1} className="flex-1 focus:outline-none">
+            {children}
+          </main>
           <Footer />
           <WhatsappFloatButton />
         </NextIntlClientProvider>

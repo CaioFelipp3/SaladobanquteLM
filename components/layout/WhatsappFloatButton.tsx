@@ -10,7 +10,7 @@ export default function WhatsappFloatButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("ariaLabel")}
-      className="fixed bottom-5 right-5 z-40 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:bottom-7 sm:right-7"
+      className="fixed bottom-5 right-5 z-40 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:bottom-7 sm:right-7"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
