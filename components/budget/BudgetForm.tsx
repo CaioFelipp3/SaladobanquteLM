@@ -4,11 +4,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { buildMailtoUrl, buildWhatsappUrl } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
-import { budgetFormSchema, type BudgetFormInput } from "@/lib/validation/budget";
+import { budgetFormSchema, parseLocalDate, type BudgetFormInput } from "@/lib/validation/budget";
 
 const emptyValues: BudgetFormInput = {
   name: "",
-  email: "",
   phone: "",
   service: "",
   eventDate: "",
@@ -57,8 +56,7 @@ export default function BudgetForm() {
   }
 
   function formatEventDate(iso: string) {
-    const date = new Date(`${iso}T00:00:00`);
-    return date.toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
+    return parseLocalDate(iso).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -95,7 +93,7 @@ export default function BudgetForm() {
       service: serviceTitle,
       eventDate: formatEventDate(data.eventDate),
       guestCount: data.guestCount,
-      message: data.message?.trim() ? data.message.trim() : "—",
+      message: data.message || "—",
     });
 
     // Nada disso passa por um backend nosso: montamos o link e devolvemos o
@@ -148,21 +146,6 @@ export default function BudgetForm() {
           onChange={handleChange("name")}
         />
         <FieldError id="budget-name-error" message={fieldError("name")} />
-      </div>
-
-      <div className="mb-5">
-        <label htmlFor="budget-email" className={labelClasses}>
-          {t("fields.email")}
-        </label>
-        <input
-          {...inputProps("email")}
-          type="email"
-          autoComplete="email"
-          maxLength={200}
-          value={values.email}
-          onChange={handleChange("email")}
-        />
-        <FieldError id="budget-email-error" message={fieldError("email")} />
       </div>
 
       <div className="mb-5">

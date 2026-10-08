@@ -94,7 +94,6 @@
     "intro": "Preencha os dados abaixo e envie sua solicitação pelo WhatsApp ou por e-mail — responderemos o quanto antes",
     "fields": {
       "name": "Nome",
-      "email": "E-mail",
       "phone": "Telefone",
       "phonePlaceholder": "(27) 99999-9999",
       "service": "Tipo de serviço",
@@ -107,13 +106,14 @@
     "errors": {
       "nameRequired": "Informe seu nome (mínimo 2 caracteres)",
       "nameInvalid": "O nome não pode conter símbolos ou números",
-      "emailInvalid": "Informe um e-mail válido",
       "phoneInvalid": "Informe um telefone válido com DDD, ex: (27) 99999-9999",
       "serviceRequired": "Selecione um serviço",
       "eventDateInvalid": "Informe uma data válida",
       "eventDatePast": "A data do evento não pode ser no passado",
+      "eventDateTooFar": "A data do evento pode ser no máximo 3 anos à frente",
       "guestCountInvalid": "Informe um número de convidados entre 1 e 1000",
-      "messageTooLong": "A mensagem pode ter no máximo 500 caracteres"
+      "messageTooLong": "A mensagem pode ter no máximo 500 caracteres",
+      "messageInvalid": "A mensagem contém caracteres invisíveis ou de controle não permitidos"
     },
     "submitWhatsapp": "Enviar pelo WhatsApp",
     "submitEmail": "Enviar por e-mail",

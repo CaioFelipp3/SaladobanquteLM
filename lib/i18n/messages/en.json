@@ -94,7 +94,6 @@
     "intro": "Fill in the details below and send your request via WhatsApp or email — we'll get back to you as soon as possible",
     "fields": {
       "name": "Name",
-      "email": "Email",
       "phone": "Phone",
       "phonePlaceholder": "(27) 99999-9999",
       "service": "Service type",
@@ -107,13 +106,14 @@
     "errors": {
       "nameRequired": "Enter your name (minimum 2 characters)",
       "nameInvalid": "Name cannot contain symbols or numbers",
-      "emailInvalid": "Enter a valid email address",
       "phoneInvalid": "Enter a valid phone number with area code, e.g. (27) 99999-9999",
       "serviceRequired": "Select a service",
       "eventDateInvalid": "Enter a valid date",
       "eventDatePast": "The event date cannot be in the past",
+      "eventDateTooFar": "The event date can be at most 3 years ahead",
       "guestCountInvalid": "Enter a guest count between 1 and 1000",
-      "messageTooLong": "The message can be at most 500 characters"
+      "messageTooLong": "The message can be at most 500 characters",
+      "messageInvalid": "The message contains invisible or control characters that are not allowed"
     },
     "submitWhatsapp": "Send via WhatsApp",
     "submitEmail": "Send via email",
