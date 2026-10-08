@@ -14,7 +14,9 @@ Sala do Banquete LM/
 │   ├── robots.ts                     → gera /robots.txt
 │   ├── sitemap.ts                    → gera /sitemap.xml (todas as páginas × idiomas)
 │   ├── globals.css                   → import do Tailwind + tema (@theme) + estilos globais
-│   └── favicon.ico
+│   ├── favicon.ico                   → ícone da aba (monograma "Lm", 32px)
+│   ├── icon.png                      → ícone 512px (buscadores, favoritos)
+│   └── apple-icon.png                → ícone da tela inicial do iPhone (180px)
 ├── components/
 │   ├── layout/    → Navbar, Footer, LanguageSwitcher, SkipLink, WhatsappFloatButton (usados em toda página)
 │   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact (só usados na Home)
@@ -24,7 +26,7 @@ Sala do Banquete LM/
 ├── lib/
 │   ├── i18n/
 │   │   ├── routing.ts          → define os idiomas suportados (pt, en) e o idioma padrão
-│   │   ├── navigation.ts       → Link/useRouter que já sabem lidar com o idioma da URL
+│   │   ├── navigation.ts       → Link/usePathname que já sabem lidar com o idioma da URL
 │   │   ├── request.ts          → carrega o dicionário de textos certo para cada request
 │   │   └── messages/
 │   │       ├── pt.json         → todos os textos do site em português

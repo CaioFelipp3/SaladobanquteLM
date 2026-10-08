@@ -125,7 +125,7 @@ Todo `target="_blank"` do site tem `rel="noopener noreferrer"` — conferido no 
 
 - O frontend **não usa nenhuma variável de ambiente**. Os dados de contato (`lib/data/contacts.ts`) são públicos por natureza: já aparecem escritos na página.
 - Nenhuma variável `NEXT_PUBLIC_*` existe. **Regra:** nada sensível leva esse prefixo, porque toda variável com ele vai para o JavaScript do navegador.
-- `.gitignore` cobre `.env`, `.env.local`, `.env.*.local`, `*.pem`, `.vercel`, `transacoes*.json` (dados do backend, com PII) e `js/config.js` (config do site legado, que pode ainda existir localmente).
+- `.gitignore` cobre **todas** as variantes de `.env` (`.env*`, com exceção dos `.env.example`). Antes só cobria `.env`, `.env.local` e `.env.*.local`, deixando de fora `.env.production` e `.env.development`, que o Next.js carrega automaticamente e costumam guardar segredos. Também cobre `*.pem`, `.vercel`, `transacoes*.json` (dados do backend, com PII) e `.claude/settings.json` (permissões pessoais do Claude Code, com caminhos da máquina de quem usa; antes era versionado e servido publicamente pela produção estática).
 - `backend/.env.example` documenta as variáveis do backend com valores fictícios.
 - **Histórico do git verificado:** busca por padrões de token do Mercado Pago (`APP_USR-`), chaves AWS, tokens do GitHub, chaves privadas e atribuições `token|secret|password = "..."` em todos os commits. Nenhum segredo real foi commitado; só os placeholders do `.env.example`.
 

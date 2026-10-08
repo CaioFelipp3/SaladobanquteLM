@@ -28,7 +28,7 @@ Os três críticos: uma CVE de execução remota de código no Next.js 16.3.0, a
 | `npm audit` (frontend) | ❌ 11 (1 crítica, 10 altas) | ⚠️ 5 altas, só de desenvolvimento, sem correção publicada |
 | `npm audit` (backend) | ❌ impossível: sem `package-lock.json` | ✅ 0 em produção; 3 altas só no `nodemon` (dev) |
 | Dependências desatualizadas | `next`, `react`, `next-intl`, `zod` atrás | Atualizadas. Sobram majors que exigem migração: `eslint` 10, `typescript` 7, `@types/node` 26; no backend, `express` 5, `dotenv` 18, `express-rate-limit` 8 |
-| Dependências não usadas | — | Nenhuma no frontend. No backend, `MERCADO_PAGO_PUBLIC_KEY` do `.env.example` não é lida pelo código |
+| Dependências não usadas | — | Nenhuma no frontend nem no backend. A variável `MERCADO_PAGO_PUBLIC_KEY`, que o código não lia, saiu do `.env.example` na limpeza pós-auditoria |
 
 ## Mapa de superfície de ataque
 
@@ -75,7 +75,7 @@ A `main` é publicada como site estático, e nesse modo a Vercel serve **qualque
 | `/backend/package.json` | 200 |
 | `/.claude/settings.json` | 200 |
 
-Nenhum desses arquivos contém segredo real (conferido), mas expõem a lógica de pagamento, nomes de variáveis e a estrutura interna. **No Next.js isso não acontece**: só `public/` é servido (testado: todos → 404). Corrige-se no merge. As cópias `.bak`/`.backup` foram removidas em `84e4a46`. A produção também não envia CSP nem os demais headers, só o HSTS da Vercel.
+Nenhum desses arquivos contém segredo real (conferido), mas expõem a lógica de pagamento, nomes de variáveis e a estrutura interna. O `.claude/settings.json` deixou de ser versionado em `de08bef`. **No Next.js isso não acontece**: só `public/` é servido (testado: todos → 404). Corrige-se no merge. As cópias `.bak`/`.backup` foram removidas em `84e4a46`. A produção também não envia CSP nem os demais headers, só o HSTS da Vercel.
 
 **A2 — Backend: arquivo corrompido apaga todo o histórico de transações** ✅ `e7f09b7`
 `loadTransacoes()` devolvia `[]` quando o `JSON.parse` falhava. Na escrita seguinte, `salvarTransacao` gravava `[nova]` por cima do arquivo, **apagando todas as transações anteriores**. Agora o arquivo inválido vai para quarentena (`transacoes.corrompido-<ts>.json`) e os dados ficam recuperáveis.
@@ -201,3 +201,19 @@ Contraste corrigido com o **menor ajuste possível** na identidade visual: o ros
 A CSP original desta auditoria incluía `upgrade-insecure-requests`. Ela **impedia o site de carregar** (CSS, JS e fontes falhavam) em qualquer servidor HTTP sem TLS: `npm start` local, acesso pelo IP da rede e o Safari mesmo em `localhost`. A bateria de testes não pegou porque rodava só no Chromium via `localhost`, que abre exceção para esse endereço.
 
 A diretiva foi removida, já que em produção não acrescentava nada (a Vercel só serve HTTPS, com HSTS, e as URLs dos recursos são relativas). O carregamento foi reverificado em Chromium e WebKit, por `localhost` e pelo IP da rede, e as suítes de CSP, formulário e acessibilidade rodaram de novo sem falhas. Daqui para a frente, os testes de navegador devem incluir o WebKit e um acesso que não seja por `localhost` (soma-se à recomendação R8).
+
+## Limpeza pós-auditoria
+
+Depois da auditoria, uma rodada de limpeza procurou código morto, resíduos da migração e arquivos inúteis. Método: inventário de todos os arquivos, grafo de imports a partir dos pontos de entrada do Next, knip (arquivos, exports e dependências sem uso), checagem de chaves de tradução e tokens de tema, e detecção de classes Tailwind sem efeito (remover uma classe por vez e comparar layout e estilo no navegador, em 4 larguras × 5 páginas). Toda remoção de estilo foi validada com 38 screenshots comparados pixel a pixel antes/depois.
+
+| Commit | O que saiu |
+|---|---|
+| `30d9e96` | Exports `redirect`/`useRouter`/`getPathname`, tipo `BudgetFormValues`, export interno do backend e variável de ambiente que o código não lia |
+| `3d9a9ac` | 15 repetições de `text-banquete-dark` (herdado do `<body>`), regra CSS de fonte duplicada e 12 classes sem efeito (`mt-0`, `pb-0`, `w-full` em blocos, `min-h` de reserva para navegadores fora do suporte do Next 16, entre outras) |
+| `15a8d3e` | Favicon padrão do template do Next.js (triângulo da Vercel), trocado pelo monograma da marca |
+| `de08bef` | `.claude/settings.json` fora do versionamento; regras do `js/config.js` legado; `.gitignore` passa a cobrir todas as variantes de `.env` |
+
+**Confirmado em uso e mantido:** todos os 30 arquivos de código, as 13 imagens de `public/` (sem duplicatas), as 143 chaves de tradução, todos os tokens do tema e todas as dependências. Os 30 `console.*` do backend são logs operacionais. Não havia TODO/FIXME, código comentado nem rotas de teste.
+
+**Classes que parecem sem efeito, mas ficam:** transições (só agem no hover), `hidden`/`sm:hidden` (menu fechado), margens que colapsam com as vizinhas, classes da lista de eventos que só agem com 2+ eventos, e classes que só importam quando o texto quebra linha.
+

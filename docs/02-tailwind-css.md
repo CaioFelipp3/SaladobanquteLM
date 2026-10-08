@@ -73,7 +73,11 @@ Algumas combinações se repetiam em vários componentes (o botão rosa aparecia
 <a className={`${buttonPrimary} mt-2.5`}>…</a>
 ```
 
-O Tailwind v4 escaneia todos os arquivos do projeto, então classes escritas num `.ts` comum entram no CSS final normalmente. Regra para não criar conflito: ao somar classes extras, não repita uma propriedade que a constante já define (ex: `buttonPrimary` já tem `px-5`; somar `px-8` deixaria o resultado depender da ordem do CSS gerado, não da ordem no `className`).
+O Tailwind v4 escaneia todos os arquivos do projeto, então classes escritas num `.ts` comum entram no CSS final normalmente.
+
+### Cor e fonte do texto vêm do `<body>`
+
+A cor padrão (`text-banquete-dark`) é definida **uma vez**, no `<body>` em `app/[locale]/layout.tsx`, e todos os elementos herdam. A fonte padrão (Montserrat) também: o Tailwind v4 aplica `--font-sans` no `<html>` automaticamente. Por isso os componentes **não** repetem `text-banquete-dark`: só declare cor quando ela for diferente (ex: `text-banquete-dark/70` para texto secundário, `text-banquete-rose` para destaque). Na limpeza pós-auditoria, 15 repetições foram removidas sem nenhuma mudança visual (conferido com comparação de screenshots pixel a pixel). Regra para não criar conflito: ao somar classes extras, não repita uma propriedade que a constante já define (ex: `buttonPrimary` já tem `px-5`; somar `px-8` deixaria o resultado depender da ordem do CSS gerado, não da ordem no `className`).
 
 ## Principais classes que vamos usar bastante
 
