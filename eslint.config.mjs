@@ -15,9 +15,6 @@ const eslintConfig = defineConfig([
     // Backend Express (CommonJS, Node puro) — fora do app Next.js e com
     // convenções próprias; não é lintado por esta config.
     "backend/**",
-    // js/config.js do site legado pode continuar existindo localmente
-    // (ignorado pelo git) — não faz parte do projeto.
-    "js/**",
   ]),
 ]);
 

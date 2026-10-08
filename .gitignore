@@ -1,14 +1,11 @@
-# Variáveis de ambiente (sensível)
-.env
-.env.local
-.env.*.local
+# Variáveis de ambiente (sensível) — todas as variantes que o Next.js carrega
+# (.env, .env.local, .env.production, .env.development...), exceto os exemplos
+.env*
+!.env.example
 
 # Dependências
 node_modules/
 yarn.lock
-
-# Configuração local do site legado (removido do repo) — pode ainda existir na máquina
-js/config.js
 
 # Banco de dados local (contém PII) — inclui quarentena/rotação e temporários de escrita atômica
 transacoes*.json
@@ -26,6 +23,9 @@ next-env.d.ts
 
 # Certificados locais (ex: HTTPS em dev)
 *.pem
+
+# Claude Code: permissões de comandos são pessoais (caminhos da máquina de cada um)
+.claude/settings.json
 
 # IDE
 .vscode/
@@ -49,7 +49,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Cache
+# Cache e relatórios de teste
 .cache/
 .eslintcache
+coverage/
 
