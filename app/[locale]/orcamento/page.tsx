@@ -32,7 +32,7 @@ export default async function OrcamentoPage({
 
   return (
     <section className="mx-auto max-w-[900px] px-5 py-12">
-      <h1 className={`${pageHeading} text-center`}>
+      <h1 className={pageHeading}>
         {t("heading")}
       </h1>
       <p className="mx-auto max-w-[560px] text-center text-[15px] leading-relaxed xs:text-base">

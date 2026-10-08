@@ -34,7 +34,7 @@ export default async function ServicosPage({
   return (
     <section className="mx-auto max-w-[900px] px-5 py-12">
       <h1 className={pageHeading}>{t("heading")}</h1>
-      <p className={bodyText}>{t("intro")}</p>
+      <p className={`${bodyText} text-center`}>{t("intro")}</p>
 
       <ServicesGrid />
 

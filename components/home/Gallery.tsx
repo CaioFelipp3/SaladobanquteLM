@@ -45,7 +45,7 @@ export default function Gallery() {
   return (
     <section id="galeria" className="mx-auto max-w-[900px] px-5 py-10">
       <h2 className={sectionHeading}>{t("heading")}</h2>
-      <p className={bodyText}>{t("intro")}</p>
+      <p className={`${bodyText} text-center`}>{t("intro")}</p>
 
       <div
         className="relative my-5 aspect-[3/4] overflow-hidden rounded-[10px] bg-banquete-border focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:aspect-[4/3]"

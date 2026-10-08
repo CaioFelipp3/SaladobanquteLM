@@ -12,13 +12,13 @@ export const focusRing =
 /** Botão/link de ação principal (rosa, texto branco em caixa alta). */
 export const buttonPrimary = `inline-block min-h-11 rounded-md bg-banquete-rose px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-banquete-rose-dark ${focusRing}`;
 
-/** Título principal (h1) das páginas internas. */
+/** Título principal (h1) das páginas internas — centralizado. */
 export const pageHeading =
-  "mb-5 font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl";
+  "mb-5 text-center font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl";
 
-/** Título (h2) das seções da Home. */
+/** Título (h2) das seções da Home — centralizado. */
 export const sectionHeading =
-  "mb-5 font-serif text-[26px] leading-tight xs:text-3xl sm:text-4xl";
+  "mb-5 text-center font-serif text-[26px] leading-tight xs:text-3xl sm:text-4xl";
 
 /** Parágrafo de texto corrido. */
 export const bodyText = "my-4 text-[15px] leading-relaxed xs:text-base";

@@ -47,10 +47,10 @@ export default async function PrivacidadePage({
 
   return (
     <article className="mx-auto max-w-[760px] px-5 py-12 text-[15px] leading-relaxed xs:text-base">
-      <h1 className="mb-2 font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl">
+      <h1 className="mb-2 text-center font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl">
         {t("heading")}
       </h1>
-      <p className="mb-6 text-sm text-banquete-dark/70">{t("updatedAt")}</p>
+      <p className="mb-6 text-center text-sm text-banquete-dark/70">{t("updatedAt")}</p>
       <p className="my-4">{t("intro")}</p>
 
       {sectionIds.map((id) => {
