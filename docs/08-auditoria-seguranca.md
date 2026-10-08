@@ -196,6 +196,8 @@ Contraste corrigido com o **menor ajuste possível** na identidade visual: o ros
 | R9 | O header HSTS declara `preload`. Só submeter o domínio em hstspreload.org quando **todos** os subdomínios servirem HTTPS (a inclusão é difícil de reverter) | Opcional |
 | R10 | O histórico do git carrega cerca de 45 MB de imagens (o repositório compactado tem ~41 MB). Limpar exigiria reescrever o histórico (`git filter-repo`), uma operação destrutiva que só vale a pena se o tamanho do clone virar problema | Opcional |
 
-## Observação sobre testes locais
+## Regressão encontrada depois da entrega
 
-Ao rodar `next start` em `http://localhost`, a página 404 registra um `ERR_SSL_PROTOCOL_ERROR` no console. Não é bug: a diretiva `upgrade-insecure-requests` da CSP faz uma busca interna do React ir para `https://localhost`, que não existe. Em produção tudo é HTTPS e o erro não ocorre. No `next dev` a diretiva fica desligada.
+A CSP original desta auditoria incluía `upgrade-insecure-requests`. Ela **impedia o site de carregar** (CSS, JS e fontes falhavam) em qualquer servidor HTTP sem TLS: `npm start` local, acesso pelo IP da rede e o Safari mesmo em `localhost`. A bateria de testes não pegou porque rodava só no Chromium via `localhost`, que abre exceção para esse endereço.
+
+A diretiva foi removida, já que em produção não acrescentava nada (a Vercel só serve HTTPS, com HSTS, e as URLs dos recursos são relativas). O carregamento foi reverificado em Chromium e WebKit, por `localhost` e pelo IP da rede, e as suítes de CSP, formulário e acessibilidade rodaram de novo sem falhas. Daqui para a frente, os testes de navegador devem incluir o WebKit e um acesso que não seja por `localhost` (soma-se à recomendação R8).

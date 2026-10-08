@@ -29,8 +29,11 @@ const contentSecurityPolicy = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  // Em dev o site roda em http://localhost — forçar https quebraria os assets.
-  ...(isDev ? [] : ["upgrade-insecure-requests"]),
+  // Sem upgrade-insecure-requests de propósito: em qualquer servidor HTTP sem
+  // TLS (npm start local, acesso pelo IP da rede, Safari) ela forçava CSS/JS/
+  // fontes a irem por https:// e a página carregava sem estilo nem
+  // interatividade. Em produção não acrescenta nada: a Vercel só serve HTTPS
+  // (com HSTS) e todos os recursos do site usam URLs relativas.
 ].join("; ");
 
 const securityHeaders = [

@@ -17,17 +17,17 @@ Todo header abaixo é enviado em **todas as respostas** do site (configurado uma
 ```
 default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
 img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none';
-base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 ```
 
 - `object-src 'none'`: bloqueia plugins (Flash, Java), um vetor clássico de execução de código.
 - `base-uri 'self'`: impede que um `<base href>` injetado redirecione todos os links relativos da página para outro domínio.
 - `frame-ancestors 'none'`: ninguém pode embutir o site em `<iframe>` (versão moderna do `X-Frame-Options`).
-- `upgrade-insecure-requests`: qualquer recurso `http://` é buscado como `https://` (só em produção; em `localhost` quebraria o desenvolvimento).
+- **Sem `upgrade-insecure-requests`, de propósito.** Essa diretiva manda o navegador buscar todo recurso `http://` como `https://`. Ela chegou a ser adicionada nesta auditoria e **quebrou o site** em qualquer servidor HTTP sem TLS: `npm start` local, acesso pelo IP da rede (celular) e o Safari mesmo em `localhost`. CSS, JS e fontes falhavam e a página aparecia crua. O teste automático não pegou porque usava só o Chromium em `localhost`, que tem uma exceção para esse endereço. Em produção ela não acrescenta nada: a Vercel só serve HTTPS (com HSTS) e todos os recursos do site usam URLs relativas. Lição: testar também no WebKit (o motor do Safari) e por um endereço que não seja `localhost`.
 
 **A concessão consciente — `'unsafe-inline'` em `script-src`:** o Next.js injeta pequenos scripts inline em cada página para a hidratação do React. A forma "estrita" de liberar só esses scripts é um *nonce* (um número aleatório por requisição), mas nonce exige renderizar cada página **a cada visita**, perdendo a geração estática e o cache de CDN. Para este site, o ganho real seria pequeno: nenhum dado de usuário é renderizado como HTML (o React escapa todo texto e não usamos `dangerouslySetInnerHTML`). Se um dia o site passar a exibir conteúdo vindo de usuários ou de um CMS, a troca para nonce passa a valer a pena.
 
-**Verificado na prática:** um script com Chromium visita as 8 páginas, escuta o evento `securitypolicyviolation` e confere que a página hidratou (o menu responde a clique). Resultado: zero violações.
+**Verificado na prática:** um script com Chromium visita as 8 páginas (e o carregamento foi conferido também no WebKit, por `localhost` e pelo IP da rede), escuta o evento `securitypolicyviolation` e confere que a página hidratou (o menu responde a clique). Resultado: zero violações.
 
 **Um caso real encontrado nesse teste:** a página de Orçamento disparava uma violação de `eval`. Causa: o zod 4 testa `new Function("")` ao carregar, para decidir se pode compilar validadores otimizados. Ele se recupera sozinho quando o eval é bloqueado, mas o navegador registra a violação. A correção foi `z.config({ jitless: true })` em `lib/validation/budget.ts`, que mantém a mesma validação sem nenhum eval.
 
