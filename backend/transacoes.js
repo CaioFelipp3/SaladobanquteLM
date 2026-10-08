@@ -121,4 +121,4 @@ function criarRepositorio(filePath) {
   return { load, salvar };
 }
 
-module.exports = { criarRepositorio, isTransacaoValida };
+module.exports = { criarRepositorio };

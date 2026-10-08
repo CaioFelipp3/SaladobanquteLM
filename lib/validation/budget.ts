@@ -122,8 +122,6 @@ function startOfToday(): Date {
   return today;
 }
 
-export type BudgetFormValues = z.infer<typeof budgetFormSchema>;
-
 /** Estado bruto do formulário, antes da validação. */
 export type BudgetFormInput = {
   name: string;
