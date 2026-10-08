@@ -8,6 +8,7 @@ import Navbar from "@/components/layout/Navbar";
 import SkipLink from "@/components/layout/SkipLink";
 import WhatsappFloatButton from "@/components/layout/WhatsappFloatButton";
 import { routing } from "@/lib/i18n/routing";
+import { siteName, siteUrl } from "@/lib/seo/metadata";
 import "../globals.css";
 
 // next/font baixa e otimiza as fontes no build (self-hosted, sem chamada externa
@@ -26,10 +27,9 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const siteUrl = "https://www.saladobanquetelm.com.br";
-
-// generateMetadata roda por locale, então título/descrição/OG saem traduzidos
-// e com URL absoluta (obrigatório para Open Graph funcionar em previews de link).
+// Base para todas as páginas, inclusive a 404. Canonical, alternates e
+// Open Graph completos ficam em cada page.tsx (lib/seo/metadata.ts) — se
+// ficassem aqui, a 404 herdaria o canonical da Home.
 export async function generateMetadata({
   params,
 }: {
@@ -42,28 +42,7 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl),
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: locale === routing.defaultLocale ? "/" : `/${locale}`,
-      languages: {
-        pt: "/",
-        en: "/en",
-      },
-    },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: locale === routing.defaultLocale ? "/" : `/${locale}`,
-      siteName: "A Sala do Banquete",
-      images: ["/assets/logo.png"],
-      locale: locale === "pt" ? "pt_BR" : "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-      images: ["/assets/logo.png"],
-    },
+    openGraph: { siteName },
   };
 }
 

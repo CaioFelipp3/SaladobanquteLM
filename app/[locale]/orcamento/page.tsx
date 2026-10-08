@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import BudgetForm from "@/components/budget/BudgetForm";
-import { routing } from "@/lib/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { pageHeading } from "@/lib/ui/styles";
 
 export async function generateMetadata({
@@ -11,25 +11,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Budget.Metadata" });
-  const path = locale === routing.defaultLocale ? "/orcamento" : `/${locale}/orcamento`;
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/orcamento",
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: path,
-      languages: { pt: "/orcamento", en: "/en/orcamento" },
-    },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: path,
-      siteName: "A Sala do Banquete",
-      images: ["/assets/logo.png"],
-      locale: locale === "pt" ? "pt_BR" : "en_US",
-      type: "website",
-    },
-  };
+  });
 }
 
 export default async function OrcamentoPage({

@@ -19,7 +19,7 @@ export default function UpcomingEvents() {
       </a>
 
       <div className="mt-8 flex flex-col gap-5 xs:flex-row xs:flex-wrap">
-        <div className="flex flex-1 flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white xs:min-w-[260px]">
+        <div className="flex flex-1 flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white xs:min-w-[260px] xs:max-w-[420px]">
           <div className="flex aspect-[3/2] w-full items-center justify-center bg-banquete-rose-soft text-center text-sm text-banquete-dark/70 xs:aspect-square">
             {t("chaDasFlores.imagePlaceholder")}
           </div>

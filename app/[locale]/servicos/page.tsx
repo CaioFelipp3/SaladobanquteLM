@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import ServiceCard from "@/components/services/ServiceCard";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
-import { routing } from "@/lib/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { bodyText, buttonPrimary, pageHeading } from "@/lib/ui/styles";
 
 export async function generateMetadata({
@@ -13,25 +13,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Services.Metadata" });
-  const path = locale === routing.defaultLocale ? "/servicos" : `/${locale}/servicos`;
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/servicos",
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: path,
-      languages: { pt: "/servicos", en: "/en/servicos" },
-    },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: path,
-      siteName: "A Sala do Banquete",
-      images: ["/assets/logo.png"],
-      locale: locale === "pt" ? "pt_BR" : "en_US",
-      type: "website",
-    },
-  };
+  });
 }
 
 export default async function ServicosPage({

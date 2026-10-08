@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { contacts } from "@/lib/data/contacts";
-import { routing } from "@/lib/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 // Ordem de exibição das seções — o texto de cada uma fica em
 // lib/i18n/messages/*.json, chave Privacy.sections.<id>.
@@ -26,25 +26,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Privacy.Metadata" });
-  const path = locale === routing.defaultLocale ? "/privacidade" : `/${locale}/privacidade`;
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/privacidade",
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: path,
-      languages: { pt: "/privacidade", en: "/en/privacidade" },
-    },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: path,
-      siteName: "A Sala do Banquete",
-      images: ["/assets/logo.png"],
-      locale: locale === "pt" ? "pt_BR" : "en_US",
-      type: "website",
-    },
-  };
+  });
 }
 
 export default async function PrivacidadePage({
