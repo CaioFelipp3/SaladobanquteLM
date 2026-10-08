@@ -1,6 +1,12 @@
 import { z } from "zod";
 import { services, type ServiceId } from "@/lib/data/services";
 
+// O zod 4 testa `new Function("")` para decidir se pode compilar validadores
+// otimizados. A CSP do site (next.config.ts) bloqueia eval — o zod se recupera
+// sozinho, mas o navegador registra uma violação de CSP a cada carregamento.
+// jitless desliga o teste: mesma validação, sem eval e sem ruído na CSP.
+z.config({ jitless: true });
+
 const serviceIds = services.map((service) => service.id) as [ServiceId, ...ServiceId[]];
 
 // Sem quebra de linha: impede que alguém injete "linhas" falsas na mensagem
