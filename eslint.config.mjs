@@ -12,11 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Site antigo (HTML/CSS/JS puro) e backend Express — fora do escopo do Next.js,
-    // não lintados por esta config. Removidos/revisados nas próximas etapas.
-    "js/**",
-    "css/**",
+    // Backend Express (CommonJS, Node puro) — fora do app Next.js e com
+    // convenções próprias; não é lintado por esta config.
     "backend/**",
+    // js/config.js do site legado pode continuar existindo localmente
+    // (ignorado pelo git) — não faz parte do projeto.
+    "js/**",
   ]),
 ]);
 

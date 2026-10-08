@@ -7,7 +7,7 @@
 node_modules/
 yarn.lock
 
-# Configuração local do frontend legado (dados sensíveis) — removido após a migração completa
+# Configuração local do site legado (removido do repo) — pode ainda existir na máquina
 js/config.js
 
 # Banco de dados local (contém PII) — inclui quarentena/rotação e temporários de escrita atômica
