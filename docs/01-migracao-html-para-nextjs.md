@@ -1,6 +1,6 @@
 # 01 — Migração de HTML puro para Next.js
 
-> Status: Home, Serviços e Orçamento migrados e funcionando (pt/en). Faltam apenas os conteúdos reais que dependem do negócio (data/descrição do evento "Chá das Flores", descrições e fotos de cada serviço) — o código já está pronto para recebê-los, só os textos estão marcados como placeholder.
+> Status: Home, Serviços, Orçamento e Política de Privacidade migrados e funcionando (pt/en), auditados antes da produção (ver [`08-auditoria-seguranca.md`](./08-auditoria-seguranca.md)). O site legado foi removido do repositório. Faltam apenas os conteúdos reais que dependem do negócio (data/descrição do evento "Chá das Flores", descrições e fotos de cada serviço) — o código já está pronto para recebê-los, só os textos estão marcados como placeholder.
 
 ## Por que migrar
 
@@ -14,7 +14,7 @@ O Next.js resolve isso porque é, ao mesmo tempo, um **framework de frontend** (
 |---|---|---|
 | `index.html` com todas as seções na mesma página, navegação por âncora (`#servicos`) | `app/[locale]/page.tsx`, `app/[locale]/servicos/page.tsx`, `app/[locale]/orcamento/page.tsx` — rotas reais | Serviços e Orçamento viram páginas de verdade, com URL própria, em vez de seções da Home |
 | `<link href="...Google Fonts...">` no `<head>`, carregado do CDN do Google em runtime | `next/font/google` dentro de `app/[locale]/layout.tsx` | O Next baixa a fonte **no build** e serve pelo próprio domínio — sem esperar o Google Fonts responder, sem layout shift, sem vazar o IP do visitante para o Google a cada carregamento |
-| Um `<script src="js/config.js">` com dados sensíveis, carregado no navegador | Variáveis de ambiente (`.env.local`) lidas só no servidor, quando necessário | Ver [`05-seguranca.md`](./05-seguranca.md) |
+| Um `<script src="js/config.js">` (fora do git) com os contatos, carregado no navegador | Constantes em `lib/data/contacts.ts` | Os contatos são públicos (aparecem na página), então não são segredo nem variável de ambiente. Ver [`05-seguranca.md`](./05-seguranca.md) |
 | Sem sistema de build; editar o HTML e dar refresh | `npm run dev` (Turbopack) compila, tipa (TypeScript) e recarrega automaticamente | Erros aparecem no terminal/editor antes de chegar no navegador |
 
 ## O que foi feito nesta etapa (scaffold)
@@ -24,18 +24,18 @@ O Next.js resolve isso porque é, ao mesmo tempo, um **framework de frontend** (
 3. Sistema de internacionalização do zero com `next-intl` (o site antigo não tinha nenhum — ver [`04-i18n.md`](./04-i18n.md)).
 4. Tema do Tailwind configurado com a paleta e tipografia do site atual (ver [`02-tailwind-css.md`](./02-tailwind-css.md)).
 5. Headers de segurança no `next.config.ts` (ver [`05-seguranca.md`](./05-seguranca.md)).
-6. Uma página inicial de teste (`app/[locale]/page.tsx`) só para provar que a base funciona em português e em inglês — **ainda não é a Home de verdade**.
+6. Home, Serviços e Orçamento migradas; depois, na auditoria, Política de Privacidade, 404 traduzida, `robots.txt` e `sitemap.xml`.
 
-## O que NÃO mudou (de propósito)
+## O que aconteceu com o site antigo e o backend
 
-- `index.html`, `css/`, `js/`, `assets/` continuam no repositório, intactos. São a referência visual e de conteúdo até cada pedaço ser migrado — só serão removidos quando não sobrar mais nada dependendo deles.
-- `backend/` (Express + Mercado Pago) não foi tocado. Fica fora da árvore do Next por enquanto; decidimos o que fazer com ele quando chegarmos na fase de e-commerce.
+- `index.html`, `css/`, `js/` e `assets/` serviram de referência visual e de conteúdo durante a migração. Com tudo migrado, foram **removidos do repositório** na auditoria (continuam recuperáveis pelo histórico do git e pela branch `main` até o merge).
+- `backend/` (Express + Mercado Pago) continua fora da árvore do Next e **não é publicado** na Vercel. Na auditoria ele foi corrigido no lugar (preço vindo do cliente, perda de dados no arquivo de transações, entre outros), para servir de base à fase de e-commerce.
 
 ## Conceito novo: Server Component vs Client Component
 
 No React tradicional (e no site antigo), todo JavaScript roda no navegador. No App Router do Next.js, por padrão, os componentes rodam **no servidor** (Server Components) — só viram JavaScript enviado ao navegador quando marcados explicitamente com `"use client"` no topo do arquivo (necessário para coisas como `onClick`, `useState`, formulários interativos). Isso importa porque menos JavaScript enviado ao navegador = carregamento mais rápido.
 
-Na prática, neste projeto, só três componentes precisaram de `"use client"`: `Navbar` (estado do menu hamburger), `Gallery` (estado do carrossel) e `BudgetForm` (estado dos campos do formulário). Todo o resto — `Hero`, `About`, `UpcomingEvents`, `Contact`, `Footer`, `WhatsappFloatButton`, as páginas de Serviços e a própria página de Orçamento — é Server Component, renderizado no servidor sem JavaScript extra no navegador.
+Na prática, neste projeto, só três componentes precisaram de `"use client"`: `Navbar` (estado do menu hamburger), `Gallery` (estado do carrossel) e `BudgetForm` (estado dos campos do formulário). Todo o resto — `Hero`, `About`, `UpcomingEvents`, `Contact`, `Footer`, `SkipLink`, `WhatsappFloatButton`, as páginas de Serviços, Orçamento e Privacidade e a 404 — é Server Component, renderizado no servidor sem JavaScript extra no navegador. (`LanguageSwitcher` não tem `"use client"` próprio, mas vira client por ser importado pelo `Navbar`.)
 
 ## Página de Serviços
 
@@ -44,3 +44,5 @@ Nova página (`app/[locale]/servicos/page.tsx`), sem equivalente direto no site 
 ## Página de Orçamento
 
 Também nova. O formulário (`components/budget/BudgetForm.tsx`) não envia dados para nenhum backend nosso: valida tudo no navegador com `zod` (ver `docs/05-seguranca.md`) e, se válido, monta uma mensagem formatada e abre um link `wa.me` (WhatsApp) ou `mailto:` (e-mail) — o próprio WhatsApp/cliente de e-mail do visitante assume a partir daí. Isso foi uma decisão deliberada de segurança e LGPD, não uma limitação: sem backend próprio processando esses dados, não existe onde vazar ou reter informação pessoal indevidamente.
+
+Na auditoria, o formulário perdeu o campo e-mail (era coletado e descartado), ganhou um checkbox obrigatório de ciência da Política de Privacidade e passou a mostrar, junto da mensagem de sucesso, um link manual para o caso de o navegador bloquear a aba do WhatsApp. Ver [`07-protecao-de-dados.md`](./07-protecao-de-dados.md).

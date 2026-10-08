@@ -16,15 +16,24 @@ Versões antigas do Tailwind (v3 e anteriores) usavam um `tailwind.config.js` se
 
 ```css
 @theme {
-  --color-banquete-bg: #faf5ef;          /* fundo geral */
-  --color-banquete-dark: #3d2b35;        /* texto principal, rodapé */
-  --color-banquete-rose: #b8688a;        /* cor de destaque (botões, links) */
-  --color-banquete-rose-dark: #9a5472;   /* hover do destaque */
-  --color-banquete-gold: #c9a84c;        /* datas de evento */
-  --color-banquete-gold-light: #c4a882;  /* texto do rodapé */
+  --color-banquete-bg: #faf5ef;            /* fundo geral */
+  --color-banquete-dark: #3d2b35;          /* texto principal, rodapé */
+  --color-banquete-rose: #a05a78;          /* destaque (botões, links) — original #b8688a */
+  --color-banquete-rose-dark: #884a64;     /* hover do destaque */
+  --color-banquete-gold: #c9a84c;          /* dourado decorativo */
+  --color-banquete-gold-text: #8b7434;     /* dourado para TEXTO (datas de evento) */
+  --color-banquete-gold-light: #c4a882;    /* texto do rodapé */
+  --color-banquete-input-border: #948a90;  /* borda dos campos do formulário */
+  --color-whatsapp: #188741;               /* botões do WhatsApp */
   ...
 }
 ```
+
+### Por que o rosa mudou: contraste (acessibilidade)
+
+A WCAG (norma internacional de acessibilidade) exige contraste mínimo de **4,5:1** entre texto e fundo, e **3:1** para ícones e bordas de campos. A auditoria mediu as cores originais: o rosa da marca com texto branco dava 3,9:1, o verde do WhatsApp 2,0:1, o dourado das datas 2,3:1 e a borda dos campos 1,1:1 (praticamente invisível para quem tem baixa visão).
+
+A correção escolhida foi a de **menor impacto visual**: escurecer o rosa só o necessário (13%) para passar, mantendo o mesmo matiz — a identidade continua a mesma. Dourado e verde precisariam escurecer demais para virar texto, então ganharam tokens próprios só para os lugares onde carregam texto (`gold-text`, `whatsapp`); o tom original continua nos usos decorativos. Os números exatos estão comentados em `app/globals.css`.
 
 Cada `--color-banquete-*` vira automaticamente uma classe utilitária: `bg-banquete-rose`, `text-banquete-dark`, `border-banquete-gold`, `hover:bg-banquete-rose-dark`, etc. Isso é uma convenção do Tailwind v4 — qualquer variável `--color-<nome>` no `@theme` gera classes `bg-<nome>`, `text-<nome>`, `border-<nome>` de graça.
 
@@ -42,7 +51,7 @@ Para o visual em cada largura de tela ficar **idêntico** ao site atual, redefin
 /* --breakpoint-md continua 768px — já batia com o original */
 ```
 
-Diferença importante de raciocínio: o CSS antigo era "desktop-first" (o estilo base é para telas grandes, e `@media (max-width: ...)` sobrescreve para telas menores). O Tailwind é "mobile-first" (o estilo sem prefixo é a base para qualquer tela, e `sm:`/`md:` sobrescrevem **a partir** daquela largura para cima). O resultado visual final é o mesmo nos mesmos pontos de quebra — só a forma de escrever a regra se inverte. Isso vai aparecer na prática quando migrarmos os componentes visuais na Etapa 2.
+Diferença importante de raciocínio: o CSS antigo era "desktop-first" (o estilo base é para telas grandes, e `@media (max-width: ...)` sobrescreve para telas menores). O Tailwind é "mobile-first" (o estilo sem prefixo é a base para qualquer tela, e `sm:`/`md:` sobrescrevem **a partir** daquela largura para cima). O resultado visual final é o mesmo nos mesmos pontos de quebra — só a forma de escrever a regra se inverte.
 
 ## Tabela de equivalência (CSS antigo → Tailwind)
 
@@ -56,7 +65,15 @@ Diferença importante de raciocínio: o CSS antigo era "desktop-first" (o estilo
 | `font-family: "Cormorant Garamond", serif; font-size: 36px;` (`h2`) | `font-serif text-4xl` |
 | `outline: 3px solid #b8688a; outline-offset: 2px;` (`:focus-visible`) | `focus-visible:outline focus-visible:outline-3 focus-visible:outline-banquete-rose focus-visible:outline-offset-2` |
 
-Esta tabela vai crescer conforme migramos cada componente na Etapa 2 — cada card, botão e seção do site antigo vai ganhar sua linha aqui.
+## Classes compartilhadas (`lib/ui/styles.ts`)
+
+Algumas combinações se repetiam em vários componentes (o botão rosa aparecia 5 vezes, o título de seção 4). Elas viraram constantes em [`lib/ui/styles.ts`](../lib/ui/styles.ts) — `buttonPrimary`, `pageHeading`, `sectionHeading`, `bodyText`, `focusRing` — usadas assim:
+
+```tsx
+<a className={`${buttonPrimary} mt-2.5`}>…</a>
+```
+
+O Tailwind v4 escaneia todos os arquivos do projeto, então classes escritas num `.ts` comum entram no CSS final normalmente. Regra para não criar conflito: ao somar classes extras, não repita uma propriedade que a constante já define (ex: `buttonPrimary` já tem `px-5`; somar `px-8` deixaria o resultado depender da ordem do CSS gerado, não da ordem no `className`).
 
 ## Principais classes que vamos usar bastante
 
