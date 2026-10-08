@@ -4,7 +4,7 @@ Este documento registra cada medida de segurança aplicada no site, o que ela pr
 
 ## Superfície de ataque, em uma frase
 
-O site é **estático**: todas as páginas são geradas no build (SSG) e não existe nenhum endpoint nosso que receba dados do visitante. As únicas entradas externas são a URL (idioma e caminho), o cabeçalho `Accept-Language`, o otimizador de imagens do Next.js (`/_next/image`) e o formulário de orçamento, que roda inteiro no navegador. O mapa detalhado de cada ponto de entrada está no [relatório da auditoria](./08-auditoria-seguranca.md#mapa-de-superfície-de-ataque).
+O site é quase todo **estático**: as páginas são geradas no build (SSG). O único endpoint nosso que recebe dados é `POST /api/checkout` (compra de ingressos, ver abaixo), e a única página renderizada a cada visita é `/ingressos/retorno`. As únicas entradas externas são a URL (idioma e caminho), o cabeçalho `Accept-Language`, o otimizador de imagens do Next.js (`/_next/image`) e o formulário de orçamento, que roda inteiro no navegador. O mapa detalhado de cada ponto de entrada está no [relatório da auditoria](./08-auditoria-seguranca.md#mapa-de-superfície-de-ataque).
 
 ## Headers de segurança (`next.config.ts`)
 
@@ -82,7 +82,7 @@ O otimizador de imagens foi o vetor de várias CVEs recentes do Next.js (SSRF, R
 
 ## Formulário de Orçamento
 
-### Por que não existe backend próprio
+### Por que o formulário não passa por um servidor nosso
 
 O envio é 100% resolvido no navegador: valida os dados, monta uma mensagem formatada e abre `wa.me/...` (nova aba) ou `mailto:...` (cliente de e-mail do visitante). Nenhum dado do formulário trafega para um servidor nosso, não fica em log e não é armazenado em lugar nenhum sob nosso controle.
 
@@ -123,10 +123,9 @@ Todo `target="_blank"` do site tem `rel="noopener noreferrer"` — conferido no 
 
 ## Segredos e variáveis de ambiente
 
-- O frontend **não usa nenhuma variável de ambiente**. Os dados de contato (`lib/data/contacts.ts`) são públicos por natureza: já aparecem escritos na página.
+- A única variável sensível é `MERCADO_PAGO_ACCESS_TOKEN`, lida só no servidor por `lib/payments/mercadopago.ts`, que começa com `import "server-only"`: se esse arquivo for importado por um componente do navegador, o build falha. Ela é cadastrada na Vercel e documentada, sem valor, no `.env.example` da raiz. Os dados de contato (`lib/data/contacts.ts`) são públicos por natureza e ficam no código.
 - Nenhuma variável `NEXT_PUBLIC_*` existe. **Regra:** nada sensível leva esse prefixo, porque toda variável com ele vai para o JavaScript do navegador.
-- `.gitignore` cobre **todas** as variantes de `.env` (`.env*`, com exceção dos `.env.example`). Antes só cobria `.env`, `.env.local` e `.env.*.local`, deixando de fora `.env.production` e `.env.development`, que o Next.js carrega automaticamente e costumam guardar segredos. Também cobre `*.pem`, `.vercel`, `transacoes*.json` (dados do backend, com PII) e `.claude/settings.json` (permissões pessoais do Claude Code, com caminhos da máquina de quem usa; antes era versionado e servido publicamente pela produção estática).
-- `backend/.env.example` documenta as variáveis do backend com valores fictícios.
+- `.gitignore` cobre **todas** as variantes de `.env` (`.env*`, com exceção dos `.env.example`). Antes só cobria `.env`, `.env.local` e `.env.*.local`, deixando de fora `.env.production` e `.env.development`, que o Next.js carrega automaticamente e costumam guardar segredos. Também cobre `*.pem`, `.vercel` e `.claude/settings.json` (permissões pessoais do Claude Code, com caminhos da máquina de quem usa; antes era versionado e servido publicamente pela produção estática).
 - **Histórico do git verificado:** busca por padrões de token do Mercado Pago (`APP_USR-`), chaves AWS, tokens do GitHub, chaves privadas e atribuições `token|secret|password = "..."` em todos os commits. Nenhum segredo real foi commitado; só os placeholders do `.env.example`.
 
 ## Exposição de informação
@@ -136,16 +135,20 @@ Todo `target="_blank"` do site tem `rel="noopener noreferrer"` — conferido no 
 - Página 404 própria, traduzida, sem detalhes internos.
 - `public/` contém só imagens do site e a logo.
 
-## Backend (`backend/`, fora do deploy)
+## Checkout de ingressos (`/api/checkout`)
 
-O backend Express de pagamentos (Mercado Pago) **não é usado pelo site atual** e não roda na Vercel. Mesmo assim foi auditado e corrigido, porque deve servir de base para a fase de e-commerce. Resumo (detalhes e testes no relatório):
+O antigo backend Express foi substituído por um Route Handler do Next.js e removido. O fluxo completo está em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md). As defesas:
 
-- **Preço definido no servidor** (`CATALOGO_INGRESSOS`): antes, o valor vinha do corpo da requisição, e qualquer pessoa podia pagar R$ 0,01 por qualquer ingresso.
-- **Persistência à prova de corrupção** (`backend/transacoes.js`): arquivo inválido vai para quarentena em vez de ser sobrescrito; escrita atômica (arquivo temporário + `rename`); permissão `0600`; validação da estrutura antes de usar.
-- **Idempotência real**: o e-mail ao cliente só sai se a transação for nova. Antes, um webhook repetido mandava e-mail duplicado.
-- **Token de admin comparado em tempo constante** (`timingSafeEqual` sobre hashes SHA-256).
-- **Erros sem stack trace**, body limitado a 100 KB, rate limit no webhook, id do pagamento validado como numérico antes de entrar na URL da API.
-- `nodemailer` 6 → 10 (15 advisories altos, incluindo injeção de comandos SMTP).
+- **Preço só no servidor.** O navegador envia `{ ticketId, quantity, locale }`; o preço vem de `lib/data/tickets.ts`. Campos extras no corpo (ex.: `price: 0.01`) são descartados pelo schema zod.
+- **Validação estrita:** ingresso precisa existir no catálogo (`find` por igualdade, então `__proto__` e `constructor` nunca casam), quantidade inteira de 1 ao máximo por compra, idioma `pt` ou `en`. Pedido inválido responde 400 e **não chega** ao Mercado Pago.
+- **CSRF:** só aceita `Content-Type: application/json` (um `<form>` comum não consegue enviar) e exige `Origin` com o mesmo host acessado (`Host`/`x-forwarded-host`). Recusa `Origin` ausente, `null` e domínios parecidos (`site.com.evil.example`).
+- **Limites:** corpo até 1 KB (conferido pelo `Content-Length` antes de ler e de novo depois); só `POST` (outros métodos → 405).
+- **Erros sem vazamento:** falha do Mercado Pago responde 502 com um código genérico; o detalhe fica só no log do servidor.
+- **Página de retorno:** ignora o `?status=` da URL e consulta a API; exige o `external_reference` (UUID aleatório por pedido), o que impede ver pagamentos de outras pessoas trocando o `payment_id` (IDOR); `payment_id` só com dígitos (texto arbitrário não é refletido na mensagem de ajuda do WhatsApp); `noindex` e fora do sitemap; não mostra dados do comprador.
+- **Redirecionamento:** o popup só segue um link `https://` cujo domínio seja do Mercado Pago (defesa contra redirecionamento aberto).
+- **URL de retorno fixa:** usa `SITE_URL` (ou a URL do Preview na Vercel, ou o domínio público), nunca o `Host` da requisição.
+
+**Testes executados** (servidor falso do Mercado Pago, Chrome e Safari, `localhost` e IP da rede): 28 ataques na API, fluxo completo de compra, 8 cenários da página de retorno, axe sem violações no popup e na página de retorno e CSP sem violações nas 9 rotas.
 
 ## SEO / Open Graph
 

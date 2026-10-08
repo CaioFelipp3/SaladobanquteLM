@@ -8,9 +8,9 @@ Este documento mapeia **quais dados pessoais o sistema trata, por onde passam, o
 
 | Papel | Quem é, neste caso |
 |---|---|
-| **Titular** | O visitante que pede orçamento (ou o comprador de ingresso, quando o backend entrar no ar) |
+| **Titular** | O visitante que pede orçamento ou compra ingresso |
 | **Controlador** | A Sala do Banquete – Liliam Müller: decide para que e como os dados são usados |
-| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail), Vercel (hospedagem), Mercado Pago (pagamentos, só futuramente) |
+| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail), Vercel (hospedagem), Mercado Pago (pagamento de ingressos) |
 | **Encarregado (DPO)** | Agentes de pequeno porte são dispensados de nomear um (Resolução CD/ANPD nº 2/2022), mas precisam oferecer um canal de contato: o e-mail `saladobanquete.lm@gmail.com`, indicado na política |
 
 ## Mapa de dados pessoais
@@ -55,20 +55,23 @@ Dados ficam no histórico da conversa / caixa de entrada da empresa
 
 **O que o site não usa:** Google Analytics, Meta Pixel, Hotjar ou qualquer rastreador; cookies de publicidade; fontes ou scripts carregados de terceiros. As fontes são servidas pelo próprio domínio via `next/font`, e o IP do visitante não é enviado ao Google Fonts. A CSP (`docs/05-seguranca.md`) bloqueia scripts de outros domínios, então um rastreador não poderia ser adicionado por engano sem mudar a política.
 
-### 3. Pagamentos (`backend/`) — **ainda não está no ar**
+### 3. Compra de ingressos (Mercado Pago) — pronta, vendas desligadas até o próximo evento
 
-Quando o backend de ingressos for ativado, ele vai gravar, por transação: id do pagamento, status, e-mail e primeiro nome do pagador, valor e descrição do ingresso, em `backend/transacoes.json`.
+O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Mercado Pago**, nunca no site. O fluxo técnico está em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md).
+
+| Dado | Onde é informado | Onde fica | Quem acessa |
+|---|---|---|---|
+| Tipo e quantidade de ingresso | Popup do site | Enviado ao Mercado Pago na criação do pedido; o site não grava | — |
+| Nome, e-mail, CPF, dados de pagamento | Checkout do Mercado Pago | Mercado Pago | Mercado Pago; a Sala do Banquete vê nome, e-mail, ingresso e valor no painel |
+| Status e valor do pagamento | — | Mercado Pago | Exibidos na página de retorno só para quem tem o `external_reference` do pedido |
 
 | Medida | Status |
 |---|---|
-| Arquivo fora do git (`.gitignore`: `transacoes*.json`) | ✅ |
-| Permissão `0600` (só o processo do servidor lê) | ✅ |
-| Escrita atômica e quarentena de arquivo corrompido (sem perda nem sobrescrita) | ✅ |
-| Endpoint de leitura (`GET /transacoes`) só com token de admin, comparado em tempo constante e com rate limit | ✅ |
-| Logs sem e-mail nem nome | ✅ |
-| Prazo de retenção e rotina de exclusão | ❌ **pendente**: o arquivo cresce sem limite de tempo, e os backups de rotação (`.bak`) também guardam PII |
-| Criptografia em repouso | ❌ depende de onde for hospedado; um banco gerenciado resolveria |
-| Atualizar a política de privacidade para incluir pagamentos e o Mercado Pago | ❌ **pendente**, obrigatório antes de ativar |
+| Site não recebe nem grava dados de cartão, documento ou contato do comprador | ✅ |
+| Sem banco de dados próprio nem envio de e-mail: nada a vazar do lado do site | ✅ |
+| Página de retorno não mostra dados do comprador e não pode ser consultada trocando o número do pagamento | ✅ |
+| Política de privacidade com a seção "Compra de ingressos" (Mercado Pago em finalidade, base legal, compartilhamento e retenção) | ✅ |
+| Lista de convidados exportada do painel do Mercado Pago: guardar com cuidado e apagar depois do evento, salvo obrigação fiscal | ❗ **rotina da equipe** |
 
 ## Avaliação item a item
 
@@ -101,11 +104,11 @@ Quando o backend de ingressos for ativado, ele vai gravar, por transação: id d
 3. Checkbox obrigatório de ciência da política antes do envio.
 4. Aviso explícito de que o envio sai do site.
 5. Validação que impede texto invisível ou de controle na mensagem (evita mensagens que enganem a equipe).
-6. Backend: arquivo de PII com permissão restrita, fora do git, sem PII nos logs e sem envio de e-mail a um endereço fictício de terceiro (antes, sem e-mail do pagador, o sistema notificava `desconhecido@email.com`).
+6. Venda de ingressos sem armazenar dados pessoais no site: tudo fica no Mercado Pago, e a página de retorno não expõe dados do comprador.
 
 ## Pendências para a Sala do Banquete
 
 - [ ] Validar o prazo de retenção (12 meses) e o prazo de resposta (15 dias) da política.
 - [ ] Criar a rotina de exclusão periódica de conversas e e-mails de orçamento antigos.
 - [ ] Revisão jurídica do texto da política.
-- [ ] Antes de ativar o backend de ingressos: definir a retenção de `transacoes.json`, atualizar a política (Mercado Pago, dados de pagamento) e preferir um banco de dados gerenciado com criptografia em repouso.
+- [ ] Venda de ingressos: definir quanto tempo a equipe guarda as listas de convidados exportadas do Mercado Pago (planilhas, impressões) e apagá-las depois do evento.

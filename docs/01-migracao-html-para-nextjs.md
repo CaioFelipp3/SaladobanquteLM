@@ -29,7 +29,7 @@ O Next.js resolve isso porque é, ao mesmo tempo, um **framework de frontend** (
 ## O que aconteceu com o site antigo e o backend
 
 - `index.html`, `css/`, `js/` e `assets/` serviram de referência visual e de conteúdo durante a migração. Com tudo migrado, foram **removidos do repositório** na auditoria (continuam recuperáveis pelo histórico do git e pela branch `main` até o merge).
-- `backend/` (Express + Mercado Pago) continua fora da árvore do Next e **não é publicado** na Vercel. Na auditoria ele foi corrigido no lugar (preço vindo do cliente, perda de dados no arquivo de transações, entre outros), para servir de base à fase de e-commerce.
+- `backend/` (Express + Mercado Pago com arquivo JSON) nunca foi publicado. Na auditoria ele foi corrigido, e depois **substituído** pelo checkout de ingressos dentro do próprio Next.js (Route Handler em `app/api/checkout`) e removido do repositório (recuperável pelo histórico do git). Ver [`09-checkout-ingressos.md`](./09-checkout-ingressos.md).
 
 ## Conceito novo: Server Component vs Client Component
 

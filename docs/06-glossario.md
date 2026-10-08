@@ -18,7 +18,7 @@ Termos técnicos usados neste projeto, explicados de forma simples. Ordem alfab�
 
 **CSS utility-first** — abordagem do Tailwind: classes pequenas de propósito único (`bg-red-500`, `p-4`) compostas diretamente no HTML/JSX, em vez de escrever regras CSS nomeadas à parte. Ver [`02-tailwind-css.md`](./02-tailwind-css.md).
 
-**Escrita atômica** — gravar um arquivo de forma que ele nunca fique "pela metade": escreve-se num arquivo temporário e depois se renomeia por cima do original (`rename` é instantâneo). Se o processo cair no meio, o original continua intacto. Usado em `backend/transacoes.js`.
+**Escrita atômica** — gravar um arquivo de forma que ele nunca fique "pela metade": escreve-se num arquivo temporário e depois se renomeia por cima do original (`rename` é instantâneo). Se o processo cair no meio, o original continua intacto.
 
 **Framework** — um conjunto de ferramentas e convenções que decide "a forma certa" de estruturar um projeto, em troca de dar bastante coisa pronta (roteamento, otimizações, build). Next.js é um framework construído em cima do React.
 
@@ -26,7 +26,7 @@ Termos técnicos usados neste projeto, explicados de forma simples. Ordem alfab�
 
 **HSTS (Strict-Transport-Security)** — header que obriga o navegador a só acessar o site por HTTPS durante um período, mesmo que alguém mande um link `http://`.
 
-**Idempotência** — propriedade de uma operação que pode ser repetida sem mudar o resultado depois da primeira vez. O webhook do Mercado Pago pode chegar duplicado; com idempotência, a segunda chegada é reconhecida e ignorada (sem gravar nem mandar e-mail de novo).
+**Idempotência** — propriedade de uma operação que pode ser repetida sem mudar o resultado depois da primeira vez. Exemplo clássico: o webhook de um meio de pagamento pode chegar duplicado; com idempotência, a segunda chegada é reconhecida e ignorada (sem gravar nem mandar e-mail de novo).
 
 **LGPD** — Lei Geral de Proteção de Dados (Brasil). Entre outras coisas, exige minimizar quais dados pessoais você coleta e por quanto tempo guarda. Influencia diretamente a decisão do formulário de Orçamento (ver [`07-protecao-de-dados.md`](./07-protecao-de-dados.md)).
 

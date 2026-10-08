@@ -9,8 +9,10 @@ Sala do Banquete LM/
 │   │   ├── servicos/page.tsx         → rota "/servicos"
 │   │   ├── orcamento/page.tsx        → rota "/orcamento"
 │   │   ├── privacidade/page.tsx      → rota "/privacidade" (Política de Privacidade)
+│   │   ├── ingressos/retorno/page.tsx → volta do Mercado Pago: confirma o pagamento
 │   │   ├── not-found.tsx             → página 404 traduzida, dentro do layout
 │   │   └── [...rest]/page.tsx        → pega qualquer caminho inexistente e dispara a 404 acima
+│   ├── api/checkout/route.ts         → POST: cria o pagamento no Mercado Pago (preço vem do catálogo)
 │   ├── robots.ts                     → gera /robots.txt
 │   ├── sitemap.ts                    → gera /sitemap.xml (todas as páginas × idiomas)
 │   ├── globals.css                   → import do Tailwind + tema (@theme) + estilos globais
@@ -19,7 +21,7 @@ Sala do Banquete LM/
 │   └── apple-icon.png                → ícone da tela inicial do iPhone (180px)
 ├── components/
 │   ├── layout/    → Navbar, Footer, LanguageSwitcher, SkipLink, WhatsappFloatButton (usados em toda página)
-│   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact (só usados na Home)
+│   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact, TicketCheckout (só usados na Home)
 │   ├── services/  → ServicesGrid (grade + estado), ServiceCard, ServiceContactDialog (popup WhatsApp/e-mail)
 │   ├── budget/    → BudgetForm
 │   └── icons/     → WhatsappIcon (SVG reaproveitado em mais de um lugar)
@@ -33,7 +35,10 @@ Sala do Banquete LM/
 │   │       └── en.json         → todos os textos do site em inglês
 │   ├── data/
 │   │   ├── contacts.ts         → WhatsApp/Instagram/e-mail/endereço (dados públicos, não são segredo)
-│   │   └── services.ts         → lista de serviços (id + ícone; título/descrição vêm do i18n)
+│   │   ├── services.ts         → lista de serviços (id + ícone; título/descrição vêm do i18n)
+│   │   └── tickets.ts          → catálogo de ingressos e preços (vazio = vendas desligadas)
+│   ├── payments/
+│   │   └── mercadopago.ts      → API do Mercado Pago (server-only: o token nunca vai ao navegador)
 │   ├── seo/
 │   │   └── metadata.ts         → domínio canônico, lista de páginas e buildPageMetadata()
 │   ├── ui/
@@ -47,10 +52,7 @@ Sala do Banquete LM/
 ├── next.config.ts               → configuração do Next.js: CSP e headers de segurança, imagens, plugin de i18n
 ├── tsconfig.json                 → configuração do TypeScript (inclui o atalho de import "@/")
 ├── package.json                  → dependências e scripts (npm run dev/build/start)
-│
-└── backend/                      → API de pagamentos (Mercado Pago) — fora do deploy, base da fase de e-commerce
-    ├── server.js                 → rotas Express (preference, webhook, transações)
-    └── transacoes.js             → persistência em arquivo (escrita atômica, quarentena, lock)
+└── .env.example                  → variáveis de ambiente (token do Mercado Pago), sem valores
 ```
 
 ## Por que `app/[locale]/` e não `app/` direto

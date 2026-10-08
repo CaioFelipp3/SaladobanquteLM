@@ -188,8 +188,8 @@ Contraste corrigido com o **menor ajuste possível** na identidade visual: o ros
 | R1 | Imagem de Open Graph dedicada (1200×630, < 300 KB). Hoje é a logo de 603×282 | Antes de divulgar links |
 | R2 | `alt` descritivo para cada foto da galeria. Hoje é "Decoração da Sala do Banquete 3", genérico | Com o conteúdo real |
 | R3 | Trocar a CSP para nonce se o site passar a renderizar conteúdo de usuários ou de um CMS | Fase com conteúdo dinâmico |
-| R4 | Backend: preencher `CATALOGO_INGRESSOS`; migrar `transacoes.json` para um banco gerenciado (o lock em memória só vale para 1 processo; criptografia em repouso; retenção); validar a janela de tempo do `ts` do webhook contra replay; criar a página `/ingressos`, para onde os `back_urls` do Mercado Pago apontam e que não existe | Fase de e-commerce |
-| R5 | Considerar Route Handlers do Next.js em vez do Express separado, para um deploy, um conjunto de headers e uma validação compartilhada (o mesmo schema zod no cliente e no servidor) | Fase de e-commerce |
+| R4 | ✅ Resolvida pelo checkout novo (sem arquivo JSON nem catálogo no Express). Texto original: Backend: preencher `CATALOGO_INGRESSOS`; migrar `transacoes.json` para um banco gerenciado (o lock em memória só vale para 1 processo; criptografia em repouso; retenção); validar a janela de tempo do `ts` do webhook contra replay; criar a página `/ingressos`, para onde os `back_urls` do Mercado Pago apontam e que não existe | Fase de e-commerce |
+| R5 | ✅ Feita em `056ccea`. Texto original: Considerar Route Handlers do Next.js em vez do Express separado, para um deploy, um conjunto de headers e uma validação compartilhada (o mesmo schema zod no cliente e no servidor) | Fase de e-commerce |
 | R6 | Majors pendentes: `eslint` 10, `typescript` 7, `express` 5 — cada um com migração própria | Manutenção |
 | R7 | Acompanhar a correção do `braces` (cadeia do `eslint-config-next`) | `npm audit` periódico |
 | R8 | Trazer para o repositório os testes desta auditoria (Playwright para e2e/CSP/axe, Vitest para o schema e o backend) e rodar em CI a cada PR | Próxima etapa |
@@ -216,4 +216,12 @@ Depois da auditoria, uma rodada de limpeza procurou código morto, resíduos da 
 **Confirmado em uso e mantido:** todos os 30 arquivos de código, as 13 imagens de `public/` (sem duplicatas), as 143 chaves de tradução, todos os tokens do tema e todas as dependências. Os 30 `console.*` do backend são logs operacionais. Não havia TODO/FIXME, código comentado nem rotas de teste.
 
 **Classes que parecem sem efeito, mas ficam:** transições (só agem no hover), `hidden`/`sm:hidden` (menu fechado), margens que colapsam com as vizinhas, classes da lista de eventos que só agem com 2+ eventos, e classes que só importam quando o texto quebra linha.
+
+## Self-checkout de ingressos e remoção do backend
+
+Depois da auditoria, a venda de ingressos foi reconstruída dentro do Next.js (`056ccea`), seguindo a recomendação R5, e o backend Express foi removido (`8e43a11`). Os achados de backend desta auditoria (C2, A2–A4, M8–M11, B13, B14) referem-se a esse código, que não existe mais. As correções serviram de base para o desenho novo, que elimina as causas: sem arquivo de dados, sem e-mail próprio, preço só no servidor. Detalhes em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md) e na seção "Checkout de ingressos" de [`05-seguranca.md`](./05-seguranca.md).
+
+Dois problemas foram encontrados e corrigidos **durante** o desenvolvimento, antes do commit:
+- **IDOR na página de retorno:** a primeira versão mostrava status e valor de qualquer pagamento pelo `payment_id` da URL. Agora exige o `external_reference` do pedido.
+- **Checagem de origem quebrada fora de `localhost`:** comparar o `Origin` com `request.url` recusava compras legítimas pelo IP da rede (no `next start`, a URL interna sai como `localhost`). Agora compara com o header `Host`/`x-forwarded-host`.
 
