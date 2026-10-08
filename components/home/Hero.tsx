@@ -8,7 +8,7 @@ export default function Hero() {
     <section id="home" className="mx-auto max-w-[900px] px-5 pt-16">
       <div className="my-8 text-center">
         <Image
-          src="/assets/logo.png"
+          src="/images/marca/logo.png"
           alt={t("logoAlt")}
           width={300}
           height={140}

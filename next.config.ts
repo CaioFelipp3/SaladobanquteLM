@@ -70,10 +70,10 @@ const nextConfig: NextConfig = {
   // procura alvos com CVE conhecida.
   poweredByHeader: false,
   images: {
-    // O otimizador de imagens (/_next/image) só aceita arquivos de /assets,
+    // O otimizador de imagens (/_next/image) só aceita arquivos de /images,
     // sem query string — impede usar o endpoint para processar arquivos
     // arbitrários (vetor das CVEs de SSRF/DoS no Image Optimizer).
-    localPatterns: [{ pathname: "/assets/**", search: "" }],
+    localPatterns: [{ pathname: "/images/**", search: "" }],
   },
   async headers() {
     return [

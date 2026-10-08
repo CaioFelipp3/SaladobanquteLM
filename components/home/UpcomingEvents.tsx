@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
-import TicketCheckout from "@/components/home/TicketCheckout";
+import TicketCheckout from "@/components/tickets/TicketCheckout";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
 import { ticketSales } from "@/lib/data/tickets";
 import { salesOpen } from "@/lib/payments/mercadopago";

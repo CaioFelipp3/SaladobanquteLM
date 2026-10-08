@@ -4,7 +4,7 @@ import { routing } from "@/lib/i18n/routing";
 /** Domínio canônico — o sem-www redireciona para cá. */
 export const siteUrl = "https://www.saladobanquetelm.com.br";
 export const siteName = "A Sala do Banquete";
-const ogImage = "/assets/logo.png";
+const ogImage = "/images/marca/logo.png";
 
 /** Páginas públicas indexáveis, sem prefixo de idioma ("" = Home). */
 export const pagePaths = ["", "/servicos", "/orcamento", "/privacidade"] as const;

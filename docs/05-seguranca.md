@@ -61,13 +61,13 @@ base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 ## Otimizador de imagens restrito
 
-`images.localPatterns` em `next.config.ts` faz o endpoint `/_next/image` aceitar **só** arquivos de `/assets/**`, sem query string. Testado:
+`images.localPatterns` em `next.config.ts` faz o endpoint `/_next/image` aceitar **só** arquivos de `/images/**`, sem query string. Testado:
 
 | Requisição | Resultado |
 |---|---|
-| `/_next/image?url=/assets/logo.png` | 200 |
+| `/_next/image?url=/images/marca/logo.png` | 200 |
 | `/_next/image?url=/favicon.ico` | 400 |
-| `/_next/image?url=/assets/logo.png?x=1` | 400 |
+| `/_next/image?url=/images/marca/logo.png?x=1` | 400 |
 | `/_next/image?url=https://evil.com/a.png` | 400 |
 
 O otimizador de imagens foi o vetor de várias CVEs recentes do Next.js (SSRF, RCE com AVIF). Restringir o que ele aceita reduz o que um atacante consegue mandar para ele processar.

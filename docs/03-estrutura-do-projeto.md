@@ -21,9 +21,10 @@ Sala do Banquete LM/
 │   └── apple-icon.png                → ícone da tela inicial do iPhone (180px)
 ├── components/
 │   ├── layout/    → Navbar, Footer, LanguageSwitcher, SkipLink, WhatsappFloatButton (usados em toda página)
-│   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact, TicketCheckout (só usados na Home)
+│   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact (só usados na Home)
 │   ├── services/  → ServicesGrid (grade + estado), ServiceCard, ServiceContactDialog (popup WhatsApp/e-mail)
 │   ├── budget/    → BudgetForm
+│   ├── tickets/   → TicketCheckout (botão + popup de compra de ingressos)
 │   └── icons/     → WhatsappIcon (SVG reaproveitado em mais de um lugar)
 ├── lib/
 │   ├── i18n/
@@ -46,7 +47,10 @@ Sala do Banquete LM/
 │   └── validation/
 │       └── budget.ts           → schema zod do formulário de orçamento
 ├── public/
-│   └── assets/                 → imagens servidas via next/image (logo, fotos da galeria, fundadora)
+│   └── images/
+│       ├── galeria/            → fotos da galeria: 1.jpeg, 2.jpeg … (quantidade em Gallery.tsx)
+│       ├── marca/              → logo.png (também usada no preview de links)
+│       └── equipe/             → liliam.jpg (foto da seção Sobre)
 ├── docs/                        → esta pasta — documentação de aprendizado
 ├── proxy.ts                     → roda no servidor antes de cada request; detecta o idioma da URL
 ├── next.config.ts               → configuração do Next.js: CSP e headers de segurança, imagens, plugin de i18n

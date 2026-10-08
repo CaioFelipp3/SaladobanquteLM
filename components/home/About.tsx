@@ -14,7 +14,7 @@ export default function About() {
       <div className="mx-auto mt-8 max-w-[700px]">
         <div className="relative aspect-[4/3] overflow-hidden rounded-[10px] bg-banquete-border">
           <Image
-            src="/assets/liliam.jpg"
+            src="/images/equipe/liliam.jpg"
             alt={t("founderImageAlt")}
             fill
             sizes="(min-width: 768px) 700px, 100vw"

@@ -50,7 +50,7 @@ Card do evento → popup (tipo + quantidade + total)
 | [`lib/data/tickets.ts`](../lib/data/tickets.ts) | Catálogo: tipos de ingresso e preços (única fonte do preço) |
 | [`lib/payments/mercadopago.ts`](../lib/payments/mercadopago.ts) | Conversa com a API do Mercado Pago (só no servidor) |
 | [`app/api/checkout/route.ts`](../app/api/checkout/route.ts) | Recebe o pedido do popup e devolve o link de pagamento |
-| [`components/home/TicketCheckout.tsx`](../components/home/TicketCheckout.tsx) | Botão + popup de compra |
+| [`components/tickets/TicketCheckout.tsx`](../components/tickets/TicketCheckout.tsx) | Botão + popup de compra |
 | [`app/[locale]/ingressos/retorno/page.tsx`](../app/[locale]/ingressos/retorno/page.tsx) | Página de chegada depois do pagamento |
 
 ## Onde ficam as vendas

@@ -59,7 +59,7 @@ export default function Gallery() {
       >
         <Image
           key={imageNumber}
-          src={`/assets/decoracao${imageNumber}.jpeg`}
+          src={`/images/galeria/${imageNumber}.jpeg`}
           alt={t("imageAlt", { index: imageNumber })}
           fill
           sizes="(min-width: 768px) 900px, 100vw"
