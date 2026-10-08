@@ -10,8 +10,9 @@ yarn.lock
 # Configuração local do frontend legado (dados sensíveis) — removido após a migração completa
 js/config.js
 
-# Banco de dados local
-transacoes.json
+# Banco de dados local (contém PII) — inclui quarentena/rotação e temporários de escrita atômica
+transacoes*.json
+.transacoes*.tmp
 
 # Next.js
 .next/
