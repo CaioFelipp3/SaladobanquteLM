@@ -12,9 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Backend Express (CommonJS, Node puro) — fora do app Next.js e com
-    // convenções próprias; não é lintado por esta config.
-    "backend/**",
   ]),
 ]);
 

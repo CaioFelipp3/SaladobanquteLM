@@ -7,10 +7,6 @@
 node_modules/
 yarn.lock
 
-# Banco de dados local (contém PII) — inclui quarentena/rotação e temporários de escrita atômica
-transacoes*.json
-.transacoes*.tmp
-
 # Next.js
 .next/
 out/
