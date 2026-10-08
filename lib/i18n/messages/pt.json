@@ -128,7 +128,9 @@
     "messageTemplate": "Olá! Gostaria de solicitar um orçamento para a Sala do Banquete.\nNome: {name}\nTelefone: {phone}\nServiço: {service}\nData do evento: {eventDate}\nNúmero de convidados: {guestCount}\nMensagem: {message}",
     "emailSubject": "Solicitação de orçamento – {service}",
     "privacyConsent": "Li e estou ciente da <link>Política de Privacidade</link>",
-    "opensInNewTab": "(abre em nova aba)"
+    "opensInNewTab": "(abre em nova aba)",
+    "fallbackWhatsapp": "Se a conversa não abriu, <link>clique aqui para abrir o WhatsApp</link>.",
+    "fallbackEmail": "Se nada abriu, <link>clique aqui</link> ou escreva diretamente para {email}."
   },
   "Privacy": {
     "Metadata": {
@@ -216,5 +218,10 @@
   "WhatsappFloat": {
     "ariaLabel": "Falar pelo WhatsApp",
     "message": "Olá. Tudo bem?\nQuero saber mais sobre os próximos eventos da Sala do Banquete."
+  },
+  "NotFound": {
+    "heading": "Página não encontrada",
+    "body": "O endereço que você acessou não existe ou foi movido.",
+    "backHome": "Voltar para o início"
   }
 }

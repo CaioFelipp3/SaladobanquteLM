@@ -128,7 +128,9 @@
     "messageTemplate": "Hello! I'd like to request a quote for Sala do Banquete.\nName: {name}\nPhone: {phone}\nService: {service}\nEvent date: {eventDate}\nNumber of guests: {guestCount}\nMessage: {message}",
     "emailSubject": "Quote request – {service}",
     "privacyConsent": "I have read and acknowledge the <link>Privacy Policy</link>",
-    "opensInNewTab": "(opens in a new tab)"
+    "opensInNewTab": "(opens in a new tab)",
+    "fallbackWhatsapp": "If the chat did not open, <link>click here to open WhatsApp</link>.",
+    "fallbackEmail": "If nothing opened, <link>click here</link> or write directly to {email}."
   },
   "Privacy": {
     "Metadata": {
@@ -216,5 +218,10 @@
   "WhatsappFloat": {
     "ariaLabel": "Chat on WhatsApp",
     "message": "Hello! I'd like to know more about the upcoming events at Sala do Banquete."
+  },
+  "NotFound": {
+    "heading": "Page not found",
+    "body": "The address you visited does not exist or has been moved.",
+    "backHome": "Back to home"
   }
 }

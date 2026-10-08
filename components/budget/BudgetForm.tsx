@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { buildMailtoUrl, buildWhatsappUrl } from "@/lib/data/contacts";
+import { buildMailtoUrl, buildWhatsappUrl, contacts } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
 import { Link } from "@/lib/i18n/navigation";
 import { budgetFormSchema, parseLocalDate, type BudgetFormInput } from "@/lib/validation/budget";
@@ -18,11 +18,22 @@ const emptyValues: BudgetFormInput = {
 };
 
 type FieldErrors = Partial<Record<keyof BudgetFormInput, string>>;
-type Status = "idle" | "success-whatsapp" | "success-email" | "error";
+type Status =
+  | { kind: "idle" }
+  | { kind: "invalid" }
+  // Guarda a URL gerada para oferecer um link manual caso o navegador
+  // bloqueie a nova aba ou não exista app de e-mail configurado.
+  | { kind: "sent"; channel: "whatsapp" | "email"; url: string };
 
 const inputClasses =
-  "w-full rounded-md border border-banquete-border bg-white px-4 py-2.5 text-[15px] text-banquete-dark placeholder:text-banquete-dark/40 focus:border-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
-const invalidClasses = "border-red-500 focus:border-red-500";
+  "w-full rounded-md border bg-white px-4 py-2.5 text-[15px] text-banquete-dark placeholder:text-banquete-dark/40 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
+// Cor da borda em classes separadas: aplicar "border-banquete-border" e
+// "border-red-500" juntas no mesmo elemento deixaria o resultado depender da
+// ordem do CSS gerado, não da ordem no className.
+const validBorderClasses = "border-banquete-border focus:border-banquete-rose";
+const invalidBorderClasses = "border-red-500 focus:border-red-500";
+const linkClasses =
+  "font-semibold text-banquete-rose underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose";
 const labelClasses = "mb-1.5 block text-[13px] font-semibold text-banquete-dark";
 
 export default function BudgetForm() {
@@ -32,17 +43,10 @@ export default function BudgetForm() {
 
   const [values, setValues] = useState<BudgetFormInput>(emptyValues);
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  // Sem atributo `min` no <input type="date">: calcular "hoje" com `new Date()`
-  // durante o render rodaria tanto no servidor quanto no cliente, e os dois
-  // podem estar em fusos horários diferentes — o valor renderizado no HTML do
-  // servidor poderia não bater com o do cliente na hidratação ("hydration
-  // mismatch"). A regra "não é antes de hoje" já é garantida de verdade pelo
-  // schema zod (eventDatePast) no submit, então não perdemos validação real,
-  // só o cinza visual do seletor nativo do navegador para datas passadas.
   useEffect(() => {
     return () => {
       if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
@@ -82,7 +86,7 @@ export default function BudgetForm() {
         if (!fieldErrors[field]) fieldErrors[field] = issue.message;
       }
       setErrors(fieldErrors);
-      setStatus("error");
+      setStatus({ kind: "invalid" });
 
       const firstInvalidField = Object.keys(fieldErrors)[0];
       document.getElementById(`budget-${firstInvalidField}`)?.focus();
@@ -106,13 +110,17 @@ export default function BudgetForm() {
     // Nada disso passa por um backend nosso: montamos o link e devolvemos o
     // controle para o WhatsApp/cliente de e-mail do próprio visitante — ver
     // docs/05-seguranca.md (minimização de dados / LGPD).
+    // Com "noopener", window.open sempre devolve null — não dá para saber se
+    // a aba foi bloqueada. Por isso a mensagem de sucesso sempre traz um link
+    // manual com a mesma URL.
     if (channel === "whatsapp") {
-      window.open(buildWhatsappUrl(message), "_blank", "noopener,noreferrer");
-      setStatus("success-whatsapp");
+      const url = buildWhatsappUrl(message);
+      window.open(url, "_blank", "noopener,noreferrer");
+      setStatus({ kind: "sent", channel, url });
     } else {
-      const subject = t("emailSubject", { service: serviceTitle });
-      window.location.href = buildMailtoUrl(subject, message);
-      setStatus("success-email");
+      const url = buildMailtoUrl(t("emailSubject", { service: serviceTitle }), message);
+      window.location.href = url;
+      setStatus({ kind: "sent", channel, url });
     }
 
     resetTimeoutRef.current = setTimeout(() => setIsSubmitting(false), 1200);
@@ -130,7 +138,7 @@ export default function BudgetForm() {
       name: field,
       "aria-invalid": Boolean(error),
       "aria-describedby": error ? `budget-${field}-error` : undefined,
-      className: `${inputClasses} ${error ? invalidClasses : ""}`,
+      className: `${inputClasses} ${error ? invalidBorderClasses : validBorderClasses}`,
     };
   }
 
@@ -190,6 +198,10 @@ export default function BudgetForm() {
         <FieldError id="budget-service-error" message={fieldError("service")} />
       </div>
 
+      {/* Sem atributo `min`: calcular "hoje" durante o render rodaria no
+          servidor (no build) e no cliente, em fusos/dias diferentes, causando
+          erro de hidratação. A regra "não é antes de hoje" é garantida pelo
+          schema zod (eventDatePast) no envio. */}
       <div className="mb-5">
         <label htmlFor="budget-eventDate" className={labelClasses}>
           {t("fields.eventDate")}
@@ -254,7 +266,7 @@ export default function BudgetForm() {
                   href="/privacidade"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-banquete-rose underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
+                  className={linkClasses}
                 >
                   {chunks}
                   <span className="sr-only"> {t("opensInNewTab")}</span>
@@ -288,30 +300,45 @@ export default function BudgetForm() {
       </div>
 
       <div role="status" aria-live="polite" className="mt-5">
-        {status === "success-whatsapp" && (
+        {status.kind === "sent" && (
           <p className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-            <strong>{t("successTitle")}</strong> {t("successWhatsapp")}
-          </p>
-        )}
-        {status === "success-email" && (
-          <p className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-            <strong>{t("successTitle")}</strong> {t("successEmail")}
-          </p>
-        )}
-        {status === "error" && (
-          <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-            <strong>{t("errorTitle")}</strong> {t("errorGeneric")}
+            <strong>{t("successTitle")}</strong>{" "}
+            {status.channel === "whatsapp" ? t("successWhatsapp") : t("successEmail")}{" "}
+            {t.rich(status.channel === "whatsapp" ? "fallbackWhatsapp" : "fallbackEmail", {
+              link: (chunks) => (
+                <a
+                  href={status.url}
+                  {...(status.channel === "whatsapp"
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className={linkClasses}
+                >
+                  {chunks}
+                </a>
+              ),
+              email: contacts.email,
+            })}
           </p>
         )}
       </div>
+
+      {/* Fora da região role="status": regiões "live" aninhadas fazem alguns
+          leitores de tela anunciarem a mesma mensagem duas vezes. */}
+      {status.kind === "invalid" && (
+        <p role="alert" className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <strong>{t("errorTitle")}</strong> {t("errorGeneric")}
+        </p>
+      )}
     </form>
   );
 }
 
+// Sem role="alert": no envio inválido o foco vai para o primeiro campo com
+// erro, e o aria-describedby do campo já faz o leitor de tela ler a mensagem.
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} role="alert" className="mt-1.5 text-[13px] text-red-600">
+    <p id={id} className="mt-1.5 text-[13px] text-red-600">
       {message}
     </p>
   );
