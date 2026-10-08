@@ -12,7 +12,7 @@ export default function About() {
       <p className={bodyText}>{t("paragraph2")}</p>
 
       <div className="mx-auto mt-8 max-w-[700px]">
-        <div className="relative aspect-[4/3] min-h-[180px] w-full overflow-hidden rounded-[10px] bg-banquete-border">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[10px] bg-banquete-border">
           <Image
             src="/assets/liliam.jpg"
             alt={t("founderImageAlt")}

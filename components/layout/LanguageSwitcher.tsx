@@ -35,7 +35,7 @@ export default function LanguageSwitcher({
             className={`text-[13px] font-semibold uppercase tracking-wide transition-colors focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose ${
               locale === activeLocale
                 ? "text-banquete-rose"
-                : "text-banquete-dark hover:text-banquete-rose"
+                : "hover:text-banquete-rose"
             }`}
           >
             {labels[locale].short}

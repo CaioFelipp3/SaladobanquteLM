@@ -48,7 +48,7 @@ export default function Gallery() {
       <p className={bodyText}>{t("intro")}</p>
 
       <div
-        className="relative my-5 aspect-[3/4] min-h-60 w-full overflow-hidden rounded-[10px] bg-banquete-border focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:aspect-[4/3]"
+        className="relative my-5 aspect-[3/4] overflow-hidden rounded-[10px] bg-banquete-border focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:aspect-[4/3]"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onKeyDown={handleKeyDown}
@@ -103,7 +103,7 @@ export default function Gallery() {
             <span
               aria-hidden="true"
               className={`h-2.5 w-2.5 rounded-full border border-banquete-rose transition-colors ${
-                index === currentIndex ? "bg-banquete-rose" : "bg-transparent group-hover:bg-banquete-rose-soft-2"
+                index === currentIndex ? "bg-banquete-rose" : "group-hover:bg-banquete-rose-soft-2"
               }`}
             />
           </button>

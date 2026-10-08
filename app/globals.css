@@ -44,10 +44,6 @@
   --breakpoint-sm: 680px;
 }
 
-body {
-  font-family: var(--font-sans);
-}
-
 /*
  * Quem ativou "reduzir movimento" no sistema (labirintite, enxaqueca, TDAH)
  * não recebe as animações de hover/menu — WCAG 2.3.3.

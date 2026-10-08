@@ -35,7 +35,7 @@ export default async function OrcamentoPage({
       <h1 className={`${pageHeading} text-center`}>
         {t("heading")}
       </h1>
-      <p className="mx-auto max-w-[560px] text-center text-[15px] leading-relaxed text-banquete-dark xs:text-base">
+      <p className="mx-auto max-w-[560px] text-center text-[15px] leading-relaxed xs:text-base">
         {t("intro")}
       </p>
 

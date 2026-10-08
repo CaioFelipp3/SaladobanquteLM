@@ -46,8 +46,8 @@ export default async function PrivacidadePage({
   const t = await getTranslations("Privacy");
 
   return (
-    <article className="mx-auto max-w-[760px] px-5 py-12 text-[15px] leading-relaxed text-banquete-dark xs:text-base">
-      <h1 className="mb-2 mt-0 font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl">
+    <article className="mx-auto max-w-[760px] px-5 py-12 text-[15px] leading-relaxed xs:text-base">
+      <h1 className="mb-2 font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl">
         {t("heading")}
       </h1>
       <p className="mb-6 text-sm text-banquete-dark/70">{t("updatedAt")}</p>

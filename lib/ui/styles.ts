@@ -14,11 +14,11 @@ export const buttonPrimary = `inline-block min-h-11 rounded-md bg-banquete-rose 
 
 /** Título principal (h1) das páginas internas. */
 export const pageHeading =
-  "mb-5 mt-0 font-serif text-[30px] leading-tight text-banquete-dark xs:text-4xl sm:text-5xl";
+  "mb-5 font-serif text-[30px] leading-tight xs:text-4xl sm:text-5xl";
 
 /** Título (h2) das seções da Home. */
 export const sectionHeading =
-  "mb-5 mt-0 font-serif text-[26px] leading-tight text-banquete-dark xs:text-3xl sm:text-4xl";
+  "mb-5 font-serif text-[26px] leading-tight xs:text-3xl sm:text-4xl";
 
 /** Parágrafo de texto corrido. */
-export const bodyText = "my-4 text-[15px] leading-relaxed text-banquete-dark xs:text-base";
+export const bodyText = "my-4 text-[15px] leading-relaxed xs:text-base";

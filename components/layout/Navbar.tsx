@@ -33,7 +33,7 @@ export default function Navbar() {
           toggleRef.current?.focus();
         }
       }}
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-banquete-bg/97 px-5 py-4 shadow-sm sm:justify-start sm:px-5 sm:py-3.5"
+      className="fixed inset-x-0 top-0 z-50 flex bg-banquete-bg/97 px-5 py-4 shadow-sm sm:py-3.5"
     >
       <button
         ref={toggleRef}
@@ -45,17 +45,17 @@ export default function Navbar() {
         className="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col justify-center gap-1.5 rounded-sm p-2 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:hidden"
       >
         <span
-          className={`block h-0.5 w-6 rounded bg-banquete-dark transition-transform duration-300 ${
+          className={`h-0.5 w-6 rounded bg-banquete-dark transition-transform duration-300 ${
             isOpen ? "translate-y-2 rotate-45" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 rounded bg-banquete-dark transition-opacity duration-300 ${
+          className={`h-0.5 w-6 rounded bg-banquete-dark transition-opacity duration-300 ${
             isOpen ? "opacity-0" : ""
           }`}
         />
         <span
-          className={`block h-0.5 w-6 rounded bg-banquete-dark transition-transform duration-300 ${
+          className={`h-0.5 w-6 rounded bg-banquete-dark transition-transform duration-300 ${
             isOpen ? "-translate-y-2 -rotate-45" : ""
           }`}
         />
@@ -72,7 +72,7 @@ export default function Navbar() {
             <Link
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="text-[13px] font-semibold uppercase tracking-wide text-banquete-dark transition-colors hover:text-banquete-rose focus-visible:rounded-sm focus-visible:text-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose"
+              className="text-[13px] font-semibold uppercase tracking-wide transition-colors hover:text-banquete-rose focus-visible:rounded-sm focus-visible:text-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose"
             >
               {link.label}
             </Link>
