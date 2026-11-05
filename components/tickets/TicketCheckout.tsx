@@ -2,6 +2,7 @@
 
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics/gtag";
 import type { Ticket } from "@/lib/data/tickets";
 import { Link } from "@/lib/i18n/navigation";
 import { buttonPrimary, focusRing } from "@/lib/ui/styles";
@@ -60,6 +61,11 @@ export default function TicketCheckout({
       });
       const data = (await response.json()) as { url?: string };
       if (!response.ok || !data.url || !isMercadoPagoUrl(data.url)) throw new Error("checkout");
+      trackEvent("begin_checkout", {
+        currency: "BRL",
+        value: ticket.price * quantity,
+        items: [{ item_id: ticket.id, item_name: ticket.name.pt, price: ticket.price, quantity }],
+      });
       window.location.assign(data.url);
       // Mantém "Abrindo o Mercado Pago..." até a página trocar
     } catch {
@@ -91,7 +97,7 @@ export default function TicketCheckout({
             event.currentTarget.close();
           }
         }}
-        className="m-auto w-[calc(100%-2rem)] max-w-[440px] rounded-[10px] bg-banquete-bg p-0 text-banquete-dark shadow-xl backdrop:bg-banquete-dark/60"
+        className="m-auto w-[calc(100%-2rem)] max-w-[440px] rounded-sm bg-banquete-bg p-0 text-banquete-dark shadow-xl backdrop:bg-banquete-dark/60"
       >
         <form
           className="relative px-6 pb-6 pt-8"
@@ -110,7 +116,7 @@ export default function TicketCheckout({
           </button>
 
           <h2 id="ticket-dialog-title" className="mb-5 text-center font-serif text-2xl leading-snug">
-            <span className="block font-sans text-xs font-semibold uppercase tracking-wide text-banquete-dark/70">
+            <span className="block font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-banquete-dark/70">
               {t("dialogLabel")}
             </span>
             {eventName}
@@ -122,7 +128,7 @@ export default function TicketCheckout({
               {tickets.map((item) => (
                 <label
                   key={item.id}
-                  className="flex cursor-pointer items-center justify-between gap-3 rounded-md border border-banquete-input-border bg-white px-4 py-3 text-sm has-[:checked]:border-banquete-rose has-[:checked]:ring-1 has-[:checked]:ring-banquete-rose"
+                  className="flex cursor-pointer items-center justify-between gap-3 rounded-sm border border-banquete-input-border bg-white px-4 py-3 text-sm has-[:checked]:border-banquete-rose has-[:checked]:ring-1 has-[:checked]:ring-banquete-rose"
                 >
                   <span className="flex items-center gap-2.5">
                     <input
@@ -149,7 +155,7 @@ export default function TicketCheckout({
                 aria-label={t("decrease")}
                 disabled={quantity <= 1}
                 onClick={() => setQuantity((value) => clamp(value - 1))}
-                className={`flex h-11 w-11 items-center justify-center rounded-md border border-banquete-input-border bg-white text-xl disabled:opacity-40 ${focusRing}`}
+                className={`flex h-11 w-11 items-center justify-center rounded-sm border border-banquete-input-border bg-white text-xl disabled:opacity-40 ${focusRing}`}
               >
                 −
               </button>
@@ -161,14 +167,14 @@ export default function TicketCheckout({
                 value={quantity}
                 aria-label={t("quantity")}
                 onChange={(event) => setQuantity(clamp(Number(event.target.value)))}
-                className={`h-11 w-16 rounded-md border border-banquete-input-border bg-white text-center text-[15px] ${focusRing}`}
+                className={`h-11 w-16 rounded-sm border border-banquete-input-border bg-white text-center text-[15px] ${focusRing}`}
               />
               <button
                 type="button"
                 aria-label={t("increase")}
                 disabled={quantity >= maxPerPurchase}
                 onClick={() => setQuantity((value) => clamp(value + 1))}
-                className={`flex h-11 w-11 items-center justify-center rounded-md border border-banquete-input-border bg-white text-xl disabled:opacity-40 ${focusRing}`}
+                className={`flex h-11 w-11 items-center justify-center rounded-sm border border-banquete-input-border bg-white text-xl disabled:opacity-40 ${focusRing}`}
               >
                 +
               </button>
@@ -195,7 +201,7 @@ export default function TicketCheckout({
           </p>
 
           {status.kind === "error" && (
-            <p role="alert" className="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+            <p role="alert" className="mb-4 rounded-sm border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
               <strong>{t("errorTitle")}</strong>{" "}
               {t.rich("errorBody", {
                 link: (chunks) => (

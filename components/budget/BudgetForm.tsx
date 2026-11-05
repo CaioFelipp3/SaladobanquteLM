@@ -2,6 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics/gtag";
 import { buildMailtoUrl, buildWhatsappUrl, contacts } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
 import { Link } from "@/lib/i18n/navigation";
@@ -26,7 +27,7 @@ type Status =
   | { kind: "sent"; channel: "whatsapp" | "email"; url: string };
 
 const inputClasses =
-  "w-full rounded-md border bg-white px-4 py-2.5 text-[15px] placeholder:text-banquete-dark/70 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
+  "w-full rounded-sm border bg-white px-4 py-2.5 text-[15px] placeholder:text-banquete-dark/70 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
 // Cor da borda em classes separadas: aplicar "border-banquete-border" e
 // "border-red-500" juntas no mesmo elemento deixaria o resultado depender da
 // ordem do CSS gerado, não da ordem no className.
@@ -106,6 +107,9 @@ export default function BudgetForm() {
       guestCount: data.guestCount,
       message: data.message || "—",
     });
+
+    // Só o canal e o tipo de serviço — nenhum dado pessoal vai para o GA.
+    trackEvent("generate_lead", { method: channel, service: data.service });
 
     // Nada disso passa por um backend nosso: montamos o link e devolvemos o
     // controle para o WhatsApp/cliente de e-mail do próprio visitante — ver
@@ -285,7 +289,7 @@ export default function BudgetForm() {
           type="button"
           disabled={isSubmitting}
           onClick={() => submit("whatsapp")}
-          className="flex min-h-11 flex-1 items-center justify-center rounded-md bg-whatsapp px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-whatsapp-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-whatsapp px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-whatsapp-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? t("submitting") : t("submitWhatsapp")}
         </button>
@@ -293,7 +297,7 @@ export default function BudgetForm() {
           type="button"
           disabled={isSubmitting}
           onClick={() => submit("email")}
-          className="flex min-h-11 flex-1 items-center justify-center rounded-md bg-banquete-rose px-5 py-3 text-xs font-semibold uppercase text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-banquete-rose px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? t("submitting") : t("submitEmail")}
         </button>
@@ -301,7 +305,7 @@ export default function BudgetForm() {
 
       <div role="status" aria-live="polite" className="mt-5">
         {status.kind === "sent" && (
-          <p className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          <p className="rounded-sm border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
             <strong>{t("successTitle")}</strong>{" "}
             {status.channel === "whatsapp" ? t("successWhatsapp") : t("successEmail")}{" "}
             {t.rich(status.channel === "whatsapp" ? "fallbackWhatsapp" : "fallbackEmail", {
@@ -325,7 +329,7 @@ export default function BudgetForm() {
       {/* Fora da região role="status": regiões "live" aninhadas fazem alguns
           leitores de tela anunciarem a mesma mensagem duas vezes. */}
       {status.kind === "invalid" && (
-        <p role="alert" className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+        <p role="alert" className="mt-5 rounded-sm border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
           <strong>{t("errorTitle")}</strong> {t("errorGeneric")}
         </p>
       )}

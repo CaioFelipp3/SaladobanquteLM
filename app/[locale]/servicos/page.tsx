@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ServicesGrid from "@/components/services/ServicesGrid";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
+import { findServiceImages } from "@/lib/data/serviceImages";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { bodyText, buttonPrimary, pageHeading } from "@/lib/ui/styles";
+import { buttonPrimary, container } from "@/lib/ui/styles";
 
 export async function generateMetadata({
   params,
@@ -32,13 +34,12 @@ export default async function ServicosPage({
   const t = await getTranslations("Services");
 
   return (
-    <section className="mx-auto max-w-[900px] px-5 py-12">
-      <h1 className={pageHeading}>{t("heading")}</h1>
-      <p className={`${bodyText} text-center`}>{t("intro")}</p>
+    <section className={`${container} py-16 sm:py-24`}>
+      <SectionHeader as="h1" eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
-      <ServicesGrid />
+      <ServicesGrid images={findServiceImages()} />
 
-      <div className="mt-8 text-center">
+      <div className="mt-14 text-center">
         <a
           href={buildWhatsappUrl(t("ctaMessage"))}
           target="_blank"

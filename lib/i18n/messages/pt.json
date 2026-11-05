@@ -11,6 +11,8 @@
     "events": "Eventos",
     "gallery": "Mesas Postas",
     "contact": "Contato",
+    "logoAlt": "Liliam Müller – A Sala do Banquete (início)",
+    "quote": "Orçamento",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "languageLabel": "Idioma",
@@ -18,11 +20,14 @@
   },
   "Home": {
     "Hero": {
-      "logoAlt": "Liliam Müller – A Sala do Banquete",
+      "eyebrow": "Vitória · Espírito Santo",
       "title": "Uma Experiência Única à Mesa",
-      "subtitle": "Descubra os melhores eventos em Vitória, ES"
+      "subtitle": "Descubra os melhores eventos em Vitória, ES",
+      "ctaPrimary": "Solicitar orçamento",
+      "ctaSecondary": "Ver próximos eventos"
     },
     "About": {
+      "eyebrow": "Nossa história",
       "heading": "A Sala do Banquete",
       "paragraph1": "A Sala do Banquete é um espaço sofisticado dedicado a criar momentos inesquecíveis. Com uma proposta inovadora que une gastronomia, arte e entretenimento, nos especializamos em eventos memoráveis.",
       "paragraph2": "Fundada por Liliam Müller, nossa sala se tornou referência em Vitória-ES por oferecer experiências personalizadas, ambientes elegantes e seleção cuidadosa de artistas e produtores. Cada evento é único, refletindo o compromisso com excelência.",
@@ -30,6 +35,7 @@
       "founderCaption": "Liliam Müller — Fundadora"
     },
     "Events": {
+      "eyebrow": "Agenda",
       "heading": "Próximos Eventos",
       "intro": "Confira nossa programação e fique por dentro dos próximos eventos",
       "ctaButton": "Saber Mais",
@@ -45,6 +51,7 @@
     },
     "Gallery": {
       "roledescription": "carrossel",
+      "eyebrow": "Galeria",
       "heading": "Nossas mesas postas",
       "intro": "Conheça os ambientes elegantes e sofisticados da Sala do Banquete",
       "imageAlt": "Decoração da Sala do Banquete {index}",
@@ -54,6 +61,7 @@
       "statusLabel": "Foto {index} de {total}"
     },
     "Contact": {
+      "eyebrow": "Contato",
       "heading": "Fale Conosco",
       "intro": "Entre em contato conosco para informações, reservas ou dúvidas",
       "whatsappLabel": "WhatsApp",
@@ -68,6 +76,7 @@
       "title": "Serviços – A Sala do Banquete",
       "description": "Conheça os serviços da Sala do Banquete: aniversários, bodas, casamentos, eventos corporativos e consultoria para montar seu acervo de mesa posta."
     },
+    "eyebrow": "O que fazemos",
     "heading": "Nossos Serviços",
     "intro": "Cada celebração merece um cuidado único — conheça o que preparamos para o seu momento especial",
     "ctaButton": "Consultar Serviço",
@@ -103,6 +112,7 @@
       "title": "Orçamento – A Sala do Banquete",
       "description": "Solicite um orçamento para o seu evento na Sala do Banquete. Preencha o formulário e receba uma resposta pelo WhatsApp ou e-mail."
     },
+    "eyebrow": "Seu evento",
     "heading": "Solicitar Orçamento",
     "intro": "Preencha os dados abaixo e envie sua solicitação pelo WhatsApp ou por e-mail — responderemos o quanto antes",
     "fields": {
@@ -184,7 +194,7 @@
       "description": "Como a Sala do Banquete trata os dados pessoais enviados pelo formulário de orçamento, de acordo com a LGPD."
     },
     "heading": "Política de Privacidade",
-    "updatedAt": "Última atualização: 7 de outubro de 2026",
+    "updatedAt": "Última atualização: 10 de outubro de 2026",
     "intro": "Esta política explica, de forma direta, quais dados pessoais a Sala do Banquete trata quando você usa este site, para quê e quais são os seus direitos segundo a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).",
     "contactLabel": "Contato sobre privacidade:",
     "sections": {
@@ -203,7 +213,7 @@
           "Número de convidados",
           "Mensagem (opcional)"
         ],
-        "note": "Na compra de ingressos, os dados são informados no Mercado Pago (veja \"Compra de ingressos\" abaixo). Não pedimos dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem."
+        "note": "Na compra de ingressos, os dados são informados no Mercado Pago (veja \"Compra de ingressos\" abaixo). Não pedimos dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem. Se você aceitar os cookies de análise, o Google Analytics também coleta dados de navegação (veja \"Cookies\" abaixo)."
       },
       "flow": {
         "title": "Como os dados chegam até nós",
@@ -215,11 +225,11 @@
       },
       "purpose": {
         "title": "Para que usamos",
-        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento, para organizar o seu evento se você nos contratar e, na compra de ingressos, para montar a lista de convidados e falar com você sobre o evento. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
+        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento, para organizar o seu evento se você nos contratar e, na compra de ingressos, para montar a lista de convidados e falar com você sobre o evento. Se você aceitar os cookies de análise, usamos estatísticas de navegação para entender como o site é usado e melhorá-lo. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
       },
       "legalBasis": {
         "title": "Base legal",
-        "body": "Para o orçamento, o tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Na compra de ingressos, a base é a execução do contrato (o mesmo art. 7º, inciso V) e o cumprimento de obrigações legais e fiscais (art. 7º, inciso II). A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar."
+        "body": "Para o orçamento, o tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Na compra de ingressos, a base é a execução do contrato (o mesmo art. 7º, inciso V) e o cumprimento de obrigações legais e fiscais (art. 7º, inciso II). A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar. Os cookies de análise (Google Analytics) só são usados com o seu consentimento (art. 7º, inciso I), que você pode revogar a qualquer momento em \"Preferências de cookies\", no rodapé do site."
       },
       "sharing": {
         "title": "Com quem os dados são compartilhados",
@@ -228,17 +238,24 @@
           "WhatsApp (Meta) ou o seu provedor de e-mail, que transportam a mensagem que você decide enviar.",
           "Mercado Pago, que processa o pagamento dos ingressos e nos informa os dados da compra.",
           "Google (Gmail), onde fica a caixa de e-mail da Sala do Banquete.",
-          "Vercel, empresa que hospeda o site e registra dados técnicos de acesso, como endereço IP e tipo de navegador, por motivos de segurança e funcionamento."
+          "Vercel, empresa que hospeda o site e registra dados técnicos de acesso, como endereço IP e tipo de navegador, por motivos de segurança e funcionamento.",
+          "Google (Google Analytics), somente se você aceitar os cookies de análise: recebe dados de navegação para gerar estatísticas de uso do site."
         ],
         "note": "Cada serviço segue a sua própria política de privacidade, e alguns podem armazenar dados fora do Brasil (LGPD, art. 33)."
       },
       "retention": {
         "title": "Por quanto tempo guardamos",
-        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Os registros de compra de ingressos ficam no Mercado Pago pelo prazo exigido pela legislação fiscal. Você pode pedir a exclusão do que não for obrigatório manter a qualquer momento."
+        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Os registros de compra de ingressos ficam no Mercado Pago pelo prazo exigido pela legislação fiscal. Os dados de navegação do Google Analytics ficam guardados no Google por 2 meses; depois disso, restam só estatísticas agregadas, que não identificam o visitante. Você pode pedir a exclusão do que não for obrigatório manter a qualquer momento."
       },
       "cookies": {
         "title": "Cookies",
-        "body": "O site usa um único cookie, NEXT_LOCALE, que guarda o idioma escolhido (português ou inglês) e expira quando você fecha o navegador. Ele é necessário para o funcionamento do site. Não usamos cookies de publicidade, ferramentas de análise (analytics) nem pixels de rastreamento."
+        "body": "O site guarda as seguintes informações no seu navegador:",
+        "items": [
+          "NEXT_LOCALE (necessário): cookie que guarda o idioma escolhido (português ou inglês) e expira quando você fecha o navegador.",
+          "cookie-consent (necessário): registro, no armazenamento local do navegador, da sua escolha sobre os cookies de análise. Vale por 12 meses, para o aviso não aparecer a cada página.",
+          "_ga e _ga_<ID> (análise, só com o seu consentimento): cookies do Google Analytics que contam visitas e registram páginas vistas, origem do acesso (por exemplo, Instagram ou Google), tipo de dispositivo, cidade aproximada e ações como pedir orçamento ou iniciar a compra de ingressos. Expiram em 12 meses."
+        ],
+        "note": "Os cookies de análise só são ativados se você clicar em \"Aceitar\" no aviso de cookies. Você pode mudar de ideia a qualquer momento em \"Preferências de cookies\", no rodapé do site; ao recusar, os cookies do Google Analytics são apagados. O Google Analytics não armazena o seu endereço IP. Não usamos cookies de publicidade nem pixels de rastreamento, e os recursos de anúncios do Google ficam desativados."
       },
       "security": {
         "title": "Segurança",
@@ -252,7 +269,8 @@
           "Corrigir dados incompletos, inexatos ou desatualizados.",
           "Pedir a eliminação dos seus dados.",
           "Saber com quem compartilhamos seus dados.",
-          "Opor-se ao tratamento."
+          "Opor-se ao tratamento.",
+          "Revogar o consentimento para os cookies de análise, em \"Preferências de cookies\", no rodapé do site."
         ],
         "note": "Para exercer esses direitos, escreva para o e-mail abaixo. Responderemos em até 15 dias. Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD)."
       },
@@ -262,9 +280,16 @@
       }
     }
   },
+  "CookieBanner": {
+    "title": "Cookies e privacidade",
+    "body": "Usamos cookies do Google Analytics para entender como o site é usado, por exemplo quais páginas são visitadas e de onde vêm os acessos. Eles só são ativados se você aceitar. <link>Saiba mais</link>.",
+    "accept": "Aceitar",
+    "reject": "Recusar"
+  },
   "Footer": {
     "rights": "Todos os direitos reservados.",
-    "privacy": "Política de Privacidade"
+    "privacy": "Política de Privacidade",
+    "cookiePreferences": "Preferências de cookies"
   },
   "WhatsappFloat": {
     "ariaLabel": "Falar pelo WhatsApp",

@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
+import { InstagramIcon, MailIcon, MapPinIcon } from "@/components/icons/LineIcons";
 import WhatsappIcon from "@/components/icons/WhatsappIcon";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { buildWhatsappUrl, contacts } from "@/lib/data/contacts";
-import { sectionHeading } from "@/lib/ui/styles";
+import { container, eyebrow, focusRing, sectionSpacing } from "@/lib/ui/styles";
 
 export default function Contact() {
   const t = useTranslations("Home.Contact");
@@ -12,59 +14,61 @@ export default function Contact() {
       label: t("whatsappLabel"),
       href: buildWhatsappUrl(),
       external: true,
-      content: (
-        <>
-          <WhatsappIcon size={18} fill="#25d366" className="mr-1.5 inline-block align-middle" />
-          {t("whatsappLink")}
-        </>
-      ),
+      icon: <WhatsappIcon size={20} />,
+      text: t("whatsappLink"),
     },
     {
       id: "instagram",
       label: t("instagramLabel"),
       href: contacts.instagramUrl,
       external: true,
-      content: <><span aria-hidden="true">📷 </span>{contacts.instagramHandle}</>,
+      icon: <InstagramIcon size={22} />,
+      text: contacts.instagramHandle,
     },
     {
       id: "email",
       label: t("emailLabel"),
       href: `mailto:${contacts.email}`,
       external: false,
-      content: <><span aria-hidden="true">📧 </span>{contacts.email}</>,
+      icon: <MailIcon size={22} />,
+      text: contacts.email,
     },
     {
       id: "address",
       label: t("addressLabel"),
       href: contacts.mapsUrl,
       external: true,
-      content: <><span aria-hidden="true">📍 </span>{contacts.address}</>,
+      icon: <MapPinIcon size={22} />,
+      text: contacts.address,
     },
   ];
 
   return (
-    <section id="contato" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className={sectionHeading}>{t("heading")}</h2>
-      <p className="mb-8 text-center text-[15px]">{t("intro")}</p>
+    <section id="contato" className={`bg-white ${sectionSpacing}`}>
+      <div className={container}>
+        <SectionHeader eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
-      <div className="mx-auto max-w-[500px]">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="my-4 rounded-[10px] border border-banquete-border bg-neutral-50 p-5"
-          >
-            <strong className="mb-2 block text-[11px] uppercase tracking-wide text-banquete-dark/70">
-              {item.label}
-            </strong>
-            <a
-              href={item.href}
-              {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="text-banquete-rose hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
-            >
-              {item.content}
-            </a>
-          </div>
-        ))}
+        {/* gap-px sobre o fundo dourado-claro desenha os filetes entre os cards */}
+        <ul className="mx-auto mt-14 grid max-w-[880px] gap-px overflow-hidden rounded-sm border border-banquete-line bg-banquete-line sm:grid-cols-2">
+          {items.map((item) => (
+            <li key={item.id} className="flex flex-col items-center bg-white px-6 py-10 text-center">
+              <span
+                aria-hidden="true"
+                className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-banquete-gold/70 text-banquete-gold-text"
+              >
+                {item.icon}
+              </span>
+              <span className={`${eyebrow} mb-3`}>{item.label}</span>
+              <a
+                href={item.href}
+                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className={`break-words font-serif text-xl lining-nums text-banquete-dark underline decoration-banquete-gold/0 underline-offset-4 transition-colors duration-300 hover:text-banquete-rose hover:decoration-banquete-gold ${focusRing} rounded-sm`}
+              >
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

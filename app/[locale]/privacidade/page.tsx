@@ -60,7 +60,7 @@ export default async function PrivacidadePage({
           : [];
 
         return (
-          <section key={id} className="mt-8">
+          <section key={id} id={id} className="mt-8 scroll-mt-20">
             <h2 className="mb-3 font-serif text-2xl leading-snug">{t(`sections.${id}.title`)}</h2>
             <p className="my-3">{t(`sections.${id}.body`)}</p>
             {items.length > 0 && (

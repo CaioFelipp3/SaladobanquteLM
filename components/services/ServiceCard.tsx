@@ -1,22 +1,16 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import Ornament from "@/components/ui/Ornament";
 import type { ServiceId } from "@/lib/data/services";
-
-// Alterna a cor de fundo do ícone entre os três tons da paleta, criando ritmo
-// visual — equivalente ao :nth-child(3n+2)/:nth-child(3n+3) do CSS original.
-const iconBackgrounds = [
-  "bg-banquete-rose-soft",
-  "bg-banquete-gold-soft",
-  "bg-banquete-rose-soft-2",
-] as const;
 
 export default function ServiceCard({
   id,
-  icon,
+  image,
   index,
   onContact,
 }: {
   id: ServiceId;
-  icon: string;
+  image?: string;
   index: number;
   onContact: () => void;
 }) {
@@ -26,25 +20,41 @@ export default function ServiceCard({
     // relative + o after:inset-0 do botão: o card inteiro vira área de clique
     // sem envolver o <h2> num <button> (HTML inválido, e o leitor de tela
     // leria o card todo como o nome do botão).
-    <div className="group relative flex flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-banquete-rose-soft-2 hover:shadow-lg">
-      <div className="flex aspect-[3/2] items-center justify-center bg-banquete-rose-soft text-sm text-banquete-dark/70">
-        {t("imagePlaceholder")}
-      </div>
-      <div className="flex flex-1 flex-col items-center px-5 py-7">
-        <div
-          className={`mb-4 flex h-[60px] w-[60px] items-center justify-center rounded-full text-2xl transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 ${iconBackgrounds[index % 3]}`}
-        >
-          <span aria-hidden="true">{icon}</span>
+    <div className="group relative flex flex-col overflow-hidden rounded-sm border border-banquete-line bg-white text-center transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(61,43,53,0.35)]">
+      {image ? (
+        // alt vazio: a foto ilustra o card e o título logo abaixo já nomeia o
+        // serviço — descrevê-la faria o leitor de tela repetir o nome.
+        <div className="relative aspect-[3/2] overflow-hidden bg-banquete-rose-soft">
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="(min-width: 1120px) 340px, (min-width: 768px) 33vw, 50vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
         </div>
-        <h2 className="mb-2 font-serif text-lg leading-snug">
+      ) : (
+        <div className="flex aspect-[3/2] flex-col items-center justify-center gap-3 bg-banquete-rose-soft">
+          <Ornament />
+          <span className="font-serif text-base italic text-banquete-dark/70">
+            {t("imagePlaceholder")}
+          </span>
+        </div>
+      )}
+      <div className="flex flex-1 flex-col items-center px-4 pb-7 pt-6 xs:px-6">
+        {/* Numeração editorial (01, 02...) no lugar dos emojis */}
+        <span aria-hidden="true" className="font-serif text-2xl italic text-banquete-gold-text">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <h2 className="mt-2 font-serif text-xl leading-snug xs:text-2xl">
           {t(`items.${id}.title`)}
         </h2>
-        <p className="text-sm text-banquete-dark/70">{t("descriptionPlaceholder")}</p>
+        <p className="mt-2 text-sm text-banquete-dark/70">{t("descriptionPlaceholder")}</p>
         <button
           type="button"
           onClick={onContact}
           aria-haspopup="dialog"
-          className="mt-auto pt-4 text-xs font-semibold uppercase tracking-wide text-banquete-rose underline-offset-4 after:absolute after:inset-0 group-hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-banquete-rose"
+          className="mt-auto pt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-banquete-rose underline-offset-[6px] after:absolute after:inset-0 group-hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-banquete-rose"
         >
           {t("contact.button")}
         </button>

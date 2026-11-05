@@ -10,7 +10,7 @@ Este documento mapeia **quais dados pessoais o sistema trata, por onde passam, o
 |---|---|
 | **Titular** | O visitante que pede orçamento ou compra ingresso |
 | **Controlador** | A Sala do Banquete – Liliam Müller: decide para que e como os dados são usados |
-| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail), Vercel (hospedagem), Mercado Pago (pagamento de ingressos) |
+| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail e Google Analytics), Vercel (hospedagem), Mercado Pago (pagamento de ingressos) |
 | **Encarregado (DPO)** | Agentes de pequeno porte são dispensados de nomear um (Resolução CD/ANPD nº 2/2022), mas precisam oferecer um canal de contato: o e-mail `saladobanquete.lm@gmail.com`, indicado na política |
 
 ## Mapa de dados pessoais
@@ -42,7 +42,7 @@ WhatsApp da empresa (Meta)  ──ou──  Caixa do Gmail da empresa (Google)
 Dados ficam no histórico da conversa / caixa de entrada da empresa
 ```
 
-**Onde os dados NÃO passam:** nenhum servidor da Sala do Banquete, nenhum banco de dados, nenhum log do site, nenhuma ferramenta de analytics. O site (Vercel) entrega só HTML/JS estático e nunca vê o conteúdo do formulário.
+**Onde os dados NÃO passam:** nenhum servidor da Sala do Banquete, nenhum banco de dados, nenhum log do site. O Google Analytics registra só que um orçamento foi enviado (canal e tipo de serviço), nunca o conteúdo dos campos. O site (Vercel) entrega só HTML/JS estático e nunca vê o conteúdo do formulário.
 
 **Quem tem acesso:** quem opera o WhatsApp e o Gmail da empresa e, como operadores, a Meta e o Google, conforme as políticas deles.
 
@@ -52,8 +52,12 @@ Dados ficam no histórico da conversa / caixa de entrada da empresa
 |---|---|---|
 | Endereço IP, navegador, URL acessada, data/hora | Vercel (logs de acesso da hospedagem) | Segurança e funcionamento; a Sala do Banquete não usa esses dados |
 | Idioma escolhido (cookie `NEXT_LOCALE`) | O próprio site | Lembrar o idioma (pt/en). Cookie de sessão, `SameSite=Lax`, sem dado pessoal |
+| Escolha sobre cookies (`cookie-consent`, localStorage) | O próprio site | Lembrar se o visitante aceitou ou recusou a análise, por 12 meses |
+| Páginas vistas, origem do acesso, dispositivo, cidade aproximada, eventos (orçamento enviado, compra iniciada) — cookies `_ga` e `_ga_<ID>` | Google Analytics 4, **só com consentimento** | Estatísticas de uso do site |
 
-**O que o site não usa:** Google Analytics, Meta Pixel, Hotjar ou qualquer rastreador; cookies de publicidade; fontes ou scripts carregados de terceiros. As fontes são servidas pelo próprio domínio via `next/font`, e o IP do visitante não é enviado ao Google Fonts. A CSP (`docs/05-seguranca.md`) bloqueia scripts de outros domínios, então um rastreador não poderia ser adicionado por engano sem mudar a política.
+**Google Analytics** (detalhes técnicos em [`10-analytics-e-cookies.md`](./10-analytics-e-cookies.md)): só carrega depois do clique em "Aceitar" no banner. Antes disso, nenhum script ou requisição vai para o Google. Os recursos de publicidade ficam desligados (Consent Mode com `ad_storage` negado, Google Signals e personalização de anúncios desativados), e o GA4 não guarda o IP. Os cookies expiram em 12 meses, junto com a escolha do banner.
+
+**O que o site não usa:** Meta Pixel, Hotjar ou outro rastreador além do Google Analytics; cookies de publicidade; fontes carregadas de terceiros. As fontes são servidas pelo próprio domínio via `next/font`, e o IP do visitante não é enviado ao Google Fonts. A CSP (`docs/05-seguranca.md`) só libera os domínios do Google Analytics quando o ID de medição está configurado; qualquer outro rastreador continua bloqueado e não poderia ser adicionado por engano sem mudar a política.
 
 ### 3. Compra de ingressos (Mercado Pago) — pronta, vendas desligadas até o próximo evento
 
@@ -89,7 +93,7 @@ O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Merc
 
 **Retenção (art. 15 e 16).** **Pendente de validação:** a política publicada propõe 12 meses após o último contato quando não há contratação, e o prazo legal/fiscal quando há contrato. Para isso valer na prática, a equipe precisa de uma rotina, por exemplo uma revisão trimestral apagando conversas e e-mails de orçamentos antigos não fechados.
 
-**Cookies e rastreamento.** Só o `NEXT_LOCALE`, que é funcional, de sessão e sem dado pessoal. Cookies estritamente necessários não exigem banner de consentimento. Se algum dia entrar analytics ou pixel, aí sim será preciso um banner com opção de recusar **antes** de carregar o script, além de atualizar a CSP e a política.
+**Cookies e rastreamento.** `NEXT_LOCALE` e o registro da escolha do banner são estritamente necessários e não exigem consentimento. Os cookies do Google Analytics têm base no **consentimento** (art. 7º, I): o banner tem "Aceitar" e "Recusar" com o mesmo peso, nada carrega antes da escolha, e o link "Preferências de cookies" no rodapé permite revogar a qualquer momento (art. 8º, § 5º), apagando os cookies `_ga`. Segue o Guia orientativo de cookies da ANPD (2022).
 
 **Dados sensíveis (art. 5º, II; art. 11).** O formulário não pede nenhum. O campo livre "Mensagem" pode receber algo sensível por iniciativa do visitante (ex: restrição alimentar por motivo de saúde, religião num casamento). A política pede para não incluir esse tipo de informação, mas, se chegar, ela deve ser usada só para o evento e apagada junto com o resto.
 
@@ -105,10 +109,12 @@ O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Merc
 4. Aviso explícito de que o envio sai do site.
 5. Validação que impede texto invisível ou de controle na mensagem (evita mensagens que enganem a equipe).
 6. Venda de ingressos sem armazenar dados pessoais no site: tudo fica no Mercado Pago, e a página de retorno não expõe dados do comprador.
+7. Google Analytics só com consentimento, banner com recusa tão fácil quanto aceite, revogação pelo rodapé e política atualizada (seção Cookies).
 
 ## Pendências para a Sala do Banquete
 
 - [ ] Validar o prazo de retenção (12 meses) e o prazo de resposta (15 dias) da política.
 - [ ] Criar a rotina de exclusão periódica de conversas e e-mails de orçamento antigos.
-- [ ] Revisão jurídica do texto da política.
+- [ ] Revisão jurídica do texto da política (incluindo a seção de cookies/Google Analytics).
+- [ ] Na propriedade do GA4: manter a retenção de dados em **2 meses** (padrão) e deixar o **Google Signals desativado**, como a política informa.
 - [ ] Venda de ingressos: definir quanto tempo a equipe guarda as listas de convidados exportadas do Mercado Pago (planilhas, impressões) e apagá-las depois do evento.

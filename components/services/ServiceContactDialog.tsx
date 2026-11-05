@@ -6,7 +6,7 @@ import { buildMailtoUrl, buildWhatsappUrl } from "@/lib/data/contacts";
 import type { ServiceId } from "@/lib/data/services";
 import { focusRing } from "@/lib/ui/styles";
 
-const optionClasses = `flex min-h-11 w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-xs font-semibold uppercase text-white transition-colors ${focusRing}`;
+const optionClasses = `flex min-h-11 w-full items-center justify-center gap-2 rounded-sm px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors ${focusRing}`;
 
 /**
  * Popup "como prefere falar com a gente?" de um serviço. Usa o <dialog> nativo
@@ -40,7 +40,7 @@ export default function ServiceContactDialog({
       onClick={(event) => {
         if (event.target === event.currentTarget) event.currentTarget.close();
       }}
-      className="m-auto w-[calc(100%-2rem)] max-w-[420px] rounded-[10px] bg-banquete-bg p-0 text-banquete-dark shadow-xl backdrop:bg-banquete-dark/60"
+      className="m-auto w-[calc(100%-2rem)] max-w-[420px] rounded-sm bg-banquete-bg p-0 text-banquete-dark shadow-xl backdrop:bg-banquete-dark/60"
     >
       {serviceId && (
         <div className="relative px-6 pb-6 pt-8 text-center">
@@ -54,7 +54,7 @@ export default function ServiceContactDialog({
           </button>
 
           <h2 id="service-dialog-title" className="mb-2 font-serif text-2xl leading-snug">
-            <span className="block font-sans text-xs font-semibold uppercase tracking-wide text-banquete-dark/70">
+            <span className="block font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-banquete-dark/70">
               {t("contact.dialogLabel")}
             </span>
             {service}

@@ -1,9 +1,11 @@
 import { useLocale, useTranslations } from "next-intl";
 import TicketCheckout from "@/components/tickets/TicketCheckout";
+import Ornament from "@/components/ui/Ornament";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
 import { ticketSales } from "@/lib/data/tickets";
 import { salesOpen } from "@/lib/payments/mercadopago";
-import { bodyText, buttonPrimary, sectionHeading } from "@/lib/ui/styles";
+import { buttonOutline, buttonPrimary, container, eyebrow, sectionSpacing } from "@/lib/ui/styles";
 
 export default function UpcomingEvents() {
   const t = useTranslations("Home.Events");
@@ -11,33 +13,23 @@ export default function UpcomingEvents() {
   const locale = useLocale() as "pt" | "en";
 
   return (
-    <section id="eventos" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className={sectionHeading}>{t("heading")}</h2>
-      <p className={`${bodyText} text-center`}>{t("intro")}</p>
-      <div className="text-center">
-        <a
-          href={buildWhatsappUrl(t("ctaMessage"))}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${buttonPrimary} mt-2.5`}
-        >
-          {t("ctaButton")}
-        </a>
-      </div>
+    <section id="eventos" className={`bg-white ${sectionSpacing}`}>
+      <div className={container}>
+        <SectionHeader eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
-      <div className="mt-8 flex flex-col gap-5 xs:flex-row xs:flex-wrap xs:justify-center">
-        <div className="flex flex-1 flex-col overflow-hidden rounded-[10px] border border-banquete-border bg-white xs:min-w-[260px] xs:max-w-[420px]">
-          <div className="flex aspect-[3/2] items-center justify-center bg-banquete-rose-soft text-center text-sm text-banquete-dark/70 xs:aspect-square">
-            {t("chaDasFlores.imagePlaceholder")}
+        <article className="mx-auto mt-14 grid max-w-[920px] overflow-hidden rounded-sm border border-banquete-line bg-banquete-bg md:grid-cols-2">
+          <div className="flex aspect-[4/3] flex-col items-center justify-center gap-4 bg-banquete-rose-soft text-center md:aspect-auto md:min-h-[380px]">
+            <Ornament />
+            <span className="font-serif text-lg italic text-banquete-dark/70">
+              {t("chaDasFlores.imagePlaceholder")}
+            </span>
           </div>
-          <div className="flex flex-1 flex-col px-5 pb-5 pt-4">
-            <h3 className="mb-2.5 font-serif text-lg leading-snug">
+          <div className="flex flex-col p-8 sm:p-10">
+            <p className={eyebrow}>{t("chaDasFlores.date")}</p>
+            <h3 className="mt-4 font-serif text-3xl font-light leading-tight sm:text-4xl">
               {t("chaDasFlores.title")}
             </h3>
-            <div className="mb-2.5 text-xs font-semibold uppercase text-banquete-gold-text">
-              {t("chaDasFlores.date")}
-            </div>
-            <p className="my-2.5 text-sm">
+            <p className="mb-8 mt-4 text-[15px] leading-[1.8] text-banquete-dark/80">
               {t("chaDasFlores.description")}
             </p>
             {/* Vendas abertas (ingressos no catálogo + token configurado):
@@ -57,12 +49,23 @@ export default function UpcomingEvents() {
                 href={buildWhatsappUrl(t("chaDasFlores.ctaMessage"))}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${buttonPrimary} mt-auto text-center`}
+                className={`${buttonPrimary} mt-auto`}
               >
                 {t("chaDasFlores.ctaButton")}
               </a>
             )}
           </div>
+        </article>
+
+        <div className="mt-12 text-center">
+          <a
+            href={buildWhatsappUrl(t("ctaMessage"))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonOutline}
+          >
+            {t("ctaButton")}
+          </a>
         </div>
       </div>
     </section>

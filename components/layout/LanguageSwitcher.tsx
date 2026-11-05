@@ -32,7 +32,7 @@ export default function LanguageSwitcher({
             hrefLang={locale === "pt" ? "pt-BR" : locale}
             aria-label={labels[locale].name}
             aria-current={locale === activeLocale ? "true" : undefined}
-            className={`text-[13px] font-semibold uppercase tracking-wide transition-colors focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose ${
+            className={`text-[13px] font-semibold uppercase tracking-[0.18em] transition-colors lg:text-[11px] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose ${
               locale === activeLocale
                 ? "text-banquete-rose"
                 : "hover:text-banquete-rose"

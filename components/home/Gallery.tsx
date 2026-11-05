@@ -3,11 +3,15 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { bodyText, focusRing, sectionHeading } from "@/lib/ui/styles";
+import { ChevronIcon } from "@/components/icons/LineIcons";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { container, focusRing, sectionSpacing } from "@/lib/ui/styles";
 
 const TOTAL_IMAGES = 11;
 
-const arrowButton = `flex h-11 w-11 items-center justify-center rounded-full bg-banquete-rose text-xl text-white transition-colors hover:bg-banquete-rose-dark ${focusRing}`;
+const arrowButton = `flex h-12 w-12 items-center justify-center rounded-full border border-banquete-dark/40 text-banquete-dark transition-colors duration-300 hover:border-banquete-dark hover:bg-banquete-dark hover:text-white ${focusRing}`;
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 // Client Component: carrossel precisa de estado (imagem atual) e de eventos
 // de teclado/toque, que só existem no navegador.
@@ -43,12 +47,11 @@ export default function Gallery() {
   const imageNumber = currentIndex + 1;
 
   return (
-    <section id="galeria" className="mx-auto max-w-[900px] px-5 py-10">
-      <h2 className={sectionHeading}>{t("heading")}</h2>
-      <p className={`${bodyText} text-center`}>{t("intro")}</p>
+    <section id="galeria" className={`${container} ${sectionSpacing}`}>
+      <SectionHeader eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
       <div
-        className="relative my-5 aspect-[3/4] overflow-hidden rounded-[10px] bg-banquete-border focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose sm:aspect-[4/3]"
+        className={`relative mt-14 aspect-[3/4] overflow-hidden rounded-sm bg-banquete-border sm:aspect-[16/10] ${focusRing}`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onKeyDown={handleKeyDown}
@@ -62,52 +65,53 @@ export default function Gallery() {
           src={`/images/galeria/${imageNumber}.jpeg`}
           alt={t("imageAlt", { index: imageNumber })}
           fill
-          sizes="(min-width: 768px) 900px, 100vw"
+          sizes="(min-width: 1120px) 1060px, 100vw"
           className="select-none object-cover"
         />
       </div>
 
-      <div className="my-5 flex justify-center gap-4">
-        <button
-          type="button"
-          aria-label={t("prevLabel")}
-          onClick={prev}
-          className={arrowButton}
-        >
-          ‹
-        </button>
-        <button
-          type="button"
-          aria-label={t("nextLabel")}
-          onClick={next}
-          className={arrowButton}
-        >
-          ›
-        </button>
-      </div>
+      <div className="mt-6 flex items-center justify-between gap-4">
+        {/* Contador visual "01 / 11"; o leitor de tela ouve o aria-live abaixo. */}
+        <p aria-hidden="true" className="font-serif text-xl lining-nums tabular-nums">
+          <span className="text-banquete-rose">{pad(imageNumber)}</span>
+          <span className="text-banquete-dark/50"> / {pad(TOTAL_IMAGES)}</span>
+        </p>
 
-      {/* Botões simples com aria-current em vez de role="tablist": um tablist
-          exige painéis (tabpanel) e navegação por setas entre as abas, o que
-          não existe aqui. Cada ponto tem área de toque de 24×24px (WCAG 2.5.8)
-          com o círculo visível de 10px no centro. */}
-      <div className="flex flex-wrap justify-center gap-1 py-1">
-        {Array.from({ length: TOTAL_IMAGES }, (_, index) => (
-          <button
-            key={index}
-            type="button"
-            aria-label={t("dotLabel", { index: index + 1, total: TOTAL_IMAGES })}
-            aria-current={index === currentIndex ? "true" : undefined}
-            onClick={() => goTo(index)}
-            className="group flex h-6 w-6 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-0 focus-visible:outline-banquete-rose"
-          >
-            <span
-              aria-hidden="true"
-              className={`h-2.5 w-2.5 rounded-full border border-banquete-rose transition-colors ${
-                index === currentIndex ? "bg-banquete-rose" : "group-hover:bg-banquete-rose-soft-2"
-              }`}
-            />
+        {/* Botões simples com aria-current em vez de role="tablist": um tablist
+            exige painéis (tabpanel) e navegação por setas entre as abas, o que
+            não existe aqui. Cada traço tem área de toque de 24×24px (WCAG 2.5.8).
+            No celular não cabem ao lado do contador — setas e o gesto de
+            arrastar continuam navegando. */}
+        <div className="hidden flex-wrap justify-center sm:flex">
+          {Array.from({ length: TOTAL_IMAGES }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={t("dotLabel", { index: index + 1, total: TOTAL_IMAGES })}
+              aria-current={index === currentIndex ? "true" : undefined}
+              onClick={() => goTo(index)}
+              className={`group flex h-6 w-6 items-center justify-center rounded-sm ${focusRing}`}
+            >
+              <span
+                aria-hidden="true"
+                className={`transition-all duration-300 ${
+                  index === currentIndex
+                    ? "h-0.5 w-5 bg-banquete-rose"
+                    : "h-px w-3 bg-banquete-dark/55 group-hover:w-4 group-hover:bg-banquete-dark"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+
+        <div className="flex gap-3">
+          <button type="button" aria-label={t("prevLabel")} onClick={prev} className={arrowButton}>
+            <ChevronIcon direction="left" size={20} />
           </button>
-        ))}
+          <button type="button" aria-label={t("nextLabel")} onClick={next} className={arrowButton}>
+            <ChevronIcon direction="right" size={20} />
+          </button>
+        </div>
       </div>
 
       <span className="sr-only" aria-live="polite" aria-atomic="true">

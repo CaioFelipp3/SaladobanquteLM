@@ -19,12 +19,13 @@
   --color-banquete-rose: #a05a78; /* original #b8688a — 4.5:1+ com branco e sobre o creme */
   --color-banquete-rose-dark: #884a64; /* hover, mais escuro que o rose */
   --color-banquete-gold: #c9a84c;
-  --color-banquete-gold-text: #8b7434; /* dourado legível sobre branco (4.5:1) */
+  --color-banquete-gold-text: #7a6528; /* dourado legível sobre branco, creme e rose-soft (4.7:1+) */
   --color-banquete-gold-light: #c4a882;
   --color-banquete-rose-soft: #f5e9ee;
   --color-banquete-gold-soft: #f3ead4;
   --color-banquete-rose-soft-2: #ecdce3;
   --color-banquete-border: #f0f0f0; /* só divisórias decorativas */
+  --color-banquete-line: #e6d8c4; /* filete dourado-claro de cards e divisórias — decorativo */
   --color-banquete-input-border: #948a90; /* borda de campo de formulário (3:1) */
 
   /* Verde da marca WhatsApp (#25d366) não chega a 4.5:1 com texto branco. */
@@ -42,6 +43,25 @@
    */
   --breakpoint-xs: 400px;
   --breakpoint-sm: 680px;
+
+  /* Entrada suave do texto do hero (desligada por prefers-reduced-motion abaixo) */
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+::selection {
+  background-color: var(--color-banquete-rose-soft-2);
+  color: var(--color-banquete-dark);
 }
 
 /*

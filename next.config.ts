@@ -1,7 +1,25 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { gaMeasurementId } from "./lib/analytics/config";
 
 const isDev = process.env.NODE_ENV === "development";
+
+/**
+ * Domínios do Google Analytics 4, liberados na CSP só quando
+ * NEXT_PUBLIC_GA_MEASUREMENT_ID está definida. Sem ela, a política continua
+ * bloqueando qualquer rastreador. Liberar o domínio não carrega nada por si
+ * só: o script só é injetado depois que o visitante aceita os cookies.
+ * Lista conforme o guia de CSP do Google Tag Platform. Ver
+ * docs/10-analytics-e-cookies.md.
+ */
+const ga = gaMeasurementId
+  ? {
+      script: " https://*.googletagmanager.com",
+      img: " https://*.google-analytics.com https://*.googletagmanager.com",
+      connect:
+        " https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+    }
+  : { script: "", img: "", connect: "" };
 
 /**
  * Content-Security-Policy — lista branca do que o navegador pode carregar/executar.
@@ -20,11 +38,11 @@ const isDev = process.env.NODE_ENV === "development";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}${ga.script}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data:",
+  `img-src 'self' blob: data:${ga.img}`,
   "font-src 'self'",
-  "connect-src 'self'",
+  `connect-src 'self'${ga.connect}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

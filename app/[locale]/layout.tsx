@@ -3,6 +3,8 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
+import CookieBanner from "@/components/analytics/CookieBanner";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import SkipLink from "@/components/layout/SkipLink";
@@ -13,9 +15,11 @@ import "../globals.css";
 
 // next/font baixa e otimiza as fontes no build (self-hosted, sem chamada externa
 // ao Google Fonts em runtime) — troca direta pelas duas fontes que o site já usava.
+// O peso 300 é o dos títulos grandes; o itálico, o de legendas e assinaturas.
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
 });
@@ -74,14 +78,14 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    // scroll-pt-20: o menu é fixo no topo (≈60px). Sem essa folga, links de
+    // scroll-pt-20: o menu é fixo no topo (64px). Sem essa folga, links de
     // âncora (#sobre) e o foco no primeiro campo inválido do formulário
     // paravam escondidos atrás dele (WCAG 2.4.11 — foco não obscurecido).
     <html
       lang={locale === "pt" ? "pt-BR" : locale}
       className={`${cormorant.variable} ${montserrat.variable} scroll-pt-20`}
     >
-      <body className="flex min-h-screen flex-col bg-banquete-bg pt-14 text-banquete-dark antialiased sm:pt-[60px]">
+      <body className="flex min-h-screen flex-col bg-banquete-bg pt-16 text-banquete-dark antialiased">
         <NextIntlClientProvider>
           <SkipLink />
           <Navbar />
@@ -92,6 +96,8 @@ export default async function LocaleLayout({
           </main>
           <Footer />
           <WhatsappFloatButton />
+          <CookieBanner />
+          <GoogleAnalytics />
         </NextIntlClientProvider>
       </body>
     </html>

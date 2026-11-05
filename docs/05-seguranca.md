@@ -20,6 +20,7 @@ img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'non
 base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 ```
 
+- **Google Analytics:** com `NEXT_PUBLIC_GA_MEASUREMENT_ID` definida, o build acrescenta os domínios do Google a `script-src`, `img-src` e `connect-src`. Sem ela, a política fica exatamente como acima. Ver [`10-analytics-e-cookies.md`](./10-analytics-e-cookies.md).
 - `object-src 'none'`: bloqueia plugins (Flash, Java), um vetor clássico de execução de código.
 - `base-uri 'self'`: impede que um `<base href>` injetado redirecione todos os links relativos da página para outro domínio.
 - `frame-ancestors 'none'`: ninguém pode embutir o site em `<iframe>` (versão moderna do `X-Frame-Options`).

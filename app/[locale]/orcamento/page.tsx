@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import BudgetForm from "@/components/budget/BudgetForm";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { pageHeading } from "@/lib/ui/styles";
 
 export async function generateMetadata({
   params,
@@ -31,13 +31,8 @@ export default async function OrcamentoPage({
   const t = await getTranslations("Budget");
 
   return (
-    <section className="mx-auto max-w-[900px] px-5 py-12">
-      <h1 className={pageHeading}>
-        {t("heading")}
-      </h1>
-      <p className="mx-auto max-w-[560px] text-center text-[15px] leading-relaxed xs:text-base">
-        {t("intro")}
-      </p>
+    <section className="mx-auto max-w-[900px] px-5 py-16 sm:px-8 sm:py-24">
+      <SectionHeader as="h1" eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
       <BudgetForm />
     </section>

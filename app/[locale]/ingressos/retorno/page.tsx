@@ -57,7 +57,7 @@ export default async function RetornoPage({
       <p className="mb-6 text-[15px] leading-relaxed xs:text-base">{t(`${outcome}Body`)}</p>
 
       {payment && (
-        <div className="mx-auto mb-8 max-w-[420px] rounded-[10px] border border-banquete-border bg-white px-5 py-4 text-sm">
+        <div className="mx-auto mb-8 max-w-[420px] rounded-sm border border-banquete-border bg-white px-5 py-4 text-sm">
           <p className="font-semibold">
             {t("summary", {
               description: payment.description,
