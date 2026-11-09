@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "title": "Liliam Müller – A Sala do Banquete",
-    "description": "A Sala do Banquete – a sophisticated event space in Vitória, ES, Brazil. Gastronomy, live music, and unique experiences with Liliam Müller."
+    "title": "A Sala do Banquete | Table settings & events in Vitória, Brazil",
+    "description": "Liliam Müller's event space and table settings in Vitória, Brazil: birthdays, weddings, anniversaries, showers and corporate events. Request a quote."
   },
   "Nav": {
     "ariaLabel": "Main navigation",
@@ -59,7 +59,7 @@
       "eyebrow": "Gallery",
       "heading": "Our table settings",
       "intro": "Explore the elegant, sophisticated environments of Sala do Banquete",
-      "imageAlt": "Sala do Banquete decoration {index}",
+      "imageAlt": "Table set by Sala do Banquete in Vitória, Brazil – photo {index}",
       "prevLabel": "Previous photo",
       "nextLabel": "Next photo",
       "dotLabel": "Photo {index} of {total}",
@@ -78,7 +78,7 @@
   },
   "Services": {
     "Metadata": {
-      "title": "Services – A Sala do Banquete",
+      "title": "Event and table setting services in Vitória – A Sala do Banquete",
       "description": "Explore the services offered by Sala do Banquete: birthdays, anniversaries, weddings, corporate events, and tableware collection consulting."
     },
     "eyebrow": "What we do",
@@ -168,7 +168,7 @@
   },
   "Budget": {
     "Metadata": {
-      "title": "Get a Quote – A Sala do Banquete",
+      "title": "Event quote in Vitória – A Sala do Banquete",
       "description": "Request a quote for your event at Sala do Banquete. Fill out the form and get a response via WhatsApp or email."
     },
     "eyebrow": "Your event",

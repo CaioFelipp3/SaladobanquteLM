@@ -28,7 +28,8 @@ const ga = gaMeasurementId
  * (SSG) e o Next.js injeta scripts inline de hidratação nelas. A alternativa
  * segura (nonce) exige renderizar cada página a cada request, perdendo o cache
  * de CDN. Como nenhum dado de usuário é renderizado como HTML (o React escapa
- * tudo e não usamos dangerouslySetInnerHTML), o ganho real do nonce aqui é
+ * tudo, e o único dangerouslySetInnerHTML — o JSON-LD de components/seo/JsonLd.tsx
+ * — leva só dados nossos, com "<" escapado), o ganho real do nonce aqui é
  * pequeno. O restante da política continua bloqueando scripts de outros
  * domínios, plugins, <base> injetado e embutir o site em iframe.
  * Ver docs/05-seguranca.md.

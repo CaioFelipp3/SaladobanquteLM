@@ -5,7 +5,16 @@ import { routing } from "@/lib/i18n/routing";
 /** Domínio canônico — o sem-www redireciona para cá. */
 export const siteUrl = "https://www.saladobanquetelm.com.br";
 export const siteName = "A Sala do Banquete";
-const ogImage = "/images/marca/logo.png";
+/**
+ * Imagem de compartilhamento (WhatsApp, Instagram, Facebook): 1200×630, o
+ * tamanho recomendado. Recorte da foto do hero.
+ */
+export const ogImage = {
+  url: "/images/marca/compartilhamento.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Mesa posta da Sala do Banquete, em Vitória, ES",
+};
 
 /** Páginas públicas indexáveis, sem prefixo de idioma ("" = Home). */
 export const pagePaths = [

@@ -5,7 +5,10 @@ import Contact from "@/components/home/Contact";
 import Gallery from "@/components/home/Gallery";
 import Hero from "@/components/home/Hero";
 import Offerings from "@/components/home/Offerings";
+import JsonLd from "@/components/seo/JsonLd";
+import { services } from "@/lib/data/services";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { homeStructuredData } from "@/lib/seo/structuredData";
 
 export async function generateMetadata({
   params,
@@ -31,8 +34,19 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const t = await getTranslations("Metadata");
+  const tServices = await getTranslations("Services");
+
   return (
     <>
+      <JsonLd
+        data={homeStructuredData({
+          locale,
+          description: t("description"),
+          catalogName: tServices("heading"),
+          serviceNames: services.map(({ id }) => tServices(`items.${id}.title`)),
+        })}
+      />
       <Hero />
       <About />
       <Offerings />

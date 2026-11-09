@@ -9,6 +9,15 @@ export const contacts = {
   instagramHandle: "@saladobanquete.lm",
   email: "saladobanquete.lm@gmail.com",
   address: "R. Constante Sodré, 364 - Santa Lucia, Vitória, ES",
+  // Mesmo endereço em partes, para os dados estruturados do Google (JSON-LD)
+  addressParts: {
+    street: "R. Constante Sodré, 364",
+    neighborhood: "Santa Lúcia",
+    city: "Vitória",
+    state: "ES",
+    country: "BR",
+  },
+  phoneDisplay: "+55 27 99309-3644",
   mapsUrl:
     "https://maps.google.com/maps?q=R.+Constante+Sodr%C3%A9,+364,+Santa+Lucia,+Vit%C3%B3ria,+ES",
 } as const;

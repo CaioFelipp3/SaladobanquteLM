@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "title": "Liliam Müller – A Sala do Banquete",
-    "description": "A Sala do Banquete – espaço sofisticado de eventos em Vitória, ES. Gastronomia, música ao vivo e experiências únicas com Liliam Müller."
+    "title": "A Sala do Banquete | Mesa posta e eventos em Vitória – ES",
+    "description": "Espaço de eventos e mesas postas de Liliam Müller em Vitória, ES: aniversários, casamentos, bodas, chás e eventos corporativos. Peça seu orçamento."
   },
   "Nav": {
     "ariaLabel": "Navegação principal",
@@ -59,7 +59,7 @@
       "eyebrow": "Galeria",
       "heading": "Nossas mesas postas",
       "intro": "Conheça os ambientes elegantes e sofisticados da Sala do Banquete",
-      "imageAlt": "Decoração da Sala do Banquete {index}",
+      "imageAlt": "Mesa posta pela Sala do Banquete em Vitória, ES – foto {index}",
       "prevLabel": "Foto anterior",
       "nextLabel": "Próxima foto",
       "dotLabel": "Foto {index} de {total}",
@@ -78,7 +78,7 @@
   },
   "Services": {
     "Metadata": {
-      "title": "Serviços – A Sala do Banquete",
+      "title": "Serviços para eventos e mesa posta em Vitória – A Sala do Banquete",
       "description": "Conheça os serviços da Sala do Banquete: aniversários, bodas, casamentos, eventos corporativos e consultoria para montar seu acervo de mesa posta."
     },
     "eyebrow": "O que fazemos",
@@ -168,7 +168,7 @@
   },
   "Budget": {
     "Metadata": {
-      "title": "Orçamento – A Sala do Banquete",
+      "title": "Orçamento para eventos em Vitória – A Sala do Banquete",
       "description": "Solicite um orçamento para o seu evento na Sala do Banquete. Preencha o formulário e receba uma resposta pelo WhatsApp ou e-mail."
     },
     "eyebrow": "Seu evento",
