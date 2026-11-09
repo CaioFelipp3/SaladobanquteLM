@@ -7,12 +7,12 @@ Sala do Banquete LM/
 │   │   ├── layout.tsx                → layout raiz: <html>, <body>, fontes, Navbar/Footer, provider de i18n
 │   │   ├── page.tsx                  → rota "/" (Home)
 │   │   ├── servicos/page.tsx         → rota "/servicos"
+│   │   ├── aulas/page.tsx            → rota "/aulas" (aulas de etiqueta + formulário de interesse)
+│   │   ├── ebooks/page.tsx           → rota "/ebooks" (link de compra na plataforma externa)
 │   │   ├── orcamento/page.tsx        → rota "/orcamento"
 │   │   ├── privacidade/page.tsx      → rota "/privacidade" (Política de Privacidade)
-│   │   ├── ingressos/retorno/page.tsx → volta do Mercado Pago: confirma o pagamento
 │   │   ├── not-found.tsx             → página 404 traduzida, dentro do layout
 │   │   └── [...rest]/page.tsx        → pega qualquer caminho inexistente e dispara a 404 acima
-│   ├── api/checkout/route.ts         → POST: cria o pagamento no Mercado Pago (preço vem do catálogo)
 │   ├── robots.ts                     → gera /robots.txt
 │   ├── sitemap.ts                    → gera /sitemap.xml (todas as páginas × idiomas)
 │   ├── globals.css                   → import do Tailwind + tema (@theme) + estilos globais
@@ -21,11 +21,15 @@ Sala do Banquete LM/
 │   └── apple-icon.png                → ícone da tela inicial do iPhone (180px)
 ├── components/
 │   ├── layout/    → Navbar, Footer, LanguageSwitcher, SkipLink, WhatsappFloatButton (usados em toda página)
-│   ├── home/      → Hero, About, UpcomingEvents, Gallery, Contact (só usados na Home)
+│   ├── home/      → Hero, About, Offerings (resumo de Aulas e E-books), Gallery, Contact (só usados na Home)
 │   ├── services/  → ServicesGrid (grade + estado), ServiceCard, ServiceContactDialog (popup WhatsApp/e-mail)
 │   ├── budget/    → BudgetForm
-│   ├── tickets/   → TicketCheckout (botão + popup de compra de ingressos)
-│   └── icons/     → WhatsappIcon (SVG reaproveitado em mais de um lugar)
+│   ├── classes/   → ClassesSection (cards das aulas + formulário de interesse)
+│   ├── ebooks/    → EbookBuyLink (link de compra que registra o clique no GA)
+│   ├── forms/     → FormParts (estilos e mensagem de erro comuns aos formulários)
+│   ├── analytics/ → CookieBanner, CookiePreferencesButton, GoogleAnalytics
+│   ├── ui/        → SectionHeader (rótulo + título + ornamento), Ornament
+│   └── icons/     → WhatsappIcon e LineIcons (ícones de traço fino)
 ├── lib/
 │   ├── i18n/
 │   │   ├── routing.ts          → define os idiomas suportados (pt, en) e o idioma padrão
@@ -36,19 +40,24 @@ Sala do Banquete LM/
 │   │       └── en.json         → todos os textos do site em inglês
 │   ├── data/
 │   │   ├── contacts.ts         → WhatsApp/Instagram/e-mail/endereço (dados públicos, não são segredo)
-│   │   ├── services.ts         → lista de serviços (id + ícone; título/descrição vêm do i18n)
-│   │   └── tickets.ts          → catálogo de ingressos e preços (vazio = vendas desligadas)
-│   ├── payments/
-│   │   └── mercadopago.ts      → API do Mercado Pago (server-only: o token nunca vai ao navegador)
+│   │   ├── services.ts         → lista de serviços (só o id; título/descrição vêm do i18n)
+│   │   ├── classes.ts          → lista de aulas de etiqueta (só o id)
+│   │   ├── ebooks.ts           → lista de e-books (id + link de compra; vazio = "Em breve")
+│   │   └── images.ts           → findImages(): acha a foto <id>.jpg de cada item em public/images/<pasta>/
 │   ├── seo/
 │   │   └── metadata.ts         → domínio canônico, lista de páginas e buildPageMetadata()
 │   ├── ui/
 │   │   └── styles.ts           → classes Tailwind compartilhadas (botão, títulos, foco)
 │   └── validation/
-│       └── budget.ts           → schema zod do formulário de orçamento
+│       ├── common.ts           → regras comuns: nome, telefone, mensagem, ciência da política
+│       ├── budget.ts           → schema zod do formulário de orçamento
+│       └── classInterest.ts    → schema zod do formulário de interesse em aulas
 ├── public/
 │   └── images/
 │       ├── galeria/            → fotos da galeria: 1.jpeg, 2.jpeg … (quantidade em Gallery.tsx)
+│       ├── servicos/           → <id-do-serviço>.jpg (ex: casamento.jpg) — aparece sozinha no card
+│       ├── aulas/              → <id-da-aula>.jpg (ex: aula-1.jpg) — idem
+│       ├── ebooks/             → capa <id-do-ebook>.jpg (ex: ebook-1.jpg), em pé (3:4) — idem
 │       ├── marca/              → logo.png (também usada no preview de links)
 │       └── equipe/             → liliam.jpg (foto da seção Sobre)
 ├── docs/                        → esta pasta — documentação de aprendizado
@@ -56,7 +65,7 @@ Sala do Banquete LM/
 ├── next.config.ts               → configuração do Next.js: CSP e headers de segurança, imagens, plugin de i18n
 ├── tsconfig.json                 → configuração do TypeScript (inclui o atalho de import "@/")
 ├── package.json                  → dependências e scripts (npm run dev/build/start)
-└── .env.example                  → variáveis de ambiente (token do Mercado Pago), sem valores
+└── .env.example                  → variáveis de ambiente (ID do Google Analytics), sem valores
 ```
 
 ## Por que `app/[locale]/` e não `app/` direto

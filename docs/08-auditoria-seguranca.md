@@ -219,9 +219,38 @@ Depois da auditoria, uma rodada de limpeza procurou código morto, resíduos da 
 
 ## Self-checkout de ingressos e remoção do backend
 
-Depois da auditoria, a venda de ingressos foi reconstruída dentro do Next.js (`056ccea`), seguindo a recomendação R5, e o backend Express foi removido (`8e43a11`). Os achados de backend desta auditoria (C2, A2–A4, M8–M11, B13, B14) referem-se a esse código, que não existe mais. As correções serviram de base para o desenho novo, que elimina as causas: sem arquivo de dados, sem e-mail próprio, preço só no servidor. Detalhes em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md) e na seção "Checkout de ingressos" de [`05-seguranca.md`](./05-seguranca.md).
+Depois da auditoria, a venda de ingressos foi reconstruída dentro do Next.js (`056ccea`), seguindo a recomendação R5, e o backend Express foi removido (`8e43a11`). Os achados de backend desta auditoria (C2, A2–A4, M8–M11, B13, B14) referem-se a esse código, que não existe mais. As correções serviram de base para o desenho novo, que elimina as causas: sem arquivo de dados, sem e-mail próprio, preço só no servidor. 
+
+> **Atualização:** O checkout de ingressos foi removido do site em novembro de 2026, junto com a seção de eventos (recuperável pelo histórico do git, commit anterior a esta remoção). O que segue é o registro histórico; o documento `09-checkout-ingressos.md` também saiu.
 
 Dois problemas foram encontrados e corrigidos **durante** o desenvolvimento, antes do commit:
 - **IDOR na página de retorno:** a primeira versão mostrava status e valor de qualquer pagamento pelo `payment_id` da URL. Agora exige o `external_reference` do pedido.
 - **Checagem de origem quebrada fora de `localhost`:** comparar o `Origin` com `request.url` recusava compras legítimas pelo IP da rede (no `next start`, a URL interna sai como `localhost`). Agora compara com o header `Host`/`x-forwarded-host`.
 
+
+## Segunda auditoria (5 de novembro de 2026)
+
+Depois do redesenho, das páginas de Aulas e E-books (desligadas) e da remoção do checkout de ingressos. Mesmo método: ferramentas automáticas, ataques de fora contra o build de produção (`next start`), leitura linha a linha e testes em Chromium e WebKit (motor do Safari), com axe-core 4.10.3 em todas as páginas, nos dois idiomas, no desktop e no celular.
+
+| # | Severidade | Achado | Status |
+|---|---|---|---|
+| S1 | **Crítica** | `next` 16.4.0 com execução remota de código no Image Optimizer (GHSA-2464-fhr4-w9xw) e mais 2 advisories | ✅ 16.4.3 |
+| S2 | Alta | `zod` 4.6.5 com consumo de memória ilimitado (GHSA-mrhx-c7xc-m3w5) | ✅ 4.6.7 |
+| S3 | Alta | Loop de pré-carregamento: 937 requisições em ~3 s só por abrir a Home (previsão de rotas do Next × reescrita de idioma do next-intl) | ✅ `optimisticRouting: false` (ver `05-seguranca.md`) |
+| S4 | Média | `addressParts` duplicado em `lib/data/contacts.ts` (conflito entre duas sessões de edição); quebraria o build | ✅ removida a cópia |
+| S5 | Média | Contraste 2,8:1 no contador da galeria ("/ 11"); mínimo WCAG 4,5:1 | ✅ |
+| S6 | Média | 9 botões "Solicitar informações" com o mesmo nome para leitor de tela | ✅ nome do serviço em texto oculto |
+| S7 | Baixa | Botão flutuante do WhatsApp fora de qualquer região (landmark) | ✅ dentro do `<footer>` |
+| S8 | Baixa | Banner de cookies voltava a cada página se o navegador lê mas não grava o `localStorage` | ✅ fallback em memória |
+| S9 | Baixa | Menu sem indicação da página atual (`aria-current`) | ✅ anunciada e destacada em rosa |
+| S10 | Baixa | Emoji ✉️ no popup de serviço; links externos do Contato sem aviso de nova aba | ✅ |
+| A1 | Info | `minimatch` (moderada) só em ferramentas de lint | Aceito: sem correção compatível |
+| A2 | Info | `TRACE /` e `/images/.../.gitkeep` respondem 500 no `next start` local | Aceito: nenhum navegador usa `TRACE`; na Vercel a borda responde antes |
+| A3 | Info | Ano do rodapé é calculado no build | Aceito: fazer um deploy em janeiro (ou qualquer deploy no ano) atualiza |
+| A4 | Info | HSTS com `includeSubDomains; preload` | Aceito: só inscrever o domínio no preload se todos os subdomínios tiverem HTTPS |
+
+**O que passou nos ataques de fora:** nenhum arquivo do projeto acessível (`.env`, `.git`, código, docs, `.next`); otimizador de imagens recusa URL externa, `169.254.169.254`, `//host`, `..`, largura e qualidade fora da lista; sem redirecionamento aberto (`//evil.example`, `Host` e `X-Forwarded-Host` forjados); sem XSS refletido na URL nem na 404; Server Action forjada → 400; rotas antigas de pagamento → 404; Aulas e E-books → 404 e fora do sitemap; headers de segurança em todas as respostas, inclusive 404, imagens e sitemap; nada de `x-powered-by`, source maps, caminhos locais ou nomes de variáveis sensíveis no JavaScript; JSON-LD válido.
+
+**Consentimento do Google Analytics** (build com um ID falso, requisições ao Google bloqueadas no teste): nada carrega antes da escolha; "Recusar" é lembrado após recarregar; o rodapé reabre o banner e move o foco; "Aceitar" carrega o `gtag.js` sem violar a CSP; revogar apaga os cookies `_ga` e descarrega o script. axe sem violações no banner.
+
+**Resultado final:** `tsc`, `eslint` e `next build` sem erros; `npm audit --omit=dev` com 0 vulnerabilidades; axe com **0 violações**; nenhum erro de console ou de CSP nem rolagem horizontal; LCP da Home no celular em 4G simulado: **0,79 s** (a foto do hero; o Google considera bom até 2,5 s).

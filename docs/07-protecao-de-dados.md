@@ -8,9 +8,9 @@ Este documento mapeia **quais dados pessoais o sistema trata, por onde passam, o
 
 | Papel | Quem é, neste caso |
 |---|---|
-| **Titular** | O visitante que pede orçamento ou compra ingresso |
+| **Titular** | O visitante que pede orçamento, demonstra interesse numa aula ou compra um e-book |
 | **Controlador** | A Sala do Banquete – Liliam Müller: decide para que e como os dados são usados |
-| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail e Google Analytics), Vercel (hospedagem), Mercado Pago (pagamento de ingressos) |
+| **Operadores / terceiros** | Meta (WhatsApp), Google (Gmail e Google Analytics), Vercel (hospedagem), plataforma de vendas dos e-books |
 | **Encarregado (DPO)** | Agentes de pequeno porte são dispensados de nomear um (Resolução CD/ANPD nº 2/2022), mas precisam oferecer um canal de contato: o e-mail `saladobanquete.lm@gmail.com`, indicado na política |
 
 ## Mapa de dados pessoais
@@ -53,29 +53,35 @@ Dados ficam no histórico da conversa / caixa de entrada da empresa
 | Endereço IP, navegador, URL acessada, data/hora | Vercel (logs de acesso da hospedagem) | Segurança e funcionamento; a Sala do Banquete não usa esses dados |
 | Idioma escolhido (cookie `NEXT_LOCALE`) | O próprio site | Lembrar o idioma (pt/en). Cookie de sessão, `SameSite=Lax`, sem dado pessoal |
 | Escolha sobre cookies (`cookie-consent`, localStorage) | O próprio site | Lembrar se o visitante aceitou ou recusou a análise, por 12 meses |
-| Páginas vistas, origem do acesso, dispositivo, cidade aproximada, eventos (orçamento enviado, compra iniciada) — cookies `_ga` e `_ga_<ID>` | Google Analytics 4, **só com consentimento** | Estatísticas de uso do site |
+| Páginas vistas, origem do acesso, dispositivo, cidade aproximada, eventos (orçamento ou interesse em aula enviado, clique para comprar e-book) — cookies `_ga` e `_ga_<ID>` | Google Analytics 4, **só com consentimento** | Estatísticas de uso do site |
 
 **Google Analytics** (detalhes técnicos em [`10-analytics-e-cookies.md`](./10-analytics-e-cookies.md)): só carrega depois do clique em "Aceitar" no banner. Antes disso, nenhum script ou requisição vai para o Google. Os recursos de publicidade ficam desligados (Consent Mode com `ad_storage` negado, Google Signals e personalização de anúncios desativados), e o GA4 não guarda o IP. Os cookies expiram em 12 meses, junto com a escolha do banner.
 
 **O que o site não usa:** Meta Pixel, Hotjar ou outro rastreador além do Google Analytics; cookies de publicidade; fontes carregadas de terceiros. As fontes são servidas pelo próprio domínio via `next/font`, e o IP do visitante não é enviado ao Google Fonts. A CSP (`docs/05-seguranca.md`) só libera os domínios do Google Analytics quando o ID de medição está configurado; qualquer outro rastreador continua bloqueado e não poderia ser adicionado por engano sem mudar a política.
 
-### 3. Compra de ingressos (Mercado Pago) — pronta, vendas desligadas até o próximo evento
+### 3. Formulário de interesse em aulas (`/aulas`)
 
-O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Mercado Pago**, nunca no site. O fluxo técnico está em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md).
+Mesmo caminho do orçamento (seção 1): o navegador monta a mensagem e abre o WhatsApp ou o e-mail do visitante; nada passa por servidor nosso. As regras de validação são as mesmas (`lib/validation/common.ts`).
 
-| Dado | Onde é informado | Onde fica | Quem acessa |
-|---|---|---|---|
-| Tipo e quantidade de ingresso | Popup do site | Enviado ao Mercado Pago na criação do pedido; o site não grava | — |
-| Nome, e-mail, CPF, dados de pagamento | Checkout do Mercado Pago | Mercado Pago | Mercado Pago; a Sala do Banquete vê nome, e-mail, ingresso e valor no painel |
-| Status e valor do pagamento | — | Mercado Pago | Exibidos na página de retorno só para quem tem o `external_reference` do pedido |
+| Dado | Obrigatório? | Para quê |
+|---|---|---|
+| Nome | Sim | Saber com quem se está falando |
+| Telefone | Sim | Retorno com datas e valores |
+| Aula de interesse | Sim | Saber qual turma oferecer |
+| Mensagem | Não | Dúvidas livres |
+| Ciência da Política de Privacidade | Sim | Transparência |
+
+O Google Analytics registra só que um interesse foi enviado (canal e aula), nunca o conteúdo dos campos.
+
+### 4. Compra de e-books (plataforma externa)
+
+O comprador sai do site pelo link de compra e informa nome, e-mail, documento e dados de pagamento **na plataforma de vendas**, nunca no site. A plataforma repassa à Sala do Banquete os dados da compra necessários para entrega e atendimento, conforme o contrato e a política dela. O Google Analytics registra só o clique no botão de compra (qual e-book).
 
 | Medida | Status |
 |---|---|
-| Site não recebe nem grava dados de cartão, documento ou contato do comprador | ✅ |
-| Sem banco de dados próprio nem envio de e-mail: nada a vazar do lado do site | ✅ |
-| Página de retorno não mostra dados do comprador e não pode ser consultada trocando o número do pagamento | ✅ |
-| Política de privacidade com a seção "Compra de ingressos" (Mercado Pago em finalidade, base legal, compartilhamento e retenção) | ✅ |
-| Lista de convidados exportada do painel do Mercado Pago: guardar com cuidado e apagar depois do evento, salvo obrigação fiscal | ❗ **rotina da equipe** |
+| Site não recebe nem grava dados de pagamento, documento ou contato do comprador | ✅ |
+| Política de privacidade com a seção "Compra de e-books" (finalidade, base legal, compartilhamento e retenção) | ✅ |
+| Nomear a plataforma na política assim que for escolhida (hoje o texto diz "plataforma externa de vendas") | ❗ **pendente** |
 
 ## Avaliação item a item
 
@@ -108,7 +114,7 @@ O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Merc
 3. Checkbox obrigatório de ciência da política antes do envio.
 4. Aviso explícito de que o envio sai do site.
 5. Validação que impede texto invisível ou de controle na mensagem (evita mensagens que enganem a equipe).
-6. Venda de ingressos sem armazenar dados pessoais no site: tudo fica no Mercado Pago, e a página de retorno não expõe dados do comprador.
+6. Venda de e-books por plataforma externa, sem dados do comprador no site (a venda de ingressos com Mercado Pago foi removida em novembro de 2026).
 7. Google Analytics só com consentimento, banner com recusa tão fácil quanto aceite, revogação pelo rodapé e política atualizada (seção Cookies).
 
 ## Pendências para a Sala do Banquete
@@ -117,4 +123,5 @@ O comprador informa nome, e-mail, CPF e dados de pagamento **no ambiente do Merc
 - [ ] Criar a rotina de exclusão periódica de conversas e e-mails de orçamento antigos.
 - [ ] Revisão jurídica do texto da política (incluindo a seção de cookies/Google Analytics).
 - [ ] Na propriedade do GA4: manter a retenção de dados em **2 meses** (padrão) e deixar o **Google Signals desativado**, como a política informa.
-- [ ] Venda de ingressos: definir quanto tempo a equipe guarda as listas de convidados exportadas do Mercado Pago (planilhas, impressões) e apagá-las depois do evento.
+- [ ] E-books: nomear a plataforma de vendas na política (seção "Compra de e-books") e conferir que dados ela repassa ao produtor.
+- [ ] Se houver listas de convidados antigas exportadas do Mercado Pago (vendas de ingressos já encerradas), apagá-las, salvo obrigação fiscal.

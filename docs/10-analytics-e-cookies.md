@@ -49,7 +49,8 @@ Além dos page views e cliques automáticos, o site envia:
 | Evento | Quando | Parâmetros |
 |---|---|---|
 | `generate_lead` | Orçamento enviado pelo formulário | `method` (`whatsapp`/`email`), `service` (id do serviço) |
-| `begin_checkout` | Comprador sai para o pagamento no Mercado Pago | `currency`, `value`, `items` (ingresso e quantidade) |
+| `generate_lead` | Interesse em aula enviado pelo formulário de `/aulas` | `method` (`whatsapp`/`email`), `class` (id da aula) |
+| `begin_checkout` | Clique em "Comprar e-book" (sai para a plataforma de vendas) | `items` (id do e-book) |
 
 Os cliques no botão flutuante do WhatsApp e nos links de contato aparecem como evento `click` (medição otimizada, links externos), com o `link_url` `wa.me`.
 

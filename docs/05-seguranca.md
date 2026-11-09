@@ -4,7 +4,7 @@ Este documento registra cada medida de segurança aplicada no site, o que ela pr
 
 ## Superfície de ataque, em uma frase
 
-O site é quase todo **estático**: as páginas são geradas no build (SSG). O único endpoint nosso que recebe dados é `POST /api/checkout` (compra de ingressos, ver abaixo), e a única página renderizada a cada visita é `/ingressos/retorno`. As únicas entradas externas são a URL (idioma e caminho), o cabeçalho `Accept-Language`, o otimizador de imagens do Next.js (`/_next/image`) e o formulário de orçamento, que roda inteiro no navegador. O mapa detalhado de cada ponto de entrada está no [relatório da auditoria](./08-auditoria-seguranca.md#mapa-de-superfície-de-ataque).
+O site é **estático**: as páginas são geradas no build (SSG) e não há nenhum endpoint nosso que receba dados. As únicas entradas externas são a URL (idioma e caminho), o cabeçalho `Accept-Language`, o otimizador de imagens do Next.js (`/_next/image`) e os formulários de orçamento e de interesse em aulas, que rodam inteiros no navegador. A compra de e-books acontece numa plataforma externa: o site só tem o link. O mapa detalhado de cada ponto de entrada está no [relatório da auditoria](./08-auditoria-seguranca.md#mapa-de-superfície-de-ataque).
 
 ## Headers de segurança (`next.config.ts`)
 
@@ -78,6 +78,13 @@ O otimizador de imagens foi o vetor de várias CVEs recentes do Next.js (SSRF, R
 - `next` atualizado de 16.3.0 para 16.4.0: corrige uma CVE **crítica** de execução remota de código no Image Optimizer e mais 8 advisories (SSRF, cache poisoning).
 - `npm audit` no frontend: de 11 vulnerabilidades (1 crítica) para 5, todas da mesma cadeia: `braces` ← `micromatch` ← `fast-glob` ← `eslint-config-next`. São **só de desenvolvimento** (rodam no `npm run lint`, nunca vão para produção) e o `braces` 3.0.3 é a última versão publicada, sem correção disponível. Risco aceito e registrado.
 - Versões de `next`, `react` e `eslint-config-next` fixadas sem `^` no `package.json`, para que um `npm install` não traga uma versão nova sem revisão.
+- **Novembro de 2026:** `next` 16.4.0 → **16.4.3** (corrige 3 advisories, um **crítico**: execução remota de código no Image Optimizer com SVG, GHSA-2464-fhr4-w9xw) e `zod` 4.6.5 → 4.6.7 (consumo de memória, GHSA-mrhx-c7xc-m3w5). Escolhida a 16.4.3, publicada havia 13 dias, em vez da 16.4.5, de 2 dias antes: versão recém-saída tem mais risco de ataque à cadeia de pacotes. `npm audit --omit=dev`: **0 vulnerabilidades**. Sobra 1 moderada só de desenvolvimento (`minimatch`, via `typescript-eslint`); a "correção" do `npm audit fix --force` rebaixaria o `eslint-config-next` para a 15, então o risco foi aceito.
+
+## Roteador: previsão de rotas desligada (`optimisticRouting`)
+
+O roteador do Next 16 tenta adivinhar a estrutura de uma URL pelo formato de outras já vistas. Com o idioma sem prefixo, o next-intl reescreve `/privacidade` para `/pt/privacidade`, e o roteador confundia `/privacidade` com `/[locale]` (a Home). Ele pedia um pedaço de página que não existe, recebia 404 e repetia o pedido sem parar: **937 requisições em ~3 segundos** só por abrir a Home e rolar até o rodapé, gastando dados e bateria do visitante e tráfego do servidor. A documentação do Next lista reescritas como limitação dessa previsão. Com `experimental.optimisticRouting: false` em `next.config.ts`, cada rota é resolvida pelo servidor (uma requisição pequena e estática): 11 requisições, nenhuma falha, navegação sem recarregar a página nos dois navegadores testados.
+
+**Ao atualizar o Next:** antes de religar a opção, abrir a Home com o DevTools na aba Network, rolar até o rodapé e conferir que não há requisições `?_rsc=` repetidas.
 
 **Rotina recomendada:** rodar `npm audit` e `npm outdated` antes de cada deploy importante, e ler as notas de versão do Next.js quando sair patch de segurança.
 
@@ -124,8 +131,8 @@ Todo `target="_blank"` do site tem `rel="noopener noreferrer"` — conferido no 
 
 ## Segredos e variáveis de ambiente
 
-- A única variável sensível é `MERCADO_PAGO_ACCESS_TOKEN`, lida só no servidor por `lib/payments/mercadopago.ts`, que começa com `import "server-only"`: se esse arquivo for importado por um componente do navegador, o build falha. Ela é cadastrada na Vercel e documentada, sem valor, no `.env.example` da raiz. Os dados de contato (`lib/data/contacts.ts`) são públicos por natureza e ficam no código.
-- Nenhuma variável `NEXT_PUBLIC_*` existe. **Regra:** nada sensível leva esse prefixo, porque toda variável com ele vai para o JavaScript do navegador.
+- O site não tem mais nenhuma variável sensível: o `MERCADO_PAGO_ACCESS_TOKEN` saiu junto com o checkout de ingressos. Se ainda estiver cadastrado na Vercel, pode ser apagado lá e a credencial revogada no painel do Mercado Pago. Os dados de contato (`lib/data/contacts.ts`) são públicos por natureza e ficam no código.
+- A única variável é `NEXT_PUBLIC_GA_MEASUREMENT_ID`, pública por natureza (o ID aparece no HTML de qualquer site com Google Analytics). **Regra:** nada sensível leva o prefixo `NEXT_PUBLIC_`, porque toda variável com ele vai para o JavaScript do navegador.
 - `.gitignore` cobre **todas** as variantes de `.env` (`.env*`, com exceção dos `.env.example`). Antes só cobria `.env`, `.env.local` e `.env.*.local`, deixando de fora `.env.production` e `.env.development`, que o Next.js carrega automaticamente e costumam guardar segredos. Também cobre `*.pem`, `.vercel` e `.claude/settings.json` (permissões pessoais do Claude Code, com caminhos da máquina de quem usa; antes era versionado e servido publicamente pela produção estática).
 - **Histórico do git verificado:** busca por padrões de token do Mercado Pago (`APP_USR-`), chaves AWS, tokens do GitHub, chaves privadas e atribuições `token|secret|password = "..."` em todos os commits. Nenhum segredo real foi commitado; só os placeholders do `.env.example`.
 
@@ -136,20 +143,15 @@ Todo `target="_blank"` do site tem `rel="noopener noreferrer"` — conferido no 
 - Página 404 própria, traduzida, sem detalhes internos.
 - `public/` contém só imagens do site e a logo.
 
-## Checkout de ingressos (`/api/checkout`)
+## Compra de e-books (link externo)
 
-O antigo backend Express foi substituído por um Route Handler do Next.js e removido. O fluxo completo está em [`09-checkout-ingressos.md`](./09-checkout-ingressos.md). As defesas:
+Os e-books são vendidos numa plataforma externa (`lib/data/ebooks.ts` guarda só o link de cada um). O site não processa pagamento, não recebe dados do comprador e não tem endpoint de checkout.
 
-- **Preço só no servidor.** O navegador envia `{ ticketId, quantity, locale }`; o preço vem de `lib/data/tickets.ts`. Campos extras no corpo (ex.: `price: 0.01`) são descartados pelo schema zod.
-- **Validação estrita:** ingresso precisa existir no catálogo (`find` por igualdade, então `__proto__` e `constructor` nunca casam), quantidade inteira de 1 ao máximo por compra, idioma `pt` ou `en`. Pedido inválido responde 400 e **não chega** ao Mercado Pago.
-- **CSRF:** só aceita `Content-Type: application/json` (um `<form>` comum não consegue enviar) e exige `Origin` com o mesmo host acessado (`Host`/`x-forwarded-host`). Recusa `Origin` ausente, `null` e domínios parecidos (`site.com.evil.example`).
-- **Limites:** corpo até 1 KB (conferido pelo `Content-Length` antes de ler e de novo depois); só `POST` (outros métodos → 405).
-- **Erros sem vazamento:** falha do Mercado Pago responde 502 com um código genérico; o detalhe fica só no log do servidor.
-- **Página de retorno:** ignora o `?status=` da URL e consulta a API; exige o `external_reference` (UUID aleatório por pedido), o que impede ver pagamentos de outras pessoas trocando o `payment_id` (IDOR); `payment_id` só com dígitos (texto arbitrário não é refletido na mensagem de ajuda do WhatsApp); `noindex` e fora do sitemap; não mostra dados do comprador.
-- **Redirecionamento:** o popup só segue um link `https://` cujo domínio seja do Mercado Pago (defesa contra redirecionamento aberto).
-- **URL de retorno fixa:** usa `SITE_URL` (ou a URL do Preview na Vercel, ou o domínio público), nunca o `Host` da requisição.
+- **Só `https://`:** o tipo de `url` em `lib/data/ebooks.ts` só aceita `""` ou um endereço `https://`, conferido pelo TypeScript no build.
+- **Nova aba com `rel="noopener noreferrer"`**, como todo link externo do site.
+- **CSP sem mudança:** um link comum não depende de `connect-src` nem de `form-action`; nada da plataforma é carregado dentro do site.
 
-**Testes executados** (servidor falso do Mercado Pago, Chrome e Safari, `localhost` e IP da rede): 28 ataques na API, fluxo completo de compra, 8 cenários da página de retorno, axe sem violações no popup e na página de retorno e CSP sem violações nas 9 rotas.
+O checkout de ingressos com Mercado Pago (Route Handler `/api/checkout` e página `/ingressos/retorno`) foi removido em novembro de 2026, junto com a seção de eventos. As defesas que ele tinha estão descritas no histórico do git deste arquivo e em [`08-auditoria-seguranca.md`](./08-auditoria-seguranca.md).
 
 ## SEO / Open Graph
 
