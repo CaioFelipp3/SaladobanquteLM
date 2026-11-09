@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { features } from "@/lib/features";
 import { Link, usePathname } from "@/lib/i18n/navigation";
 import { routing } from "@/lib/i18n/routing";
 import { focusRing } from "@/lib/ui/styles";
@@ -23,10 +24,11 @@ export default function Navbar() {
     { href: "/", label: t("home") },
     { href: "/#sobre", label: t("about") },
     { href: "/servicos", label: t("services") },
-    { href: "/#eventos", label: t("events") },
+    { href: "/aulas", label: t("classes"), enabled: features.classes },
+    { href: "/ebooks", label: t("ebooks"), enabled: features.ebooks },
     { href: "/#galeria", label: t("gallery") },
     { href: "/#contato", label: t("contact") },
-  ];
+  ].filter((link) => link.enabled !== false);
 
   return (
     <nav

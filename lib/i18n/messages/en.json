@@ -8,7 +8,8 @@
     "home": "Home",
     "about": "About",
     "services": "Services",
-    "events": "Events",
+    "classes": "Classes",
+    "ebooks": "E-books",
     "gallery": "Table Settings",
     "contact": "Contact",
     "logoAlt": "Liliam Müller – A Sala do Banquete (home)",
@@ -22,9 +23,10 @@
     "Hero": {
       "eyebrow": "Vitória · Espírito Santo · Brazil",
       "title": "A Unique Experience at the Table",
-      "subtitle": "Discover the best events in Vitória, ES",
+      "subtitle": "Bespoke table settings and events in Vitória, Brazil",
       "ctaPrimary": "Request a quote",
-      "ctaSecondary": "See upcoming events"
+      "ctaSecondary": "Explore our classes",
+      "ctaServices": "Explore our services"
     },
     "About": {
       "eyebrow": "Our story",
@@ -34,20 +36,23 @@
       "founderImageAlt": "Liliam Müller – Founder of Sala do Banquete",
       "founderCaption": "Liliam Müller — Founder"
     },
-    "Events": {
-      "eyebrow": "What's on",
-      "heading": "Upcoming Events",
-      "intro": "Check out our schedule and stay up to date on upcoming events",
-      "ctaButton": "Learn More",
-      "ctaMessage": "Hello! I'd like to know more about the upcoming events at Sala do Banquete.",
-      "chaDasFlores": {
-        "title": "Chá das Flores",
-        "date": "[Date to be confirmed]",
-        "description": "[Event description to be filled in]",
-        "imagePlaceholder": "Image coming soon",
-        "ctaButton": "Get Tickets",
-        "ctaMessage": "Hello! I'm interested in the *Chá das Flores* event at Sala do Banquete. Could you send me more information and pricing?"
-      }
+    "Offerings": {
+      "eyebrow": "Learn with us",
+      "heading": "Classes and E-books",
+      "intro": "The Sala do Banquete experience, also in etiquette classes and e-books to read whenever you like",
+      "classes": {
+        "eyebrow": "Etiquette",
+        "title": "Etiquette Classes",
+        "body": "Learn to host, serve and carry yourself at the table with elegance and ease.",
+        "cta": "Explore the classes"
+      },
+      "ebooks": {
+        "eyebrow": "Reading",
+        "title": "Our E-books",
+        "body": "Practical guides on table settings, etiquette and the art of hosting.",
+        "cta": "See the e-books"
+      },
+      "comingSoon": "Coming soon"
     },
     "Gallery": {
       "roledescription": "carousel",
@@ -107,6 +112,60 @@
       "emailBody": "Hello!\n\nI found you through the website and I'm interested in the \"{service}\" service at Sala do Banquete. Could you send me more information?\n\nThank you!"
     }
   },
+  "Classes": {
+    "Metadata": {
+      "title": "Etiquette Classes – A Sala do Banquete",
+      "description": "Etiquette classes with Sala do Banquete in Vitória, ES, Brazil. Learn to host, serve and carry yourself at the table with elegance."
+    },
+    "eyebrow": "Etiquette",
+    "heading": "Etiquette Classes",
+    "intro": "Learn to host, serve and carry yourself at the table with elegance and ease",
+    "imagePlaceholder": "Image coming soon",
+    "interestButton": "I'm interested",
+    "items": {
+      "aula-1": {
+        "title": "[Class 1 name]",
+        "details": "[Duration · format]"
+      },
+      "aula-2": {
+        "title": "[Class 2 name]",
+        "details": "[Duration · format]"
+      },
+      "aula-3": {
+        "title": "[Class 3 name]",
+        "details": "[Duration · format]"
+      }
+    },
+    "form": {
+      "eyebrow": "Sign up",
+      "heading": "I'm interested",
+      "intro": "Leave your details and the class you'd like — we'll reply with upcoming dates and prices",
+      "fieldClass": "Class of interest",
+      "classPlaceholder": "Select a class",
+      "classRequired": "Select a class",
+      "messageTemplate": "Hello! I'm interested in the etiquette classes at Sala do Banquete.\nName: {name}\nPhone: {phone}\nClass: {classTitle}\nMessage: {message}",
+      "emailSubject": "Etiquette class enquiry – {classTitle}"
+    }
+  },
+  "Ebooks": {
+    "Metadata": {
+      "title": "E-books – A Sala do Banquete",
+      "description": "E-books by Sala do Banquete on table settings, etiquette and the art of hosting."
+    },
+    "eyebrow": "Reading",
+    "heading": "Our E-books",
+    "intro": "Practical guides on table settings, etiquette and the art of hosting, to read whenever and wherever you like",
+    "coverPlaceholder": "Cover coming soon",
+    "coverAlt": "Cover of the e-book {title}",
+    "buy": "Buy e-book",
+    "comingSoon": "Coming soon",
+    "opensInNewTab": "(opens in a new tab)",
+    "purchaseNote": "The e-book is purchased and delivered through the sales platform, in a secure environment. Your payment details are entered only there.",
+    "items": {
+      "ebook-1": { "title": "[E-book 1 title]" },
+      "ebook-2": { "title": "[E-book 2 title]" }
+    }
+  },
   "Budget": {
     "Metadata": {
       "title": "Get a Quote – A Sala do Banquete",
@@ -155,46 +214,13 @@
     "fallbackWhatsapp": "If the chat did not open, <link>click here to open WhatsApp</link>.",
     "fallbackEmail": "If nothing opened, <link>click here</link> or write directly to {email}."
   },
-  "Tickets": {
-    "dialogLabel": "Buy tickets",
-    "ticketType": "Ticket type",
-    "quantity": "Quantity",
-    "decrease": "Decrease quantity",
-    "increase": "Increase quantity",
-    "total": "Total",
-    "paymentNote": "You will go to Mercado Pago's secure checkout to pay with Pix, card or bank slip. Your payment details are entered only there.",
-    "privacyLink": "Privacy Policy",
-    "submit": "Go to payment",
-    "submitting": "Opening Mercado Pago...",
-    "close": "Close",
-    "errorTitle": "We couldn't open the payment right now.",
-    "errorBody": "Please try again in a few minutes or <link>message us on WhatsApp</link>.",
-    "whatsappMessage": "Hello! I tried to buy a ticket for *{event}* on the website, but the payment didn't open. Could you help me?",
-    "Return": {
-      "Metadata": { "title": "Payment – A Sala do Banquete" },
-      "approvedTitle": "Payment confirmed!",
-      "approvedBody": "Thank you! Mercado Pago has emailed you the receipt. We'll be in touch soon with the event details.",
-      "pendingTitle": "Payment processing",
-      "pendingBody": "Your payment is still being processed (common with bank slips and some card reviews). You'll get an email confirmation as soon as it's approved.",
-      "rejectedTitle": "Payment not approved",
-      "rejectedBody": "The payment was not completed and nothing was charged. You can try again with another payment method.",
-      "unknownTitle": "We couldn't confirm the payment",
-      "unknownBody": "If you completed the payment, the Mercado Pago receipt will arrive by email. If in doubt, message us on WhatsApp.",
-      "summary": "{description} — {amount}",
-      "orderLabel": "Order",
-      "backHome": "Back to home",
-      "tryAgain": "Try again",
-      "help": "Message us on WhatsApp",
-      "helpMessage": "Hello! I bought a ticket on the website (order {order}) and I'd like some help."
-    }
-  },
   "Privacy": {
     "Metadata": {
       "title": "Privacy Policy – A Sala do Banquete",
-      "description": "How Sala do Banquete handles the personal data sent through the quote request form, in line with Brazil's LGPD."
+      "description": "How Sala do Banquete handles the personal data sent through the website's forms and when buying e-books, in line with Brazil's LGPD."
     },
     "heading": "Privacy Policy",
-    "updatedAt": "Last updated: October 10, 2026",
+    "updatedAt": "Last updated: November 5, 2026",
     "intro": "This policy explains, in plain terms, which personal data Sala do Banquete handles when you use this website, why, and what your rights are under Brazil's General Data Protection Law (Law No. 13,709/2018, LGPD).",
     "contactLabel": "Privacy contact:",
     "sections": {
@@ -204,39 +230,38 @@
       },
       "collected": {
         "title": "What data we collect",
-        "body": "The website receives personal data in two situations. Through the quote request form:",
+        "body": "The website receives personal data through the quote request and etiquette class enquiry forms:",
         "items": [
           "Name",
           "Phone number",
-          "Type of service",
-          "Expected event date",
-          "Number of guests",
+          "Type of service (quote) or class of interest",
+          "Expected event date and number of guests (quote only)",
           "Message (optional)"
         ],
-        "note": "When you buy tickets, the data is entered at Mercado Pago (see \"Ticket purchases\" below). We do not ask for sensitive data (such as health, religion or ethnic origin). Please do not include this kind of information in the message field. If you accept analytics cookies, Google Analytics also collects browsing data (see \"Cookies\" below)."
+        "note": "When you buy e-books, the data is entered on the sales platform (see \"E-book purchases\" below). We do not ask for sensitive data (such as health, religion or ethnic origin). Please do not include this kind of information in the message field. If you accept analytics cookies, Google Analytics also collects browsing data (see \"Cookies\" below)."
       },
       "flow": {
         "title": "How the data reaches us",
-        "body": "The form does not send anything to a Sala do Banquete server. When you click send, your own browser builds the message and opens WhatsApp or your email app with it already filled in. You review the text and decide whether to send it. The data only reaches us if you send the message there, and nothing is stored on the website."
+        "body": "The forms do not send anything to a Sala do Banquete server. When you click send, your own browser builds the message and opens WhatsApp or your email app with it already filled in. You review the text and decide whether to send it. The data only reaches us if you send the message there, and nothing is stored on the website."
       },
       "payments": {
-        "title": "Ticket purchases",
-        "body": "When you buy a ticket, the payment takes place entirely within Mercado Pago's environment: that is where you enter your name, email, ID number and payment details, under Mercado Pago's own privacy policy. The website does not receive or store card details, ID documents or passwords. After the purchase, Sala do Banquete receives from Mercado Pago the buyer's name and email, the ticket type and quantity and the amount paid, to put together the guest list and contact you about the event."
+        "title": "E-book purchases",
+        "body": "E-books are sold through an external sales platform. When you click buy, you leave this website and enter your name, email, ID documents and payment details directly on the platform, under its own privacy policy. The website does not receive or store payment details, ID documents or passwords. The platform informs Sala do Banquete of the purchase details needed for delivery and customer service, such as name, email and the e-book purchased."
       },
       "purpose": {
         "title": "What we use it for",
-        "body": "We use the data only to answer your quote request, to organize your event if you hire us and, for ticket purchases, to put together the guest list and contact you about the event. If you accept analytics cookies, we use browsing statistics to understand how the website is used and to improve it. We do not use your data for advertising, we do not sell it and we do not share it with third parties for commercial purposes."
+        "body": "We use the data only to answer your quote request or class enquiry, to organize your event or class if you hire us and, for e-book purchases, for delivery and customer service about the purchase. If you accept analytics cookies, we use browsing statistics to understand how the website is used and to improve it. We do not use your data for advertising, we do not sell it and we do not share it with third parties for commercial purposes."
       },
       "legalBasis": {
         "title": "Legal basis",
-        "body": "For quote requests, processing is based on Article 7, item V, of the LGPD: preliminary steps related to a contract, at the request of the data subject. For ticket purchases, the basis is the performance of the contract (the same Article 7, item V) and compliance with legal and tax obligations (Article 7, item II). The acknowledgment checkbox on the form exists to make sure you have read this policy before sending. Analytics cookies (Google Analytics) are only used with your consent (Article 7, item I), which you can withdraw at any time under \"Cookie preferences\" in the website footer."
+        "body": "For quote requests and class enquiries, processing is based on Article 7, item V, of the LGPD: preliminary steps related to a contract, at the request of the data subject. For e-book purchases, the basis is the performance of the contract (the same Article 7, item V) and compliance with legal and tax obligations (Article 7, item II). The acknowledgment checkbox on the forms exists to make sure you have read this policy before sending. Analytics cookies (Google Analytics) are only used with your consent (Article 7, item I), which you can withdraw at any time under \"Cookie preferences\" in the website footer."
       },
       "sharing": {
         "title": "Who the data is shared with",
         "body": "To work, the website and our customer service rely on a few third-party services:",
         "items": [
           "WhatsApp (Meta) or your email provider, which carry the message you decide to send.",
-          "Mercado Pago, which processes ticket payments and informs us of the purchase details.",
+          "The e-book sales platform, which processes payment and delivery and informs us of the purchase details.",
           "Google (Gmail), which hosts Sala do Banquete's mailbox.",
           "Vercel, the company that hosts the website and logs technical access data, such as IP address and browser type, for security and operational reasons.",
           "Google (Google Analytics), only if you accept analytics cookies: receives browsing data to produce usage statistics for the website."
@@ -245,7 +270,7 @@
       },
       "retention": {
         "title": "How long we keep it",
-        "body": "Quote conversations and emails are kept for up to 12 months after the last contact when no contract is signed. If there is a contract, the data is kept for as long as needed to meet legal and tax obligations. Ticket purchase records are kept at Mercado Pago for the period required by tax law. Google Analytics browsing data is kept by Google for 2 months; after that, only aggregate statistics that do not identify visitors remain. You can ask for deletion of anything we are not legally required to keep at any time."
+        "body": "Quote and class enquiry conversations and emails are kept for up to 12 months after the last contact when no contract is signed. If there is a contract, the data is kept for as long as needed to meet legal and tax obligations. E-book purchase records are kept on the sales platform for the period required by tax law. Google Analytics browsing data is kept by Google for 2 months; after that, only aggregate statistics that do not identify visitors remain. You can ask for deletion of anything we are not legally required to keep at any time."
       },
       "cookies": {
         "title": "Cookies",
@@ -253,13 +278,13 @@
         "items": [
           "NEXT_LOCALE (required): cookie that stores your chosen language (Portuguese or English) and expires when you close your browser.",
           "cookie-consent (required): a record, in your browser's local storage, of your choice about analytics cookies. It lasts 12 months so the notice does not appear on every page.",
-          "_ga and _ga_<ID> (analytics, only with your consent): Google Analytics cookies that count visits and record pages viewed, where the visit came from (for example, Instagram or Google), device type, approximate city and actions such as requesting a quote or starting a ticket purchase. They expire after 12 months."
+          "_ga and _ga_<ID> (analytics, only with your consent): Google Analytics cookies that count visits and record pages viewed, where the visit came from (for example, Instagram or Google), device type, approximate city and actions such as requesting a quote, enquiring about a class or clicking to buy an e-book. They expire after 12 months."
         ],
         "note": "Analytics cookies are only turned on if you click \"Accept\" on the cookie notice. You can change your mind at any time under \"Cookie preferences\" in the website footer; if you decline, the Google Analytics cookies are deleted. Google Analytics does not store your IP address. We do not use advertising cookies or tracking pixels, and Google's advertising features are turned off."
       },
       "security": {
         "title": "Security",
-        "body": "The website is served only over an encrypted connection (HTTPS) and uses security headers that make common attacks harder. Since the form does not store data on a server, there is no database of quote requests on the website that could leak."
+        "body": "The website is served only over an encrypted connection (HTTPS) and uses security headers that make common attacks harder. Since the forms do not store data on a server, there is no database of quote requests or enquiries on the website that could leak."
       },
       "rights": {
         "title": "Your rights",
@@ -293,7 +318,7 @@
   },
   "WhatsappFloat": {
     "ariaLabel": "Chat on WhatsApp",
-    "message": "Hello! I'd like to know more about the upcoming events at Sala do Banquete."
+    "message": "Hello! I'd like to know more about Sala do Banquete."
   },
   "NotFound": {
     "heading": "Page not found",

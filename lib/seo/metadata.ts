@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { features } from "@/lib/features";
 import { routing } from "@/lib/i18n/routing";
 
 /** Domínio canônico — o sem-www redireciona para cá. */
@@ -7,8 +8,20 @@ export const siteName = "A Sala do Banquete";
 const ogImage = "/images/marca/logo.png";
 
 /** Páginas públicas indexáveis, sem prefixo de idioma ("" = Home). */
-export const pagePaths = ["", "/servicos", "/orcamento", "/privacidade"] as const;
+export const pagePaths = [
+  "",
+  "/servicos",
+  "/aulas",
+  "/ebooks",
+  "/orcamento",
+  "/privacidade",
+] as const;
 export type PagePath = (typeof pagePaths)[number];
+
+/** Páginas no ar agora: as desligadas em lib/features.ts ficam fora do sitemap. */
+export const publishedPaths = pagePaths.filter(
+  (path) => (path !== "/aulas" || features.classes) && (path !== "/ebooks" || features.ebooks),
+);
 
 /** "/servicos" em pt → "/servicos"; em en → "/en/servicos". */
 export function localizedPath(locale: string, path: PagePath): string {

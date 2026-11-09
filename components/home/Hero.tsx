@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Ornament from "@/components/ui/Ornament";
+import { features } from "@/lib/features";
 import { Link } from "@/lib/i18n/navigation";
 import { buttonShape, eyebrowType, focusRingLight } from "@/lib/ui/styles";
 
@@ -43,11 +44,12 @@ export default function Hero() {
           >
             {t("ctaPrimary")}
           </Link>
+          {/* Com as aulas fora do ar (lib/features.ts), leva aos serviços */}
           <Link
-            href="/#eventos"
+            href={features.classes ? "/aulas" : "/servicos"}
             className={`${buttonShape} ${focusRingLight} w-full border border-white/70 text-white hover:bg-white hover:text-banquete-dark xs:w-auto`}
           >
-            {t("ctaSecondary")}
+            {features.classes ? t("ctaSecondary") : t("ctaServices")}
           </Link>
         </div>
       </div>

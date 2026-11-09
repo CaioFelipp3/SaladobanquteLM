@@ -4,7 +4,7 @@ import About from "@/components/home/About";
 import Contact from "@/components/home/Contact";
 import Gallery from "@/components/home/Gallery";
 import Hero from "@/components/home/Hero";
-import UpcomingEvents from "@/components/home/UpcomingEvents";
+import Offerings from "@/components/home/Offerings";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata({
@@ -35,7 +35,7 @@ export default async function HomePage({
     <>
       <Hero />
       <About />
-      <UpcomingEvents />
+      <Offerings />
       <Gallery />
       <Contact />
     </>

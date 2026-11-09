@@ -8,7 +8,8 @@
     "home": "Início",
     "about": "Sobre",
     "services": "Serviços",
-    "events": "Eventos",
+    "classes": "Aulas",
+    "ebooks": "E-books",
     "gallery": "Mesas Postas",
     "contact": "Contato",
     "logoAlt": "Liliam Müller – A Sala do Banquete (início)",
@@ -22,9 +23,10 @@
     "Hero": {
       "eyebrow": "Vitória · Espírito Santo",
       "title": "Uma Experiência Única à Mesa",
-      "subtitle": "Descubra os melhores eventos em Vitória, ES",
+      "subtitle": "Mesas postas e eventos sob medida em Vitória, ES",
       "ctaPrimary": "Solicitar orçamento",
-      "ctaSecondary": "Ver próximos eventos"
+      "ctaSecondary": "Conhecer as aulas",
+      "ctaServices": "Conhecer os serviços"
     },
     "About": {
       "eyebrow": "Nossa história",
@@ -34,20 +36,23 @@
       "founderImageAlt": "Liliam Müller – Fundadora da Sala do Banquete",
       "founderCaption": "Liliam Müller — Fundadora"
     },
-    "Events": {
-      "eyebrow": "Agenda",
-      "heading": "Próximos Eventos",
-      "intro": "Confira nossa programação e fique por dentro dos próximos eventos",
-      "ctaButton": "Saber Mais",
-      "ctaMessage": "Olá. Tudo bem?\nQuero saber mais sobre os próximos eventos da Sala do Banquete.",
-      "chaDasFlores": {
-        "title": "Chá das Flores",
-        "date": "[Data a confirmar]",
-        "description": "[Descrição do evento a preencher]",
-        "imagePlaceholder": "Imagem em breve",
-        "ctaButton": "Adquirir Ingresso",
-        "ctaMessage": "Olá! Tenho interesse no evento *Chá das Flores* na Sala do Banquete. Poderia me passar mais informações e valores?"
-      }
+    "Offerings": {
+      "eyebrow": "Aprenda com a gente",
+      "heading": "Aulas e E-books",
+      "intro": "A experiência da Sala do Banquete também em aulas de etiqueta e em e-books para ler quando quiser",
+      "classes": {
+        "eyebrow": "Etiqueta",
+        "title": "Aulas de Etiqueta",
+        "body": "Aprenda a receber, servir e se portar à mesa com elegância e naturalidade.",
+        "cta": "Conhecer as aulas"
+      },
+      "ebooks": {
+        "eyebrow": "Leitura",
+        "title": "Nossos E-books",
+        "body": "Guias práticos sobre mesa posta, etiqueta e a arte de receber.",
+        "cta": "Ver os e-books"
+      },
+      "comingSoon": "Em breve"
     },
     "Gallery": {
       "roledescription": "carrossel",
@@ -107,6 +112,60 @@
       "emailBody": "Olá!\n\nVim pelo site e tenho interesse no serviço \"{service}\" da Sala do Banquete. Poderia me passar mais informações?\n\nObrigado(a)!"
     }
   },
+  "Classes": {
+    "Metadata": {
+      "title": "Aulas de Etiqueta – A Sala do Banquete",
+      "description": "Aulas de etiqueta com a Sala do Banquete, em Vitória, ES. Aprenda a receber, servir e se portar à mesa com elegância."
+    },
+    "eyebrow": "Etiqueta",
+    "heading": "Aulas de Etiqueta",
+    "intro": "Aprenda a receber, servir e se portar à mesa com elegância e naturalidade",
+    "imagePlaceholder": "Imagem em breve",
+    "interestButton": "Tenho interesse",
+    "items": {
+      "aula-1": {
+        "title": "[Nome da aula 1]",
+        "details": "[Duração · formato]"
+      },
+      "aula-2": {
+        "title": "[Nome da aula 2]",
+        "details": "[Duração · formato]"
+      },
+      "aula-3": {
+        "title": "[Nome da aula 3]",
+        "details": "[Duração · formato]"
+      }
+    },
+    "form": {
+      "eyebrow": "Inscrição",
+      "heading": "Tenho interesse",
+      "intro": "Deixe seus dados e a aula escolhida — respondemos com as próximas datas e valores",
+      "fieldClass": "Aula de interesse",
+      "classPlaceholder": "Selecione uma aula",
+      "classRequired": "Selecione uma aula",
+      "messageTemplate": "Olá! Tenho interesse nas aulas de etiqueta da Sala do Banquete.\nNome: {name}\nTelefone: {phone}\nAula: {classTitle}\nMensagem: {message}",
+      "emailSubject": "Interesse em aula de etiqueta – {classTitle}"
+    }
+  },
+  "Ebooks": {
+    "Metadata": {
+      "title": "E-books – A Sala do Banquete",
+      "description": "E-books da Sala do Banquete sobre mesa posta, etiqueta e a arte de receber."
+    },
+    "eyebrow": "Leitura",
+    "heading": "Nossos E-books",
+    "intro": "Guias práticos sobre mesa posta, etiqueta e a arte de receber, para ler quando e onde quiser",
+    "coverPlaceholder": "Capa em breve",
+    "coverAlt": "Capa do e-book {title}",
+    "buy": "Comprar e-book",
+    "comingSoon": "Em breve",
+    "opensInNewTab": "(abre em nova aba)",
+    "purchaseNote": "A compra e a entrega do e-book são feitas pela plataforma de vendas, em ambiente seguro. Seus dados de pagamento são informados só lá.",
+    "items": {
+      "ebook-1": { "title": "[Título do e-book 1]" },
+      "ebook-2": { "title": "[Título do e-book 2]" }
+    }
+  },
   "Budget": {
     "Metadata": {
       "title": "Orçamento – A Sala do Banquete",
@@ -155,46 +214,13 @@
     "fallbackWhatsapp": "Se a conversa não abriu, <link>clique aqui para abrir o WhatsApp</link>.",
     "fallbackEmail": "Se nada abriu, <link>clique aqui</link> ou escreva diretamente para {email}."
   },
-  "Tickets": {
-    "dialogLabel": "Comprar ingresso",
-    "ticketType": "Tipo de ingresso",
-    "quantity": "Quantidade",
-    "decrease": "Diminuir quantidade",
-    "increase": "Aumentar quantidade",
-    "total": "Total",
-    "paymentNote": "Você vai para o ambiente seguro do Mercado Pago para pagar com Pix, cartão ou boleto. Seus dados de pagamento são informados só lá.",
-    "privacyLink": "Política de Privacidade",
-    "submit": "Ir para o pagamento",
-    "submitting": "Abrindo o Mercado Pago...",
-    "close": "Fechar",
-    "errorTitle": "Não foi possível abrir o pagamento agora.",
-    "errorBody": "Tente novamente em alguns minutos ou <link>fale com a gente pelo WhatsApp</link>.",
-    "whatsappMessage": "Olá! Tentei comprar ingresso para o *{event}* pelo site, mas o pagamento não abriu. Pode me ajudar?",
-    "Return": {
-      "Metadata": { "title": "Pagamento – A Sala do Banquete" },
-      "approvedTitle": "Pagamento confirmado!",
-      "approvedBody": "Obrigado! O Mercado Pago enviou o comprovante para o seu e-mail. Em breve entraremos em contato com os detalhes do evento.",
-      "pendingTitle": "Pagamento em processamento",
-      "pendingBody": "Seu pagamento ainda está sendo processado (comum em boleto e em algumas análises de cartão). Você recebe a confirmação por e-mail assim que for aprovado.",
-      "rejectedTitle": "Pagamento não aprovado",
-      "rejectedBody": "O pagamento não foi concluído e nada foi cobrado. Você pode tentar de novo com outro meio de pagamento.",
-      "unknownTitle": "Não conseguimos confirmar o pagamento",
-      "unknownBody": "Se você concluiu o pagamento, o comprovante do Mercado Pago chega por e-mail. Em caso de dúvida, fale com a gente pelo WhatsApp.",
-      "summary": "{description} — {amount}",
-      "orderLabel": "Pedido",
-      "backHome": "Voltar para o início",
-      "tryAgain": "Tentar novamente",
-      "help": "Falar pelo WhatsApp",
-      "helpMessage": "Olá! Fiz uma compra de ingresso pelo site (pedido {order}) e gostaria de ajuda."
-    }
-  },
   "Privacy": {
     "Metadata": {
       "title": "Política de Privacidade – A Sala do Banquete",
-      "description": "Como a Sala do Banquete trata os dados pessoais enviados pelo formulário de orçamento, de acordo com a LGPD."
+      "description": "Como a Sala do Banquete trata os dados pessoais enviados pelos formulários do site e na compra de e-books, de acordo com a LGPD."
     },
     "heading": "Política de Privacidade",
-    "updatedAt": "Última atualização: 10 de outubro de 2026",
+    "updatedAt": "Última atualização: 5 de novembro de 2026",
     "intro": "Esta política explica, de forma direta, quais dados pessoais a Sala do Banquete trata quando você usa este site, para quê e quais são os seus direitos segundo a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).",
     "contactLabel": "Contato sobre privacidade:",
     "sections": {
@@ -204,39 +230,38 @@
       },
       "collected": {
         "title": "Quais dados coletamos",
-        "body": "O site recebe dados pessoais em duas situações. No formulário de orçamento:",
+        "body": "O site recebe dados pessoais pelos formulários de orçamento e de interesse em aulas de etiqueta:",
         "items": [
           "Nome",
           "Telefone",
-          "Tipo de serviço desejado",
-          "Data prevista do evento",
-          "Número de convidados",
+          "Tipo de serviço desejado (orçamento) ou aula de interesse",
+          "Data prevista do evento e número de convidados (só no orçamento)",
           "Mensagem (opcional)"
         ],
-        "note": "Na compra de ingressos, os dados são informados no Mercado Pago (veja \"Compra de ingressos\" abaixo). Não pedimos dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem. Se você aceitar os cookies de análise, o Google Analytics também coleta dados de navegação (veja \"Cookies\" abaixo)."
+        "note": "Na compra de e-books, os dados são informados na plataforma de vendas (veja \"Compra de e-books\" abaixo). Não pedimos dados sensíveis (como saúde, religião ou origem racial). Por favor, não inclua esse tipo de informação no campo de mensagem. Se você aceitar os cookies de análise, o Google Analytics também coleta dados de navegação (veja \"Cookies\" abaixo)."
       },
       "flow": {
         "title": "Como os dados chegam até nós",
-        "body": "O formulário não envia nada para um servidor da Sala do Banquete. Ao clicar em enviar, o seu próprio navegador monta a mensagem e abre o WhatsApp ou o seu aplicativo de e-mail já preenchido. Você confere o texto e decide se envia. Os dados só chegam até nós se você enviar a mensagem por lá, e nada fica gravado no site."
+        "body": "Os formulários não enviam nada para um servidor da Sala do Banquete. Ao clicar em enviar, o seu próprio navegador monta a mensagem e abre o WhatsApp ou o seu aplicativo de e-mail já preenchido. Você confere o texto e decide se envia. Os dados só chegam até nós se você enviar a mensagem por lá, e nada fica gravado no site."
       },
       "payments": {
-        "title": "Compra de ingressos",
-        "body": "Quando você compra um ingresso, o pagamento acontece inteiramente no ambiente do Mercado Pago: é lá que você informa nome, e-mail, CPF e dados de pagamento, conforme a política de privacidade do Mercado Pago. O site não recebe nem armazena dados de cartão, documentos ou senhas. Depois da compra, a Sala do Banquete recebe do Mercado Pago o nome e o e-mail de quem comprou, o tipo e a quantidade de ingressos e o valor pago, para montar a lista de convidados e entrar em contato sobre o evento."
+        "title": "Compra de e-books",
+        "body": "Os e-books são vendidos por uma plataforma externa de vendas. Ao clicar em comprar, você sai deste site e informa nome, e-mail, documentos e dados de pagamento diretamente na plataforma, conforme a política de privacidade dela. O site não recebe nem armazena dados de pagamento, documentos ou senhas. A plataforma informa à Sala do Banquete os dados necessários da compra, como nome, e-mail e e-book adquirido, para a entrega e o atendimento."
       },
       "purpose": {
         "title": "Para que usamos",
-        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento, para organizar o seu evento se você nos contratar e, na compra de ingressos, para montar a lista de convidados e falar com você sobre o evento. Se você aceitar os cookies de análise, usamos estatísticas de navegação para entender como o site é usado e melhorá-lo. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
+        "body": "Usamos os dados exclusivamente para responder à sua solicitação de orçamento ou ao seu interesse nas aulas, para organizar o seu evento ou a sua aula se você nos contratar e, na compra de e-books, para a entrega e o atendimento sobre a compra. Se você aceitar os cookies de análise, usamos estatísticas de navegação para entender como o site é usado e melhorá-lo. Não usamos seus dados para publicidade, não os vendemos e não os compartilhamos com terceiros para fins comerciais."
       },
       "legalBasis": {
         "title": "Base legal",
-        "body": "Para o orçamento, o tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Na compra de ingressos, a base é a execução do contrato (o mesmo art. 7º, inciso V) e o cumprimento de obrigações legais e fiscais (art. 7º, inciso II). A caixa de ciência no formulário existe para garantir que você leu esta política antes de enviar. Os cookies de análise (Google Analytics) só são usados com o seu consentimento (art. 7º, inciso I), que você pode revogar a qualquer momento em \"Preferências de cookies\", no rodapé do site."
+        "body": "Para o orçamento e o interesse em aulas, o tratamento se baseia no art. 7º, inciso V, da LGPD: procedimentos preliminares relacionados a um contrato, a pedido do próprio titular. Na compra de e-books, a base é a execução do contrato (o mesmo art. 7º, inciso V) e o cumprimento de obrigações legais e fiscais (art. 7º, inciso II). A caixa de ciência nos formulários existe para garantir que você leu esta política antes de enviar. Os cookies de análise (Google Analytics) só são usados com o seu consentimento (art. 7º, inciso I), que você pode revogar a qualquer momento em \"Preferências de cookies\", no rodapé do site."
       },
       "sharing": {
         "title": "Com quem os dados são compartilhados",
         "body": "Para funcionar, o site e o atendimento dependem de alguns serviços de terceiros:",
         "items": [
           "WhatsApp (Meta) ou o seu provedor de e-mail, que transportam a mensagem que você decide enviar.",
-          "Mercado Pago, que processa o pagamento dos ingressos e nos informa os dados da compra.",
+          "A plataforma de vendas dos e-books, que processa o pagamento e a entrega e nos informa os dados da compra.",
           "Google (Gmail), onde fica a caixa de e-mail da Sala do Banquete.",
           "Vercel, empresa que hospeda o site e registra dados técnicos de acesso, como endereço IP e tipo de navegador, por motivos de segurança e funcionamento.",
           "Google (Google Analytics), somente se você aceitar os cookies de análise: recebe dados de navegação para gerar estatísticas de uso do site."
@@ -245,7 +270,7 @@
       },
       "retention": {
         "title": "Por quanto tempo guardamos",
-        "body": "As conversas e e-mails de orçamento são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Os registros de compra de ingressos ficam no Mercado Pago pelo prazo exigido pela legislação fiscal. Os dados de navegação do Google Analytics ficam guardados no Google por 2 meses; depois disso, restam só estatísticas agregadas, que não identificam o visitante. Você pode pedir a exclusão do que não for obrigatório manter a qualquer momento."
+        "body": "As conversas e e-mails de orçamento e de interesse em aulas são mantidos por até 12 meses após o último contato, quando não há contratação. Se houver contrato, os dados são mantidos pelo período necessário para cumprir obrigações legais e fiscais. Os registros de compra de e-books ficam na plataforma de vendas pelo prazo exigido pela legislação fiscal. Os dados de navegação do Google Analytics ficam guardados no Google por 2 meses; depois disso, restam só estatísticas agregadas, que não identificam o visitante. Você pode pedir a exclusão do que não for obrigatório manter a qualquer momento."
       },
       "cookies": {
         "title": "Cookies",
@@ -253,13 +278,13 @@
         "items": [
           "NEXT_LOCALE (necessário): cookie que guarda o idioma escolhido (português ou inglês) e expira quando você fecha o navegador.",
           "cookie-consent (necessário): registro, no armazenamento local do navegador, da sua escolha sobre os cookies de análise. Vale por 12 meses, para o aviso não aparecer a cada página.",
-          "_ga e _ga_<ID> (análise, só com o seu consentimento): cookies do Google Analytics que contam visitas e registram páginas vistas, origem do acesso (por exemplo, Instagram ou Google), tipo de dispositivo, cidade aproximada e ações como pedir orçamento ou iniciar a compra de ingressos. Expiram em 12 meses."
+          "_ga e _ga_<ID> (análise, só com o seu consentimento): cookies do Google Analytics que contam visitas e registram páginas vistas, origem do acesso (por exemplo, Instagram ou Google), tipo de dispositivo, cidade aproximada e ações como pedir orçamento, demonstrar interesse em aulas ou clicar para comprar um e-book. Expiram em 12 meses."
         ],
         "note": "Os cookies de análise só são ativados se você clicar em \"Aceitar\" no aviso de cookies. Você pode mudar de ideia a qualquer momento em \"Preferências de cookies\", no rodapé do site; ao recusar, os cookies do Google Analytics são apagados. O Google Analytics não armazena o seu endereço IP. Não usamos cookies de publicidade nem pixels de rastreamento, e os recursos de anúncios do Google ficam desativados."
       },
       "security": {
         "title": "Segurança",
-        "body": "O site é servido apenas por conexão criptografada (HTTPS) e usa cabeçalhos de segurança que dificultam ataques comuns. Como o formulário não grava dados em servidor, não existe no site um banco de dados de orçamentos que possa vazar."
+        "body": "O site é servido apenas por conexão criptografada (HTTPS) e usa cabeçalhos de segurança que dificultam ataques comuns. Como os formulários não gravam dados em servidor, não existe no site um banco de dados de orçamentos ou inscrições que possa vazar."
       },
       "rights": {
         "title": "Seus direitos",
@@ -293,7 +318,7 @@
   },
   "WhatsappFloat": {
     "ariaLabel": "Falar pelo WhatsApp",
-    "message": "Olá. Tudo bem?\nQuero saber mais sobre os próximos eventos da Sala do Banquete."
+    "message": "Olá. Tudo bem?\nQuero saber mais sobre a Sala do Banquete."
   },
   "NotFound": {
     "heading": "Página não encontrada",
