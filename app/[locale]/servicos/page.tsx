@@ -3,7 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import ServicesGrid from "@/components/services/ServicesGrid";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { buildWhatsappUrl } from "@/lib/data/contacts";
-import { findServiceImages } from "@/lib/data/serviceImages";
+import { findImages } from "@/lib/data/images";
+import { services } from "@/lib/data/services";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buttonPrimary, container } from "@/lib/ui/styles";
 
@@ -37,7 +38,12 @@ export default async function ServicosPage({
     <section className={`${container} py-16 sm:py-24`}>
       <SectionHeader as="h1" eyebrow={t("eyebrow")} title={t("heading")} intro={t("intro")} />
 
-      <ServicesGrid images={findServiceImages()} />
+      <ServicesGrid
+        images={findImages(
+          "servicos",
+          services.map((service) => service.id),
+        )}
+      />
 
       <div className="mt-14 text-center">
         <a

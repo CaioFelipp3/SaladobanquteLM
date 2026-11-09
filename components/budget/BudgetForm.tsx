@@ -2,6 +2,16 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import {
+  FieldError,
+  inputClasses,
+  invalidBorderClasses,
+  labelClasses,
+  linkClasses,
+  submitEmailClasses,
+  submitWhatsappClasses,
+  validBorderClasses,
+} from "@/components/forms/FormParts";
 import { trackEvent } from "@/lib/analytics/gtag";
 import { buildMailtoUrl, buildWhatsappUrl, contacts } from "@/lib/data/contacts";
 import { services } from "@/lib/data/services";
@@ -25,17 +35,6 @@ type Status =
   // Guarda a URL gerada para oferecer um link manual caso o navegador
   // bloqueie a nova aba ou não exista app de e-mail configurado.
   | { kind: "sent"; channel: "whatsapp" | "email"; url: string };
-
-const inputClasses =
-  "w-full rounded-sm border bg-white px-4 py-2.5 text-[15px] placeholder:text-banquete-dark/70 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-1 focus-visible:outline-banquete-rose";
-// Cor da borda em classes separadas: aplicar "border-banquete-border" e
-// "border-red-500" juntas no mesmo elemento deixaria o resultado depender da
-// ordem do CSS gerado, não da ordem no className.
-const validBorderClasses = "border-banquete-input-border focus:border-banquete-rose";
-const invalidBorderClasses = "border-red-500 focus:border-red-500";
-const linkClasses =
-  "font-semibold text-banquete-rose underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose";
-const labelClasses = "mb-1.5 block text-[13px] font-semibold ";
 
 export default function BudgetForm() {
   const t = useTranslations("Budget");
@@ -289,7 +288,7 @@ export default function BudgetForm() {
           type="button"
           disabled={isSubmitting}
           onClick={() => submit("whatsapp")}
-          className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-whatsapp px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-whatsapp-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
+          className={submitWhatsappClasses}
         >
           {isSubmitting ? t("submitting") : t("submitWhatsapp")}
         </button>
@@ -297,7 +296,7 @@ export default function BudgetForm() {
           type="button"
           disabled={isSubmitting}
           onClick={() => submit("email")}
-          className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-banquete-rose px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-banquete-rose-dark focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose disabled:cursor-not-allowed disabled:opacity-60"
+          className={submitEmailClasses}
         >
           {isSubmitting ? t("submitting") : t("submitEmail")}
         </button>
@@ -334,16 +333,5 @@ export default function BudgetForm() {
         </p>
       )}
     </form>
-  );
-}
-
-// Sem role="alert": no envio inválido o foco vai para o primeiro campo com
-// erro, e o aria-describedby do campo já faz o leitor de tela ler a mensagem.
-function FieldError({ id, message }: { id: string; message?: string }) {
-  if (!message) return null;
-  return (
-    <p id={id} className="mt-1.5 text-[13px] text-red-700">
-      {message}
-    </p>
   );
 }
