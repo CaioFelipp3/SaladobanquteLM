@@ -25,7 +25,9 @@ let memoryConsent: ConsentStatus | null = null;
 export function readConsent(): ConsentStatus | null {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
+    // Ler funciona mas gravar falhou (cota cheia, armazenamento bloqueado):
+    // sem este fallback, o banner voltava a cada página mesmo após a escolha.
+    if (!raw) return memoryConsent;
     const { status, date } = JSON.parse(raw) as { status?: unknown; date?: unknown };
     const isValid =
       (status === "granted" || status === "denied") &&

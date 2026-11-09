@@ -87,6 +87,17 @@ const nextConfig: NextConfig = {
   // Remove o header "X-Powered-By: Next.js" — não revelar a stack a quem
   // procura alvos com CVE conhecida.
   poweredByHeader: false,
+  experimental: {
+    // A "previsão de rotas" do roteador do Next 16 adivinha a estrutura de
+    // uma URL pelo formato de outras já vistas. Com o idioma sem prefixo
+    // (o next-intl reescreve /privacidade para /pt/privacidade), ela confunde
+    // /privacidade com /[locale] (a Home), pede um pedaço que não existe,
+    // recebe 404 e repete o pedido sem parar — centenas de requisições por
+    // segundo só por abrir a Home. A própria documentação do Next aponta
+    // reescritas como limitação. Desligada, cada rota é resolvida pelo
+    // servidor (uma requisição pequena e estática). Ver docs/05-seguranca.md.
+    optimisticRouting: false,
+  },
   images: {
     // O otimizador de imagens (/_next/image) só aceita arquivos de /images,
     // sem query string — impede usar o endpoint para processar arquivos
