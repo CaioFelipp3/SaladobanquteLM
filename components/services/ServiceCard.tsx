@@ -49,7 +49,6 @@ export default function ServiceCard({
         <h2 className="mt-2 font-serif text-xl leading-snug xs:text-2xl">
           {t(`items.${id}.title`)}
         </h2>
-        <p className="mt-2 text-sm text-banquete-dark/70">{t("descriptionPlaceholder")}</p>
         <button
           type="button"
           onClick={onContact}
@@ -57,6 +56,8 @@ export default function ServiceCard({
           className="mt-auto pt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-banquete-rose underline-offset-[6px] after:absolute after:inset-0 group-hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-banquete-rose"
         >
           {t("contact.button")}
+          {/* Sem isso, os 9 botões teriam o mesmo nome para o leitor de tela */}
+          <span className="sr-only"> — {t(`items.${id}.title`)}</span>
         </button>
       </div>
     </div>

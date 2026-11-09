@@ -73,7 +73,8 @@
       "whatsappLink": "Chat on WhatsApp",
       "instagramLabel": "Instagram",
       "emailLabel": "Email",
-      "addressLabel": "Address"
+      "addressLabel": "Address",
+      "opensInNewTab": "(opens in a new tab)"
     }
   },
   "Services": {
@@ -86,7 +87,6 @@
     "intro": "Every celebration deserves unique care — see what we prepare for your special moment",
     "ctaButton": "Ask About a Service",
     "ctaMessage": "Hello! I'd like to know more about the services at Sala do Banquete.",
-    "descriptionPlaceholder": "[Description to be filled in]",
     "imagePlaceholder": "Image coming soon",
     "items": {
       "aniversario-infantil": { "title": "Kids' Birthday Party" },

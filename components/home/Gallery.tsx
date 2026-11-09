@@ -74,7 +74,8 @@ export default function Gallery() {
         {/* Contador visual "01 / 11"; o leitor de tela ouve o aria-live abaixo. */}
         <p aria-hidden="true" className="font-serif text-xl lining-nums tabular-nums">
           <span className="text-banquete-rose">{pad(imageNumber)}</span>
-          <span className="text-banquete-dark/50"> / {pad(TOTAL_IMAGES)}</span>
+          {/* /70: com /50 o contraste ficava em 2,8:1 (mínimo WCAG 4,5:1) */}
+          <span className="text-banquete-dark/70"> / {pad(TOTAL_IMAGES)}</span>
         </p>
 
         {/* Botões simples com aria-current em vez de role="tablist": um tablist

@@ -8,7 +8,6 @@ import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import SkipLink from "@/components/layout/SkipLink";
-import WhatsappFloatButton from "@/components/layout/WhatsappFloatButton";
 import { routing } from "@/lib/i18n/routing";
 import { siteName, siteUrl } from "@/lib/seo/metadata";
 import "../globals.css";
@@ -95,7 +94,6 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer />
-          <WhatsappFloatButton />
           <CookieBanner />
           <GoogleAnalytics />
         </NextIntlClientProvider>

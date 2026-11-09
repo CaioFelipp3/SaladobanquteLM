@@ -10,7 +10,7 @@ import { focusRing } from "@/lib/ui/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 // Sublinhado dourado que cresce da esquerda no hover (só no menu horizontal).
-const linkClasses = `relative text-[13px] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-banquete-rose focus-visible:rounded-sm focus-visible:text-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose lg:text-[11px] lg:after:absolute lg:after:-bottom-1.5 lg:after:left-0 lg:after:h-px lg:after:w-full lg:after:origin-left lg:after:scale-x-0 lg:after:bg-banquete-gold lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100`;
+const linkClasses = `relative text-[13px] font-semibold uppercase tracking-[0.18em] transition-colors hover:text-banquete-rose aria-[current=page]:text-banquete-rose focus-visible:rounded-sm focus-visible:text-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-banquete-rose lg:text-[11px] lg:after:absolute lg:after:-bottom-1.5 lg:after:left-0 lg:after:h-px lg:after:w-full lg:after:origin-left lg:after:scale-x-0 lg:after:bg-banquete-gold lg:after:transition-transform lg:after:duration-300 lg:hover:after:scale-x-100`;
 
 // Precisa ser Client Component: o menu hamburger do mobile depende de estado
 // (aberto/fechado), o que só existe em componentes que rodam no navegador.
@@ -92,7 +92,14 @@ export default function Navbar() {
         >
           {links.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} onClick={() => setIsOpen(false)} className={linkClasses}>
+              <Link
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                // Página atual anunciada pelo leitor de tela. Âncoras da Home
+                // (/#sobre) nunca batem com o pathname, então não marcam.
+                aria-current={link.href === pathname ? "page" : undefined}
+                className={linkClasses}
+              >
                 {link.label}
               </Link>
             </li>
@@ -109,6 +116,7 @@ export default function Navbar() {
             <Link
               href="/orcamento"
               onClick={() => setIsOpen(false)}
+              aria-current={pathname === "/orcamento" ? "page" : undefined}
               className={`inline-flex min-h-11 items-center rounded-sm border border-banquete-rose px-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-banquete-rose transition-colors duration-300 hover:bg-banquete-rose hover:text-white ${focusRing}`}
             >
               {t("quote")}

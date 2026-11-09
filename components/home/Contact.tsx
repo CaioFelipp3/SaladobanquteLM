@@ -65,6 +65,7 @@ export default function Contact() {
                 className={`break-words font-serif text-xl lining-nums text-banquete-dark underline decoration-banquete-gold/0 underline-offset-4 transition-colors duration-300 hover:text-banquete-rose hover:decoration-banquete-gold ${focusRing} rounded-sm`}
               >
                 {item.text}
+                {item.external && <span className="sr-only"> {t("opensInNewTab")}</span>}
               </a>
             </li>
           ))}

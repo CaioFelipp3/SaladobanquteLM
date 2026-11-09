@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import CookiePreferencesButton from "@/components/analytics/CookiePreferencesButton";
+import WhatsappFloatButton from "@/components/layout/WhatsappFloatButton";
 import Ornament from "@/components/ui/Ornament";
 import { contacts } from "@/lib/data/contacts";
 import { Link } from "@/lib/i18n/navigation";
@@ -29,6 +30,9 @@ export default function Footer() {
           <CookiePreferencesButton label={t("cookiePreferences")} className={linkClasses} />
         </p>
       </div>
+      {/* Fixo no canto da tela, mas dentro do <footer>: fora de uma região
+          (landmark), quem navega por regiões no leitor de tela não o acha. */}
+      <WhatsappFloatButton />
     </footer>
   );
 }

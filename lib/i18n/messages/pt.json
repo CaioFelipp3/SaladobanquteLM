@@ -73,7 +73,8 @@
       "whatsappLink": "Falar pelo WhatsApp",
       "instagramLabel": "Instagram",
       "emailLabel": "E-mail",
-      "addressLabel": "Endereço"
+      "addressLabel": "Endereço",
+      "opensInNewTab": "(abre em nova aba)"
     }
   },
   "Services": {
@@ -86,7 +87,6 @@
     "intro": "Cada celebração merece um cuidado único — conheça o que preparamos para o seu momento especial",
     "ctaButton": "Consultar Serviço",
     "ctaMessage": "Olá. Tudo bem?\nQuero saber mais sobre os serviços da Sala do Banquete.",
-    "descriptionPlaceholder": "[Descrição a preencher]",
     "imagePlaceholder": "Imagem em breve",
     "items": {
       "aniversario-infantil": { "title": "Aniversário Infantil" },

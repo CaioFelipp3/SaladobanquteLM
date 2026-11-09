@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { MailIcon } from "@/components/icons/LineIcons";
 import WhatsappIcon from "@/components/icons/WhatsappIcon";
 import { buildMailtoUrl, buildWhatsappUrl } from "@/lib/data/contacts";
 import type { ServiceId } from "@/lib/data/services";
@@ -83,7 +84,7 @@ export default function ServiceContactDialog({
               onClick={close}
               className={`${optionClasses} bg-banquete-rose hover:bg-banquete-rose-dark`}
             >
-              <span aria-hidden="true">✉️</span>
+              <MailIcon size={18} />
               {t("contact.email")}
             </a>
           </div>
