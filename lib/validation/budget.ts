@@ -25,8 +25,10 @@ export const budgetFormSchema = z.object({
     .string()
     // Formato exato do <input type="date">. Date.parse sozinho aceitaria
     // "2027" ou "May 5" e ajustaria datas impossíveis em silêncio.
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "eventDateInvalid")
-    .refine(isRealCalendarDate, "eventDateInvalid")
+    // abort: data fora do formato ou inexistente para aqui — as regras
+    // seguintes comparariam uma data inválida (NaN) e repetiriam o erro.
+    .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "eventDateInvalid", abort: true })
+    .refine(isRealCalendarDate, { message: "eventDateInvalid", abort: true })
     .refine((value) => parseLocalDate(value) >= startOfToday(), "eventDatePast")
     .refine((value) => {
       const limit = startOfToday();

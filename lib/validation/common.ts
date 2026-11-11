@@ -11,7 +11,9 @@ z.config({ jitless: true });
 // trecho; marcas de direção (U+200E/F), zero-width space (U+200B) e BOM
 // (U+FEFF) escondem conteúdo. Nenhum deles tem uso legítimo num formulário.
 // O zero-width joiner (U+200D) fica de fora: ele compõe emojis como 👨‍👩‍👧.
-const SPOOFING_CHARS = /[​‎‏‪-‮⁦-⁩﻿]/;
+// Escritos como \u de propósito: os caracteres literais ficam invisíveis no
+// editor e na revisão do código (o próprio padrão "Trojan Source").
+const SPOOFING_CHARS = /[\u200B\u200E\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/;
 
 // Caracteres de controle (U+0000–U+001F, U+007F–U+009F), exceto quebra de
 // linha e tab — só fazem sentido no campo de mensagem, que é multilinha.
