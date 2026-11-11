@@ -26,8 +26,11 @@ Sala do Banquete LM/
 │   ├── budget/    → BudgetForm
 │   ├── classes/   → ClassesSection (cards das aulas + formulário de interesse)
 │   ├── ebooks/    → EbookBuyLink (link de compra que registra o clique no GA)
-│   ├── forms/     → FormParts (estilos e mensagem de erro comuns aos formulários)
+│   ├── forms/     → peças comuns aos dois formulários (orçamento e aulas):
+│   │                 FormParts (estilos, erro de campo, checkbox da política, botões de envio,
+│   │                 mensagem de sucesso/erro) e useContactForm (estado, validação e envio)
 │   ├── analytics/ → CookieBanner, CookiePreferencesButton, GoogleAnalytics
+│   ├── seo/       → JsonLd (dados estruturados para o Google)
 │   ├── ui/        → SectionHeader (rótulo + título + ornamento), Ornament
 │   └── icons/     → WhatsappIcon e LineIcons (ícones de traço fino)
 ├── lib/
@@ -44,8 +47,14 @@ Sala do Banquete LM/
 │   │   ├── classes.ts          → lista de aulas de etiqueta (só o id)
 │   │   ├── ebooks.ts           → lista de e-books (id + link de compra; vazio = "Em breve")
 │   │   └── images.ts           → findImages(): acha a foto <id>.jpg de cada item em public/images/<pasta>/
+│   ├── analytics/
+│   │   ├── config.ts           → lê e valida o ID do Google Analytics (variável de ambiente)
+│   │   ├── consent.ts          → guarda a escolha do banner de cookies
+│   │   └── gtag.ts             → carrega/desliga o Google Analytics e envia eventos
 │   ├── seo/
-│   │   └── metadata.ts         → domínio canônico, lista de páginas e buildPageMetadata()
+│   │   ├── metadata.ts         → domínio canônico, lista de páginas e buildPageMetadata()
+│   │   └── structuredData.ts   → dados estruturados (schema.org) da Home
+│   ├── features.ts             → liga/desliga as seções de Aulas e E-books
 │   ├── ui/
 │   │   └── styles.ts           → classes Tailwind compartilhadas (botão, títulos, foco)
 │   └── validation/
@@ -58,7 +67,7 @@ Sala do Banquete LM/
 │       ├── servicos/           → <id-do-serviço>.jpg (ex: casamento.jpg) — aparece sozinha no card
 │       ├── aulas/              → <id-da-aula>.jpg (ex: aula-1.jpg) — idem
 │       ├── ebooks/             → capa <id-do-ebook>.jpg (ex: ebook-1.jpg), em pé (3:4) — idem
-│       ├── marca/              → logo.png (também usada no preview de links)
+│       ├── marca/              → logo.png e compartilhamento.jpg (1200×630, preview de links)
 │       └── equipe/             → liliam.jpg (foto da seção Sobre)
 ├── docs/                        → esta pasta — documentação de aprendizado
 ├── proxy.ts                     → roda no servidor antes de cada request; detecta o idioma da URL

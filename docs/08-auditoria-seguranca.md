@@ -185,7 +185,7 @@ Contraste corrigido com o **menor ajuste possível** na identidade visual: o ros
 
 | # | Recomendação | Quando |
 |---|---|---|
-| R1 | Imagem de Open Graph dedicada (1200×630, < 300 KB). Hoje é a logo de 603×282 | Antes de divulgar links |
+| R1 | ✅ Feita: `public/images/marca/compartilhamento.jpg`, 1200×630, 168 KB. Texto original: Imagem de Open Graph dedicada (1200×630, < 300 KB). Hoje é a logo de 603×282 | Antes de divulgar links |
 | R2 | `alt` descritivo para cada foto da galeria. Hoje é "Decoração da Sala do Banquete 3", genérico | Com o conteúdo real |
 | R3 | Trocar a CSP para nonce se o site passar a renderizar conteúdo de usuários ou de um CMS | Fase com conteúdo dinâmico |
 | R4 | ✅ Resolvida pelo checkout novo (sem arquivo JSON nem catálogo no Express). Texto original: Backend: preencher `CATALOGO_INGRESSOS`; migrar `transacoes.json` para um banco gerenciado (o lock em memória só vale para 1 processo; criptografia em repouso; retenção); validar a janela de tempo do `ts` do webhook contra replay; criar a página `/ingressos`, para onde os `back_urls` do Mercado Pago apontam e que não existe | Fase de e-commerce |
@@ -244,7 +244,7 @@ Depois do redesenho, das páginas de Aulas e E-books (desligadas) e da remoção
 | S8 | Baixa | Banner de cookies voltava a cada página se o navegador lê mas não grava o `localStorage` | ✅ fallback em memória |
 | S9 | Baixa | Menu sem indicação da página atual (`aria-current`) | ✅ anunciada e destacada em rosa |
 | S10 | Baixa | Emoji ✉️ no popup de serviço; links externos do Contato sem aviso de nova aba | ✅ |
-| A1 | Info | `minimatch` (moderada) só em ferramentas de lint | Aceito: sem correção compatível |
+| A1 | Info | `minimatch` (moderada) só em ferramentas de lint | ✅ Resolvido em 11/11 com `overrides` (ver terceira auditoria) |
 | A2 | Info | `TRACE /` e `/images/.../.gitkeep` respondem 500 no `next start` local | Aceito: nenhum navegador usa `TRACE`; na Vercel a borda responde antes |
 | A3 | Info | Ano do rodapé é calculado no build | Aceito: fazer um deploy em janeiro (ou qualquer deploy no ano) atualiza |
 | A4 | Info | HSTS com `includeSubDomains; preload` | Aceito: só inscrever o domínio no preload se todos os subdomínios tiverem HTTPS |
@@ -254,3 +254,54 @@ Depois do redesenho, das páginas de Aulas e E-books (desligadas) e da remoção
 **Consentimento do Google Analytics** (build com um ID falso, requisições ao Google bloqueadas no teste): nada carrega antes da escolha; "Recusar" é lembrado após recarregar; o rodapé reabre o banner e move o foco; "Aceitar" carrega o `gtag.js` sem violar a CSP; revogar apaga os cookies `_ga` e descarrega o script. axe sem violações no banner.
 
 **Resultado final:** `tsc`, `eslint` e `next build` sem erros; `npm audit --omit=dev` com 0 vulnerabilidades; axe com **0 violações**; nenhum erro de console ou de CSP nem rolagem horizontal; LCP da Home no celular em 4G simulado: **0,79 s** (a foto do hero; o Google considera bom até 2,5 s).
+
+## Terceira auditoria (11 de novembro de 2026)
+
+Revisão antes do merge, focada no que mudou desde a segunda auditoria. Mesmo método: ferramentas automáticas, leitura linha a linha, ataques contra o build de produção (`next start`) e testes no navegador (Chromium e WebKit).
+
+**Ponto de partida:** o site não tem mais backend. Não existe rota de API, Server Action nem escrita em arquivo; o único acesso ao disco é a leitura das fotos durante o build (`lib/data/images.ts`). Os formulários não enviam nada a um servidor nosso: abrem o WhatsApp ou o e-mail do próprio visitante com a mensagem pronta. Por isso não há validação "no servidor" nem limite de envios a implementar: não existe servidor recebendo esses dados.
+
+### Verificação automatizada
+
+| Verificação | Resultado |
+|---|---|
+| `npm run build` | ✅ sem erros nem warnings |
+| `npm run lint` | ✅ 0 problemas |
+| `npx tsc --noEmit` | ✅ 0 erros |
+| `npm audit` (com dependências de desenvolvimento) | ✅ 0 vulnerabilidades |
+| Desatualizados | `next` 16.4.6 e `next-intl` 4.15.0 disponíveis, sem falha de segurança publicada contra as versões em uso. Majors (`eslint` 10, `typescript` 7) continuam pendentes (R6) |
+
+### Superfície de ataque atual
+
+| Ponto de entrada | Teste | Resultado |
+|---|---|---|
+| Idioma na URL (`/de`, `/..%2f..%2fetc%2fpasswd`) | Locale arbitrário, path traversal | 404 |
+| Arquivos do projeto (`.env`, `.git/config`, `package.json`, `next.config.ts`) | Acesso direto | 404 |
+| `/_next/image?url=` | URL externa, `../`, query string | 400 |
+| `//evil.com`, `X-Forwarded-Host` forjado | Redirecionamento aberto | Fica no mesmo domínio |
+| Cookie `NEXT_LOCALE` com `\r\n` ou `../` | Injeção de header | Ignorado |
+| Query string | XSS refletido | Nada aparece no HTML |
+| Formulários de orçamento e aulas | 33 payloads direto no schema | 25 recusados; os 8 aceitos são entradas legítimas (nome acentuado, emoji, várias linhas, `<script>` na mensagem tratado como texto) |
+| Links `wa.me` e `mailto:` | Injetar `&phone=` e `Bcc:` | Viram texto literal |
+| 404 e JavaScript publicado | Stack trace, source maps, caminhos locais | Nenhum |
+| Histórico do git (todos os commits) | Tokens do Mercado Pago, senhas, chaves, arquivos de dados | Só placeholders; nenhum segredo real nem arquivo com dados pessoais |
+
+### Achados
+
+| # | Severidade | Achado | Status |
+|---|---|---|---|
+| T1 | Média | A regex que bloqueia caracteres invisíveis (`lib/validation/common.ts`) tinha esses caracteres colados direto no código. A linha era impossível de revisar, e um editor que "limpe" invisíveis apagaria a proteção sem ninguém ver | ✅ `fb94ca6`: escrita com códigos `\u`; os 13 caracteres testados um a um |
+| T2 | Baixa | Data em formato errado fazia o schema comparar uma data inválida com "hoje" e repetir o mesmo erro 4 vezes | ✅ `fb94ca6`: a validação para no primeiro erro (`abort`) |
+| T3 | Baixa | Cerca de 150 linhas repetidas entre o formulário de orçamento e o de aulas (estado, validação, envio, checkbox da política, mensagens) | ✅ Extraídas para `components/forms/` (`useContactForm` e peças em `FormParts`) |
+| T4 | Baixa | Documentação defasada: estrutura de pastas sem `lib/analytics/`, `lib/features.ts` e `seo/`; `minimatch` ainda como "aceito"; R1 como pendente | ✅ Atualizada |
+| T5 | Info | `minimatch` moderada só em ferramentas de lint (A1 da segunda auditoria) | ✅ `040cef8`: `overrides` no `package.json` |
+
+**Como a refatoração (T3) foi verificada:** o mesmo roteiro rodou no código antigo e no novo, lado a lado, com as Aulas ligadas só na cópia de teste: envio vazio, campos inválidos, envio válido por WhatsApp e por e-mail, botão "Tenho interesse". Em Chromium e WebKit, nas páginas de orçamento (pt e en) e de aulas, o HTML do formulário, o foco e as URLs geradas ficaram **idênticos** em todos os passos. A única diferença no HTML é um espaço sobrando que saiu da classe dos rótulos. Nenhum erro de console.
+
+### Recomendações novas
+
+| # | Recomendação | Quando |
+|---|---|---|
+| R11 | A rota que gera a 404 (`[...rest]`) é a única dinâmica: cada endereço inexistente executa uma função na Vercel. Numa varredura de bots, isso vira custo. Criar uma regra de *rate limit* no Vercel Firewall | Depois do merge |
+| R12 | As fotos originais dos serviços têm até 5,4 MB (3543 px). O otimizador entrega 36 a 190 KB ao visitante, então não pesa para quem acessa, mas deixa mais lenta a primeira otimização de cada foto e aumenta o repositório. Reduzir os originais para uns 2000 px ao trocar as fotos | Ao atualizar as fotos |
+| R13 | Atualizar `next` para 16.4.6 e `next-intl` para 4.15.0 numa rodada própria, testando a navegação (ver aviso do `optimisticRouting` em `05-seguranca.md`) | Manutenção |

@@ -79,6 +79,7 @@ O otimizador de imagens foi o vetor de várias CVEs recentes do Next.js (SSRF, R
 - `npm audit` no frontend: de 11 vulnerabilidades (1 crítica) para 5, todas da mesma cadeia: `braces` ← `micromatch` ← `fast-glob` ← `eslint-config-next`. São **só de desenvolvimento** (rodam no `npm run lint`, nunca vão para produção) e o `braces` 3.0.3 é a última versão publicada, sem correção disponível. Risco aceito e registrado.
 - Versões de `next`, `react` e `eslint-config-next` fixadas sem `^` no `package.json`, para que um `npm install` não traga uma versão nova sem revisão.
 - **Novembro de 2026:** `next` 16.4.0 → **16.4.3** (corrige 3 advisories, um **crítico**: execução remota de código no Image Optimizer com SVG, GHSA-2464-fhr4-w9xw) e `zod` 4.6.5 → 4.6.7 (consumo de memória, GHSA-mrhx-c7xc-m3w5). Escolhida a 16.4.3, publicada havia 13 dias, em vez da 16.4.5, de 2 dias antes: versão recém-saída tem mais risco de ataque à cadeia de pacotes. `npm audit --omit=dev`: **0 vulnerabilidades**. Sobra 1 moderada só de desenvolvimento (`minimatch`, via `typescript-eslint`); a "correção" do `npm audit fix --force` rebaixaria o `eslint-config-next` para a 15, então o risco foi aceito.
+- **11 de novembro de 2026:** a moderada do `minimatch` foi resolvida com um `overrides` no `package.json`, que força a versão 11 só dentro do `@typescript-eslint/typescript-estree`, sem rebaixar o `eslint-config-next`. `react` e `react-dom` foram para 19.3.1. `npm audit` (incluindo dependências de desenvolvimento): **0 vulnerabilidades**. Ao atualizar o `typescript-eslint`, conferir se o override ainda é necessário e removê-lo se não for.
 
 ## Roteador: previsão de rotas desligada (`optimisticRouting`)
 
@@ -89,6 +90,8 @@ O roteador do Next 16 tenta adivinhar a estrutura de uma URL pelo formato de out
 **Rotina recomendada:** rodar `npm audit` e `npm outdated` antes de cada deploy importante, e ler as notas de versão do Next.js quando sair patch de segurança.
 
 ## Formulário de Orçamento
+
+Tudo que vale aqui vale também para o formulário de interesse nas aulas: os dois usam as mesmas regras de nome, telefone e mensagem (`lib/validation/common.ts`) e a mesma lógica de envio (`components/forms/useContactForm.ts`).
 
 ### Por que o formulário não passa por um servidor nosso
 
@@ -108,9 +111,9 @@ Testado com uma bateria de 29 payloads maliciosos (antes das correções: 12 fal
 - **Normalização NFC**: "é" pode chegar como um caractere (U+00E9) ou como "e" + acento combinante (U+0301), comum em texto colado. Sem normalizar, um "José" legítimo era recusado.
 - **Sem quebra de linha** nos campos de uma linha: impede injetar "linhas" falsas na mensagem final (ex: `João\nTelefone: 000`).
 - **Telefone**: só dígitos e `+ ( ) - .`, até 20 caracteres, DDI 55 opcional. **Antes**, o código só contava os dígitos, e `<b>27999999999</b>` passava.
-- **Data**: formato exato `AAAA-MM-DD`, data real de calendário (30/02 é recusado), não no passado, até 3 anos à frente. **Antes**, `Date.parse` aceitava `"2027"` e `9999-12-31`.
+- **Data**: formato exato `AAAA-MM-DD`, data real de calendário (30/02 é recusado), não no passado, até 3 anos à frente. **Antes**, `Date.parse` aceitava `"2027"` e `9999-12-31`. Se o formato ou a data estiverem errados, a validação para ali (`abort`), sem comparar uma data inválida com "hoje".
 - **Convidados**: só dígitos, de 1 a 1000. **Antes**, `z.coerce.number` aceitava `0x10` (16) e `1e3` (1000).
-- **Mensagem**: até 500 caracteres; rejeita caracteres de controle e caracteres invisíveis de *spoofing*: controles bidirecionais (U+202E inverte a ordem visual do texto), zero-width space e similares. O zero-width joiner fica permitido porque compõe emojis.
+- **Mensagem**: até 500 caracteres; rejeita caracteres de controle e caracteres invisíveis de *spoofing*: controles bidirecionais (U+202E inverte a ordem visual do texto), zero-width space e similares. O zero-width joiner fica permitido porque compõe emojis. Na regex, esses caracteres ficam escritos como códigos (`\u202E`), nunca colados direto: colados, ficam invisíveis no editor e na revisão, e um editor que "limpe" invisíveis apagaria a proteção sem ninguém perceber.
 - **Serviço**: precisa ser um dos ids da lista (`z.enum`); `__proto__` e `../` são recusados.
 
 ### Montagem da URL

@@ -51,7 +51,7 @@ Dados ficam no histórico da conversa / caixa de entrada da empresa
 | Dado | Quem coleta | Para quê |
 |---|---|---|
 | Endereço IP, navegador, URL acessada, data/hora | Vercel (logs de acesso da hospedagem) | Segurança e funcionamento; a Sala do Banquete não usa esses dados |
-| Idioma escolhido (cookie `NEXT_LOCALE`) | O próprio site | Lembrar o idioma (pt/en). Cookie de sessão, `SameSite=Lax`, sem dado pessoal |
+| Idioma escolhido (cookie `NEXT_LOCALE`) | O próprio site | Lembrar o idioma (pt/en). Cookie de sessão, `SameSite=Lax`, sem dado pessoal. Só é gravado quando o idioma escolhido é diferente do idioma do navegador: quem navega em português com o navegador em português não recebe cookie nenhum (conferido em 11/11/2026) |
 | Escolha sobre cookies (`cookie-consent`, localStorage) | O próprio site | Lembrar se o visitante aceitou ou recusou a análise, por 12 meses |
 | Páginas vistas, origem do acesso, dispositivo, cidade aproximada, eventos (orçamento ou interesse em aula enviado, clique para comprar e-book) — cookies `_ga` e `_ga_<ID>` | Google Analytics 4, **só com consentimento** | Estatísticas de uso do site |
 
