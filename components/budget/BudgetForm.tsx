@@ -1,21 +1,15 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
 import {
   FieldError,
-  inputClasses,
-  invalidBorderClasses,
   labelClasses,
-  linkClasses,
-  submitEmailClasses,
-  submitWhatsappClasses,
-  validBorderClasses,
+  PrivacyConsent,
+  SendStatusMessage,
+  SubmitButtons,
 } from "@/components/forms/FormParts";
-import { trackEvent } from "@/lib/analytics/gtag";
-import { buildMailtoUrl, buildWhatsappUrl, contacts } from "@/lib/data/contacts";
+import { useContactForm } from "@/components/forms/useContactForm";
 import { services } from "@/lib/data/services";
-import { Link } from "@/lib/i18n/navigation";
 import { budgetFormSchema, parseLocalDate, type BudgetFormInput } from "@/lib/validation/budget";
 
 const emptyValues: BudgetFormInput = {
@@ -28,43 +22,10 @@ const emptyValues: BudgetFormInput = {
   privacyAccepted: false,
 };
 
-type FieldErrors = Partial<Record<keyof BudgetFormInput, string>>;
-type Status =
-  | { kind: "idle" }
-  | { kind: "invalid" }
-  // Guarda a URL gerada para oferecer um link manual caso o navegador
-  // bloqueie a nova aba ou não exista app de e-mail configurado.
-  | { kind: "sent"; channel: "whatsapp" | "email"; url: string };
-
 export default function BudgetForm() {
   const t = useTranslations("Budget");
   const tServices = useTranslations("Services");
   const locale = useLocale();
-
-  const [values, setValues] = useState<BudgetFormInput>(emptyValues);
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  useEffect(() => {
-    return () => {
-      if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
-    };
-  }, []);
-
-  function handleChange(field: keyof BudgetFormInput) {
-    return (
-      event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-    ) => {
-      const { target } = event;
-      const value =
-        target instanceof HTMLInputElement && target.type === "checkbox"
-          ? target.checked
-          : target.value;
-      setValues((prev) => ({ ...prev, [field]: value }));
-    };
-  }
 
   function formatEventDate(iso: string) {
     return parseLocalDate(iso).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
@@ -74,76 +35,28 @@ export default function BudgetForm() {
     });
   }
 
-  function submit(channel: "whatsapp" | "email") {
-    if (isSubmitting) return;
-
-    const result = budgetFormSchema.safeParse(values);
-
-    if (!result.success) {
-      const fieldErrors: FieldErrors = {};
-      for (const issue of result.error.issues) {
-        const field = issue.path[0] as keyof BudgetFormInput;
-        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
-      }
-      setErrors(fieldErrors);
-      setStatus({ kind: "invalid" });
-
-      const firstInvalidField = Object.keys(fieldErrors)[0];
-      document.getElementById(`budget-${firstInvalidField}`)?.focus();
-      return;
-    }
-
-    setErrors({});
-    setIsSubmitting(true);
-
-    const data = result.data;
-    const serviceTitle = tServices(`items.${data.service}.title`);
-    const message = t("messageTemplate", {
-      name: data.name,
-      phone: data.phone,
-      service: serviceTitle,
-      eventDate: formatEventDate(data.eventDate),
-      guestCount: data.guestCount,
-      message: data.message || "—",
-    });
-
-    // Só o canal e o tipo de serviço — nenhum dado pessoal vai para o GA.
-    trackEvent("generate_lead", { method: channel, service: data.service });
-
-    // Nada disso passa por um backend nosso: montamos o link e devolvemos o
-    // controle para o WhatsApp/cliente de e-mail do próprio visitante — ver
-    // docs/05-seguranca.md (minimização de dados / LGPD).
-    // Com "noopener", window.open sempre devolve null — não dá para saber se
-    // a aba foi bloqueada. Por isso a mensagem de sucesso sempre traz um link
-    // manual com a mesma URL.
-    if (channel === "whatsapp") {
-      const url = buildWhatsappUrl(message);
-      window.open(url, "_blank", "noopener,noreferrer");
-      setStatus({ kind: "sent", channel, url });
-    } else {
-      const url = buildMailtoUrl(t("emailSubject", { service: serviceTitle }), message);
-      window.location.href = url;
-      setStatus({ kind: "sent", channel, url });
-    }
-
-    resetTimeoutRef.current = setTimeout(() => setIsSubmitting(false), 1200);
-  }
-
-  function fieldError(field: keyof BudgetFormInput) {
-    const key = errors[field];
-    return key ? t(`errors.${key}`) : undefined;
-  }
-
-  function inputProps(field: keyof BudgetFormInput) {
-    const error = fieldError(field);
-    return {
-      id: `budget-${field}`,
-      name: field,
-      "aria-invalid": Boolean(error),
-      "aria-describedby": error ? `budget-${field}-error` : undefined,
-      className: `${inputClasses} ${error ? invalidBorderClasses : validBorderClasses}`,
-    };
-  }
+  const form = useContactForm({
+    initialValues: emptyValues,
+    schema: budgetFormSchema,
+    idPrefix: "budget",
+    translateError: (key) => t(`errors.${key}`),
+    compose: (data) => {
+      const serviceTitle = tServices(`items.${data.service}.title`);
+      return {
+        message: t("messageTemplate", {
+          name: data.name,
+          phone: data.phone,
+          service: serviceTitle,
+          eventDate: formatEventDate(data.eventDate),
+          guestCount: data.guestCount,
+          message: data.message || "—",
+        }),
+        subject: t("emailSubject", { service: serviceTitle }),
+        // Só o tipo de serviço — nenhum dado pessoal vai para o GA.
+        analytics: { service: data.service },
+      };
+    },
+  });
 
   return (
     <form
@@ -156,14 +69,14 @@ export default function BudgetForm() {
           {t("fields.name")}
         </label>
         <input
-          {...inputProps("name")}
+          {...form.inputProps("name")}
           type="text"
           autoComplete="name"
           maxLength={80}
-          value={values.name}
-          onChange={handleChange("name")}
+          value={form.values.name}
+          onChange={form.handleChange("name")}
         />
-        <FieldError id="budget-name-error" message={fieldError("name")} />
+        <FieldError id="budget-name-error" message={form.fieldError("name")} />
       </div>
 
       <div className="mb-5">
@@ -171,15 +84,15 @@ export default function BudgetForm() {
           {t("fields.phone")}
         </label>
         <input
-          {...inputProps("phone")}
+          {...form.inputProps("phone")}
           type="tel"
           autoComplete="tel"
           placeholder={t("fields.phonePlaceholder")}
           maxLength={20}
-          value={values.phone}
-          onChange={handleChange("phone")}
+          value={form.values.phone}
+          onChange={form.handleChange("phone")}
         />
-        <FieldError id="budget-phone-error" message={fieldError("phone")} />
+        <FieldError id="budget-phone-error" message={form.fieldError("phone")} />
       </div>
 
       <div className="mb-5">
@@ -187,9 +100,9 @@ export default function BudgetForm() {
           {t("fields.service")}
         </label>
         <select
-          {...inputProps("service")}
-          value={values.service}
-          onChange={handleChange("service")}
+          {...form.inputProps("service")}
+          value={form.values.service}
+          onChange={form.handleChange("service")}
         >
           <option value="">{t("fields.servicePlaceholder")}</option>
           {services.map((service) => (
@@ -198,7 +111,7 @@ export default function BudgetForm() {
             </option>
           ))}
         </select>
-        <FieldError id="budget-service-error" message={fieldError("service")} />
+        <FieldError id="budget-service-error" message={form.fieldError("service")} />
       </div>
 
       {/* Sem atributo `min`: calcular "hoje" durante o render rodaria no
@@ -210,12 +123,12 @@ export default function BudgetForm() {
           {t("fields.eventDate")}
         </label>
         <input
-          {...inputProps("eventDate")}
+          {...form.inputProps("eventDate")}
           type="date"
-          value={values.eventDate}
-          onChange={handleChange("eventDate")}
+          value={form.values.eventDate}
+          onChange={form.handleChange("eventDate")}
         />
-        <FieldError id="budget-eventDate-error" message={fieldError("eventDate")} />
+        <FieldError id="budget-eventDate-error" message={form.fieldError("eventDate")} />
       </div>
 
       <div className="mb-5">
@@ -223,15 +136,15 @@ export default function BudgetForm() {
           {t("fields.guestCount")}
         </label>
         <input
-          {...inputProps("guestCount")}
+          {...form.inputProps("guestCount")}
           type="number"
           inputMode="numeric"
           min={1}
           max={1000}
-          value={values.guestCount}
-          onChange={handleChange("guestCount")}
+          value={form.values.guestCount}
+          onChange={form.handleChange("guestCount")}
         />
-        <FieldError id="budget-guestCount-error" message={fieldError("guestCount")} />
+        <FieldError id="budget-guestCount-error" message={form.fieldError("guestCount")} />
       </div>
 
       <div className="mb-5">
@@ -239,99 +152,25 @@ export default function BudgetForm() {
           {t("fields.message")} <span className="font-normal text-banquete-dark/70">{t("messageOptional")}</span>
         </label>
         <textarea
-          {...inputProps("message")}
+          {...form.inputProps("message")}
           rows={4}
           maxLength={500}
-          value={values.message}
-          onChange={handleChange("message")}
+          value={form.values.message}
+          onChange={form.handleChange("message")}
         />
-        <FieldError id="budget-message-error" message={fieldError("message")} />
+        <FieldError id="budget-message-error" message={form.fieldError("message")} />
       </div>
 
-      <div className="mb-5">
-        <div className="flex items-start gap-2.5">
-          <input
-            id="budget-privacyAccepted"
-            name="privacyAccepted"
-            type="checkbox"
-            checked={values.privacyAccepted}
-            onChange={handleChange("privacyAccepted")}
-            aria-invalid={Boolean(fieldError("privacyAccepted"))}
-            aria-describedby={
-              fieldError("privacyAccepted") ? "budget-privacyAccepted-error" : undefined
-            }
-            className="mt-1 h-4 w-4 shrink-0 accent-banquete-rose focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-banquete-rose"
-          />
-          <label htmlFor="budget-privacyAccepted" className="text-sm">
-            {t.rich("privacyConsent", {
-              link: (chunks) => (
-                <Link
-                  href="/privacidade"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClasses}
-                >
-                  {chunks}
-                  <span className="sr-only"> {t("opensInNewTab")}</span>
-                </Link>
-              ),
-            })}
-          </label>
-        </div>
-        <FieldError id="budget-privacyAccepted-error" message={fieldError("privacyAccepted")} />
-      </div>
+      <PrivacyConsent
+        idPrefix="budget"
+        checked={form.values.privacyAccepted}
+        onChange={form.handleChange("privacyAccepted")}
+        error={form.fieldError("privacyAccepted")}
+      />
 
-      <p className="mb-5 text-xs leading-relaxed text-banquete-dark/70">{t("privacyNote")}</p>
+      <SubmitButtons isSubmitting={form.isSubmitting} onSubmit={form.submit} />
 
-      <div className="flex flex-col gap-3 xs:flex-row">
-        <button
-          type="button"
-          disabled={isSubmitting}
-          onClick={() => submit("whatsapp")}
-          className={submitWhatsappClasses}
-        >
-          {isSubmitting ? t("submitting") : t("submitWhatsapp")}
-        </button>
-        <button
-          type="button"
-          disabled={isSubmitting}
-          onClick={() => submit("email")}
-          className={submitEmailClasses}
-        >
-          {isSubmitting ? t("submitting") : t("submitEmail")}
-        </button>
-      </div>
-
-      <div role="status" aria-live="polite" className="mt-5">
-        {status.kind === "sent" && (
-          <p className="rounded-sm border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-            <strong>{t("successTitle")}</strong>{" "}
-            {status.channel === "whatsapp" ? t("successWhatsapp") : t("successEmail")}{" "}
-            {t.rich(status.channel === "whatsapp" ? "fallbackWhatsapp" : "fallbackEmail", {
-              link: (chunks) => (
-                <a
-                  href={status.url}
-                  {...(status.channel === "whatsapp"
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className={linkClasses}
-                >
-                  {chunks}
-                </a>
-              ),
-              email: contacts.email,
-            })}
-          </p>
-        )}
-      </div>
-
-      {/* Fora da região role="status": regiões "live" aninhadas fazem alguns
-          leitores de tela anunciarem a mesma mensagem duas vezes. */}
-      {status.kind === "invalid" && (
-        <p role="alert" className="mt-5 rounded-sm border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-          <strong>{t("errorTitle")}</strong> {t("errorGeneric")}
-        </p>
-      )}
+      <SendStatusMessage status={form.status} />
     </form>
   );
 }
