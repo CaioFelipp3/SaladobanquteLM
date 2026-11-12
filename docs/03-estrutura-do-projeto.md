@@ -73,8 +73,14 @@ Sala do Banquete LM/
 ├── proxy.ts                     → roda no servidor antes de cada request; detecta o idioma da URL
 ├── next.config.ts               → configuração do Next.js: CSP e headers de segurança, imagens, plugin de i18n
 ├── tsconfig.json                 → configuração do TypeScript (inclui o atalho de import "@/")
-├── package.json                  → dependências e scripts (npm run dev/build/start)
-└── .env.example                  → variáveis de ambiente (ID do Google Analytics), sem valores
+├── package.json                  → dependências e scripts (npm run dev/build/start/lint/scan:secrets)
+├── .env.example                  → variáveis de ambiente (ID do Google Analytics), sem valores
+├── .gitleaks.toml                → regras do detector de segredos (ver seguranca-informacoes.md)
+├── .husky/pre-commit             → roda gitleaks + lint antes de cada commit
+├── .husky/install.mjs            → ativa os hooks no npm install (pula em CI/Vercel)
+├── .github/dependabot.yml        → PRs semanais de atualização de dependências
+├── .gitattributes                → LF em todo texto, imagens como binário
+└── .gitignore                    → .env*, chaves, dumps, planilhas, build, arquivos do sistema
 ```
 
 ## Por que `app/[locale]/` e não `app/` direto

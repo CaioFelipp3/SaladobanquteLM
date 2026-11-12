@@ -75,3 +75,6 @@ yarn-error.log*
 .eslintcache
 coverage/
 
+# Relatórios de auditoria com fraquezas ainda abertas — ficam só na máquina
+# de quem auditou (ver docs/seguranca-informacoes.md)
+docs/auditoria-protecao-dados.md
