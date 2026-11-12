@@ -1,0 +1,36 @@
+# Configuração do gitleaks (detector de segredos) — usada pelo hook de
+# pre-commit (.husky/pre-commit) e pelo script `npm run scan:secrets`.
+# Ver docs/seguranca-informacoes.md.
+title = "Sala do Banquete LM"
+
+# Parte das ~200 regras padrão do gitleaks (AWS, GitHub, Google, Stripe,
+# chaves privadas, tokens genéricos...) e acrescenta as específicas do projeto.
+[extend]
+useDefault = true
+
+# Mercado Pago: access token de produção (APP_USR-) ou de teste (TEST-).
+# É a credencial que movimenta dinheiro — o checkout pode voltar no futuro.
+# A public key (APP_USR-<uuid>) é pública por natureza e não casa aqui.
+[[rules]]
+id = "mercadopago-access-token"
+description = "Access token do Mercado Pago"
+regex = '''\b(?:APP_USR|TEST)-\d{10,20}-\d{6}-[a-f0-9]{32}-\d{6,12}\b'''
+keywords = ["app_usr-", "test-"]
+tags = ["mercadopago", "pagamento"]
+
+# CPF formatado (000.000.000-00). Não é segredo, é DADO PESSOAL (LGPD):
+# não pode aparecer em código, testes, seeds ou documentação. Use os
+# fictícios das tabelas de teste se precisar de exemplo — e marque a linha
+# com o comentário `gitleaks:allow`.
+[[rules]]
+id = "cpf-brasileiro"
+description = "CPF (dado pessoal — LGPD)"
+regex = '''\b\d{3}\.\d{3}\.\d{3}-\d{2}\b'''
+tags = ["pii", "lgpd"]
+
+[[allowlists]]
+description = "Arquivos gerados ou de terceiros (nunca versionados)"
+paths = [
+  '''(?:^|/)\.next/''',
+  '''(?:^|/)node_modules/''',
+]

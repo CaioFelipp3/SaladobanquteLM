@@ -1,0 +1,17 @@
+# Roda antes de cada `git commit`. Se qualquer etapa falhar, o commit é
+# cancelado e nada é gravado. Ver docs/seguranca-informacoes.md
+# ("Hooks de pre-commit") para o que fazer e quando é aceitável pular.
+
+# 1) Segredos: varre só o que está em stage (o que vai entrar no commit).
+#    O gitleaks é um binário (não vem pelo npm): sem ele, o commit é
+#    bloqueado em vez de passar sem verificação.
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks não encontrado — commit bloqueado."
+  echo "  Instale com: brew install gitleaks   (outros sistemas: https://github.com/gitleaks/gitleaks#installing)"
+  exit 1
+fi
+#    -v mostra arquivo, linha e regra de cada achado; --redact mascara o valor.
+gitleaks git --staged --redact --no-banner -v .
+
+# 2) Lint (ESLint com as regras do Next.js) no projeto inteiro.
+npm run lint --silent
