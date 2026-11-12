@@ -1,0 +1,27 @@
+# Dependabot — PRs automáticos de atualização das dependências npm.
+# Só vale depois de chegar na branch padrão (main). Ver
+# docs/seguranca-informacoes.md ("Configuração do GitHub").
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "America/Sao_Paulo"
+    # Carência: só sugere uma versão publicada há pelo menos 7 dias — a
+    # maioria dos pacotes sequestrados é detectada e removida do npm antes
+    # disso (política de docs/05-seguranca.md). Atualizações de SEGURANÇA
+    # (alertas do Dependabot) não esperam a carência.
+    cooldown:
+      default-days: 7
+    # Patches e minors num PR só, para não virar ruído. Majors (ex: TypeScript
+    # 7, ESLint 10) vêm em PRs separados, porque podem quebrar o build.
+    groups:
+      minor-e-patch:
+        update-types: ["minor", "patch"]
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore"
+      include: "scope"
