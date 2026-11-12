@@ -17,11 +17,36 @@ next-env.d.ts
 # Vercel (estado local de link do projeto — não é segredo, mas não deve ser versionado)
 .vercel
 
-# Certificados locais (ex: HTTPS em dev)
+# Certificados e chaves privadas (ex: HTTPS em dev, certificados de APIs)
 *.pem
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+
+# Bancos de dados locais, dumps e exportações (podem conter dados pessoais)
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+dumps/
+backups/
+*.csv
+*.xlsx
+
+# Relatórios do gitleaks (repetem o trecho do segredo encontrado)
+gitleaks-report.*
 
 # Claude Code: permissões de comandos são pessoais (caminhos da máquina de cada um)
 .claude/settings.json
+.claude/settings.local.json
 
 # IDE
 .vscode/

@@ -1,0 +1,21 @@
+# Quebra de linha: sempre LF no repositório e na cópia de trabalho, em
+# qualquer sistema. Evita diffs "fantasmas" (CRLF do Windows) e hooks/scripts
+# shell quebrados por \r no fim da linha.
+* text=auto eol=lf
+
+# Binários: git nunca tenta converter quebra de linha nem mostrar diff de texto.
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.webp  binary
+*.avif  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+
+# Lockfile: o GitHub recolhe o diff por padrão (arquivo gerado), mas ele
+# continua diffável — revisar o lockfile é como se detecta um pacote trocado
+# ou um "resolved" apontando para fora do registro oficial.
+package-lock.json linguist-generated=true
